@@ -1,4 +1,4 @@
-import { PlaceTax } from './generated/places'
+import { PlaceKey, PlaceTaxes } from './generated/places'
 
 export const RATE = {
   /**
@@ -148,6 +148,7 @@ export function calcHealthInsuranceContribution(gross: number): number {
 }
 
 interface GrossToNetConfig {
+  place?: PlaceKey
   taxRateLow?: number
   taxRateHigh?: number
   personalAllowanceCoefficient?: number
@@ -163,11 +164,20 @@ interface GrossToNetConfig {
  * @returns The net income.
  */
 export function grossToNet(gross: number, config?: GrossToNetConfig): number {
+  config ??= {}
+  const {
+    place,
+    personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
+  } = config
+
+  if (place && !PlaceTaxes[place]) {
+    throw new Error(`Unknown place "${place}"`)
+  }
+
   const {
     taxRateLow = RATE.TAX_LOW_BRACKET,
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
-    personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
-  } = config ?? {}
+  } = place ? PlaceTaxes[place] : config
 
   const pensionContribution = calcPensionContribution(gross)
 
@@ -199,6 +209,7 @@ export function grossToTotal(gross: number): number {
 }
 
 interface NetToGrossConfig {
+  place?: PlaceKey
   taxRateLow?: number
   taxRateHigh?: number
   personalAllowanceCoefficient?: number
@@ -215,12 +226,21 @@ interface NetToGrossConfig {
  * @returns The calculated gross amount.
  */
 export function netToGross(net: number, config?: NetToGrossConfig): number {
+  config ??= {}
+  const {
+    place,
+    personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
+    increment = 0.01,
+  } = config
+
+  if (place && !PlaceTaxes[place]) {
+    throw new Error(`Unknown place "${place}"`)
+  }
+
   const {
     taxRateLow = RATE.TAX_LOW_BRACKET,
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
-    personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
-    increment = 0.01,
-  } = config ?? {}
+  } = place ? PlaceTaxes[place] : config
 
   let gross = net
   while (true) {
@@ -262,4 +282,4 @@ export const brutoToNeto = grossToNet
  */
 export const netoToBruto = netToGross
 
-console.log(brutoToNeto(3150, { ...PlaceTax['zagreb'] }))
+console.log(brutoToNeto(3150, { place: 'samobor' }))

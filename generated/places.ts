@@ -566,7 +566,7 @@ export type Place =
  * Tax rates for different places in Croatia.
  * Generated off of the data from 'porezi.json'.
  */
-export const PlaceTax = {
+export const PlaceTaxes = {
   andrijaševci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
@@ -2792,3 +2792,5 @@ export const PlaceTax = {
     taxRateHigh: 0.327,
   },
 } as const;
+
+export type PlaceKey = keyof typeof PlaceTaxes;
