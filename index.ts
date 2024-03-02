@@ -281,5 +281,3 @@ export const brutoToNeto = grossToNet
  * @returns The calculated gross amount.
  */
 export const netoToBruto = netToGross
-
-console.log(brutoToNeto(3150, { place: 'samobor' }))
