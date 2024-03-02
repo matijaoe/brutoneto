@@ -48,12 +48,17 @@ export const PERSONAL_ALLOWANCE_COEFFICIENT = 1
 /**
  * Calculates the total pension contribution based on the gross salary.
  * @param gross - The gross salary.
- * @returns The total pension contribution.
+ * @returns Contributions per pension pillar and the total pension contribution.
  */
-export function calcPensionContribution(gross: number): number {
+export function calcPensionContribution(gross: number) {
   const firstPilar = gross * RATE.PENSION_CONTRIBUTION_PILLAR_1
   const secondPillar = gross * RATE.PENSION_CONTRIBUTION_PILLAR_2
-  return firstPilar + secondPillar
+  const total = firstPilar + secondPillar
+  return {
+    firstPilar,
+    secondPillar,
+    total,
+  }
 }
 
 /**
@@ -110,18 +115,23 @@ export function calcTaxableIncome(
  *
  * @param principal - The principal amount.
  * @param taxRates - An array containing the low and high tax rates.
- * @returns The calculated tax amount.
+ * @returns Tax amounts for the low and high tax brackets, and the total tax amount.
  */
 export function calcTax(
   principal: number,
   [taxRateLow, taxRateHigh]: [number, number],
-): number {
+) {
   const taxLower = Math.min(principal, HIGH_TAX_BRACKET_THRESHOLD) * taxRateLow
   const taxHigher = Math.max(
     (principal - HIGH_TAX_BRACKET_THRESHOLD) * taxRateHigh,
     0,
   )
-  return taxLower + taxHigher
+  const total = taxLower + taxHigher
+  return {
+    taxLower,
+    taxHigher,
+    total,
+  }
 }
 
 /**
@@ -179,7 +189,7 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceTaxes[place] : config
 
-  const pensionContribution = calcPensionContribution(gross)
+  const { total: pensionContribution } = calcPensionContribution(gross)
 
   const income = calcIncomeAfterDeductions(gross, pensionContribution)
 
@@ -190,7 +200,7 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
 
   const taxableIncome = calcTaxableIncome(income, personalAllowance)
 
-  const taxes = calcTax(taxableIncome, [taxRateLow, taxRateHigh])
+  const { total: taxes } = calcTax(taxableIncome, [taxRateLow, taxRateHigh])
 
   const net = calcFinalNet(income, taxes)
 
@@ -201,11 +211,14 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
  * Calculates the total amount by adding the gross amount and the health insurance contribution.
  *
  * @param gross - The gross amount.
- * @returns The total amount.
+ * @returns The health insurance contribution and the total gross amount.
  */
-export function grossToTotal(gross: number): number {
+export function grossToTotal(gross: number) {
   const healthInsuranceContribution = calcHealthInsuranceContribution(gross)
-  return gross + healthInsuranceContribution
+  return {
+    healthInsuranceContribution,
+    total: gross + healthInsuranceContribution,
+  }
 }
 
 interface NetToGrossConfig {
@@ -281,3 +294,82 @@ export const brutoToNeto = grossToNet
  * @returns The calculated gross amount.
  */
 export const netoToBruto = netToGross
+
+export function detailedSalary(gross: number, config?: GrossToNetConfig) {
+  config ??= {}
+  const {
+    place,
+    personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
+  } = config
+
+  if (place && !PlaceTaxes[place]) {
+    throw new Error(`Unknown place "${place}"`)
+  }
+
+  const {
+    taxRateLow = RATE.TAX_LOW_BRACKET,
+    taxRateHigh = RATE.TAX_HIGH_BRACKET,
+  } = place ? PlaceTaxes[place] : config
+
+  const {
+    firstPilar,
+    secondPillar,
+    total: pensionContribution,
+  } = calcPensionContribution(gross)
+
+  const income = calcIncomeAfterDeductions(gross, pensionContribution)
+
+  const personalAllowance = calcPersonalAllowance(
+    income,
+    personalAllowanceCoefficient,
+  )
+
+  const taxableIncome = calcTaxableIncome(income, personalAllowance)
+
+  const {
+    taxHigher,
+    taxLower,
+    total: taxes,
+  } = calcTax(taxableIncome, [taxRateLow, taxRateHigh])
+
+  const net = calcFinalNet(income, taxes)
+
+  const { healthInsuranceContribution, total: grossTotal } = grossToTotal(gross)
+
+  const netShareOfGross = parseFloat((net / gross).toFixed(2))
+  const netShareOfTotal = parseFloat((net / grossTotal).toFixed(2))
+
+  return {
+    net,
+    gross,
+    grossTotal,
+    pension: {
+      firstPilar,
+      secondPillar,
+      total: pensionContribution,
+    },
+    income,
+    taxes: {
+      lowerBracket: taxLower,
+      higherBracket: taxHigher,
+      total: taxes,
+    },
+    healthInsurance: healthInsuranceContribution,
+    taxableIncome,
+    personalAllowance,
+    variables: {
+      place: place ?? null,
+      taxRateLow,
+      taxRateHigh,
+      personalAllowanceCoefficient,
+      basicPersonalAllowance: BASIC_PERSONAL_ALLOWANCE,
+    },
+    calculations: {
+      netShareOfTotal,
+      netShareOfGross,
+    },
+  }
+}
+
+console.log(grossToNet(3150, { place: 'sveta-nedelja-samobor' }))
+console.log(detailedSalary(3150, { place: 'sveta-nedelja-samobor' }))

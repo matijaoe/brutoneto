@@ -4,6 +4,8 @@ import { PlaceTaxes } from './generated/places'
 
 const gross = 3000
 
+// TODO: coefficients, higher and lower taxes, place vs tax params overrides, netToGross...
+
 test('gross to net (default tax rates)', () => {
   const expectedNet = 2032
 
