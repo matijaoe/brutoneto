@@ -20,7 +20,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "BALE - VALLE",
+    "jedinica": "BALE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -210,7 +210,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "BRTONIGLA - VERTENEGLIO",
+    "jedinica": "BRTONIGLA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -220,7 +220,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "BUJE - BUIE",
+    "jedinica": "BUJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -560,7 +560,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "FAŽANA - FASANA",
+    "jedinica": "FAŽANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -575,7 +575,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "FUNTANA - FONTANE",
+    "jedinica": "FUNTANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -690,7 +690,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "GROŽNJAN - GRISIGNANA",
+    "jedinica": "GROŽNJAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -910,7 +910,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "KAŠTELIR-LABINCI - CASTELLIERE-S. DOMENICA",
+    "jedinica": "KAŠTELIR-LABINCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -1175,7 +1175,7 @@
     "visaStopa": 0.33
   },
   {
-    "jedinica": "LIŽNJAN - LISIGNANO",
+    "jedinica": "LIŽNJAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -1380,7 +1380,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "MOTOVUN - MONTONA",
+    "jedinica": "MOTOVUN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -1400,7 +1400,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "MURTER - KORNATI",
+    "jedinica": "MURTER-KORNATI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -1485,7 +1485,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "NOVIGRAD - CITTANOVA",
+    "jedinica": "NOVIGRAD",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
@@ -1550,7 +1550,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "OPRTALJ - PORTOLE",
+    "jedinica": "OPRTALJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -1785,7 +1785,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "POREČ - PARENZO",
+    "jedinica": "POREČ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -1875,7 +1875,7 @@
     "visaStopa": 0.25
   },
   {
-    "jedinica": "PULA - POLA",
+    "jedinica": "PULA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -1955,7 +1955,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "ROVINJ - ROVIGNO",
+    "jedinica": "ROVINJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -2340,7 +2340,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "TAR-VABRIGA - TORRE-ABREGA",
+    "jedinica": "TAR-VABRIGA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -2435,7 +2435,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "UMAG - UMAGO",
+    "jedinica": "UMAG",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -2575,12 +2575,12 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "VIŠNJAN - VISIGNANO",
+    "jedinica": "VIŠNJAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "jedinica": "VIŽINADA - VISINADA",
+    "jedinica": "VIŽINADA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
@@ -2600,7 +2600,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "VODNJAN - DIGNANO",
+    "jedinica": "VODNJAN",
     "nizaStopa": 0.22399999999999998,
     "visaStopa": 0.336
   },
@@ -2665,7 +2665,7 @@
     "visaStopa": 0.3
   },
   {
-    "jedinica": "VRSAR - ORSERA",
+    "jedinica": "VRSAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
