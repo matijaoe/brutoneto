@@ -1,6 +1,4 @@
-import { Rate } from './types'
-
-export const RATE: Rate = {
+export const RATE = {
   PENSION_CONTRIBUTION_PILLAR_1: 0.15,
   PENSION_CONTRIBUTION_PILLAR_2: 0.05,
   HEALTH_INSURANCE_CONTRIBUTION: 0.165,
@@ -8,81 +6,105 @@ export const RATE: Rate = {
   TAX_HIGH_BRACKET: 0.3,
 } as const
 
-export const HIGH_TAX_BRACKET_THREASHOLD = 4200
+export const HIGH_TAX_BRACKET_THRESHOLD = 4200
 export const BASIC_PERSONAL_ALLOWANCE = 560
 export const PERSONAL_ALLOWANCE_COEFFICIENT = 1
 
-export function calculatePensionContribution(gross: number): number {
+export function calcPensionContribution(gross: number): number {
   const firstPilar = gross * RATE.PENSION_CONTRIBUTION_PILLAR_1
   const secondPillar = gross * RATE.PENSION_CONTRIBUTION_PILLAR_2
   return firstPilar + secondPillar
 }
 
-export function calculateIncomeAfterDeductions(
+export function calcIncomeAfterDeductions(
   gross: number,
   pensionContribution: number
 ): number {
   return gross - pensionContribution
 }
 
-export function calculatePersonalAllowance(
+export function calcPersonalAllowance(
   income: number,
   coefficient: number
 ): number {
   return Math.min(income, BASIC_PERSONAL_ALLOWANCE * coefficient)
 }
 
-export function calculateTaxableIncome(
+export function calcTaxableIncome(
   income: number,
   personalAllowance: number
 ): number {
   return income - personalAllowance
 }
 
-export function calculateTax(
+export function calcTax(
   principal: number,
   taxRateLow: number,
   taxRateHigh: number
 ): number {
-  const taxLowerBracket =
-    Math.min(principal, HIGH_TAX_BRACKET_THREASHOLD) * taxRateLow
-  const taxHigherBracket = Math.max(
-    (principal - HIGH_TAX_BRACKET_THREASHOLD) * taxRateHigh,
+  const taxLower = Math.min(principal, HIGH_TAX_BRACKET_THRESHOLD) * taxRateLow
+  const taxHigher = Math.max(
+    (principal - HIGH_TAX_BRACKET_THRESHOLD) * taxRateHigh,
     0
   )
-  return taxLowerBracket + taxHigherBracket
+  return taxLower + taxHigher
 }
 
-export function calculateFinalNet(income: number, taxes: number): number {
+export function calcFinalNet(income: number, taxes: number): number {
   return income - taxes
 }
 
-export function calculateHealthInsuranceContribution(gross: number): number {
+export function calcHealthInsuranceContribution(gross: number): number {
   return gross * RATE.HEALTH_INSURANCE_CONTRIBUTION
 }
 
-export function calculateNetSalary(
+export function grossToNet(
   gross: number,
-  taxRateLow = RATE.TAX_LOW_BRACKET,
-  taxRateHigh = RATE.TAX_HIGH_BRACKET,
-  personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT
+  taxRateLow: number = RATE.TAX_LOW_BRACKET,
+  taxRateHigh: number = RATE.TAX_HIGH_BRACKET,
+  personalAllowanceCoefficient: number = PERSONAL_ALLOWANCE_COEFFICIENT
 ): number {
-  const pensionContribution = calculatePensionContribution(gross)
-  const income = calculateIncomeAfterDeductions(gross, pensionContribution)
-  const personalAllowance = calculatePersonalAllowance(
+  const pensionContribution = calcPensionContribution(gross)
+  const income = calcIncomeAfterDeductions(gross, pensionContribution)
+  const personalAllowance = calcPersonalAllowance(
     income,
     personalAllowanceCoefficient
   )
-  const taxableIncome = calculateTaxableIncome(income, personalAllowance)
-  const taxes = calculateTax(taxableIncome, taxRateLow, taxRateHigh)
-  const net = calculateFinalNet(income, taxes)
+  const taxableIncome = calcTaxableIncome(income, personalAllowance)
+  const taxes = calcTax(taxableIncome, taxRateLow, taxRateHigh)
+  const net = calcFinalNet(income, taxes)
   return net
 }
 
-export function brutoToBruto2(gross: number): number {
-  const healthInsuranceContribution =
-    calculateHealthInsuranceContribution(gross)
+export function grossToTotal(gross: number): number {
+  const healthInsuranceContribution = calcHealthInsuranceContribution(gross)
   return gross + healthInsuranceContribution
 }
 
-export const brutoNeto = calculateNetSalary
+export function netToGross(
+  net: number,
+  taxRateLow: number = RATE.TAX_LOW_BRACKET,
+  taxRateHigh: number = RATE.TAX_HIGH_BRACKET,
+  personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
+  increment = 0.01
+): number {
+  let gross = net
+  while (true) {
+    const calculatedNet = grossToNet(
+      gross,
+      taxRateLow,
+      taxRateHigh,
+      personalAllowanceCoefficient
+    )
+    if (calculatedNet < net) {
+      gross += increment
+    } else {
+      break
+    }
+  }
+  return parseFloat(gross.toFixed(2))
+}
+
+// Croatian aliases
+export const bruto2Neto = grossToNet
+export const neto2Bruto = netToGross
