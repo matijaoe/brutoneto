@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "scule": "^1.3.0"
+    "title-case": "^4.3.1"
   }
 }

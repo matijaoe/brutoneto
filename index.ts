@@ -1,10 +1,4 @@
-export type Rate = {
-  PENSION_CONTRIBUTION_PILLAR_1: number
-  PENSION_CONTRIBUTION_PILLAR_2: number
-  HEALTH_INSURANCE_CONTRIBUTION: number
-  TAX_LOW_BRACKET: number
-  TAX_HIGH_BRACKET: number
-}
+import { Rate } from './types'
 
 export const RATE: Rate = {
   PENSION_CONTRIBUTION_PILLAR_1: 0.15,

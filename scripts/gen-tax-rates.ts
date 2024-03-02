@@ -1,6 +1,6 @@
-import { load } from "cheerio"
-import { rawHtmlTables } from "./data/raw-html-tables"
-import { convertFromPercentage } from "../utils"
+import { load } from 'cheerio'
+import { convertFromPercentage, localizedTitleCase, writeFile } from '../utils'
+import { rawHtmlTables } from './data/raw-html-tables'
 
 type PlaceTaxRecord = {
   jedinica: string
@@ -14,7 +14,7 @@ const generateTaxRecords = () => {
   const rows = rawHtmlTables
     .map((table) => {
       const $ = load(table)
-      const rows = $("table table tbody td")
+      const rows = $('table table tbody td')
         .get()
         .map((td) => $(td).text())
 
@@ -26,7 +26,7 @@ const generateTaxRecords = () => {
     const jedinica = rows[i]
 
     taxRateRecords.push({
-      jedinica,
+      jedinica: localizedTitleCase(jedinica),
       nizaStopa: convertFromPercentage(rows[i + 1]),
       visaStopa: convertFromPercentage(rows[i + 2]),
     })
@@ -36,13 +36,14 @@ const generateTaxRecords = () => {
 }
 
 const writeTaxRecords = async (taxRecords: PlaceTaxRecord[]) => {
-  try {
-    await Bun.write("data/porezi.json", JSON.stringify(taxRecords, null, 2), {
-      createPath: true,
-    })
+  const written = await writeFile(
+    'data/porezi.json',
+    JSON.stringify(taxRecords, null, 2)
+  )
+  if (written) {
     console.log('✅ Tax rates written to "data/porezi.json"')
-  } catch (err) {
-    console.error("❌ Error writing tax rates file", err)
+  } else {
+    console.error('❌ Error writing tax rates file')
   }
 }
 
