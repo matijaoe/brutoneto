@@ -1,2781 +1,2781 @@
 [
   {
-    "opcina": "ANDRIJAŠEVCI",
+    "jedinica": "ANDRIJAŠEVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ANTUNOVAC",
+    "jedinica": "ANTUNOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BABINA GREDA",
+    "jedinica": "BABINA GREDA",
     "nizaStopa": 0.21,
     "visaStopa": 0.315
   },
   {
-    "opcina": "BAKAR",
+    "jedinica": "BAKAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BALE - VALLE",
+    "jedinica": "BALE - VALLE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BARBAN",
+    "jedinica": "BARBAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BARILOVIĆ",
+    "jedinica": "BARILOVIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BAŠKA",
+    "jedinica": "BAŠKA",
     "nizaStopa": 0.15,
     "visaStopa": 0.25
   },
   {
-    "opcina": "BAŠKA VODA",
+    "jedinica": "BAŠKA VODA",
     "nizaStopa": 0.17,
     "visaStopa": 0.27
   },
   {
-    "opcina": "BEBRINA",
+    "jedinica": "BEBRINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BEDEKOVČINA",
+    "jedinica": "BEDEKOVČINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BEDENICA",
+    "jedinica": "BEDENICA",
     "nizaStopa": 0.21,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BEDNJA",
+    "jedinica": "BEDNJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BELI MANASTIR",
+    "jedinica": "BELI MANASTIR",
     "nizaStopa": 0.2,
     "visaStopa": 0.25
   },
   {
-    "opcina": "BELICA",
+    "jedinica": "BELICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BELIŠĆE",
+    "jedinica": "BELIŠĆE",
     "nizaStopa": 0.214,
     "visaStopa": 0.321
   },
   {
-    "opcina": "BENKOVAC",
+    "jedinica": "BENKOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BEREK",
+    "jedinica": "BEREK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BERETINEC",
+    "jedinica": "BERETINEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BIBINJE",
+    "jedinica": "BIBINJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BILICE",
+    "jedinica": "BILICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BILJE",
+    "jedinica": "BILJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BIOGRAD NA MORU",
+    "jedinica": "BIOGRAD NA MORU",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BISKUPIJA",
+    "jedinica": "BISKUPIJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BISTRA",
+    "jedinica": "BISTRA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BIZOVAC",
+    "jedinica": "BIZOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BJELOVAR",
+    "jedinica": "BJELOVAR",
     "nizaStopa": 0.18,
     "visaStopa": 0.28
   },
   {
-    "opcina": "BLATO",
+    "jedinica": "BLATO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BOGDANOVCI",
+    "jedinica": "BOGDANOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BOL",
+    "jedinica": "BOL",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BOROVO",
+    "jedinica": "BOROVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BOSILJEVO",
+    "jedinica": "BOSILJEVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BOŠNJACI",
+    "jedinica": "BOŠNJACI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BRCKOVLJANI",
+    "jedinica": "BRCKOVLJANI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BRDOVEC",
+    "jedinica": "BRDOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BRELA",
+    "jedinica": "BRELA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BRESTOVAC",
+    "jedinica": "BRESTOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BREZNICA",
+    "jedinica": "BREZNICA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "BREZNIČKI HUM",
+    "jedinica": "BREZNIČKI HUM",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BRINJE",
+    "jedinica": "BRINJE",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "BROD MORAVICE",
+    "jedinica": "BROD MORAVICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BRODSKI STUPNIK",
+    "jedinica": "BRODSKI STUPNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BRTONIGLA - VERTENEGLIO",
+    "jedinica": "BRTONIGLA - VERTENEGLIO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BUDINŠČINA",
+    "jedinica": "BUDINŠČINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BUJE - BUIE",
+    "jedinica": "BUJE - BUIE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BUKOVLJE",
+    "jedinica": "BUKOVLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "BUZET",
+    "jedinica": "BUZET",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "CERNA",
+    "jedinica": "CERNA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CERNIK",
+    "jedinica": "CERNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CEROVLJE",
+    "jedinica": "CEROVLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CESTICA",
+    "jedinica": "CESTICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CETINGRAD",
+    "jedinica": "CETINGRAD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CISTA PROVO",
+    "jedinica": "CISTA PROVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CIVLJANE",
+    "jedinica": "CIVLJANE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CRES",
+    "jedinica": "CRES",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CRIKVENICA",
+    "jedinica": "CRIKVENICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "CRNAC",
+    "jedinica": "CRNAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ČABAR",
+    "jedinica": "ČABAR",
     "nizaStopa": 0.22,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ČAČINCI",
+    "jedinica": "ČAČINCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ČAĐAVICA",
+    "jedinica": "ČAĐAVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.25
   },
   {
-    "opcina": "ČAGLIN",
+    "jedinica": "ČAGLIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ČAKOVEC",
+    "jedinica": "ČAKOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ČAVLE",
+    "jedinica": "ČAVLE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ČAZMA",
+    "jedinica": "ČAZMA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ČEMINAC",
+    "jedinica": "ČEMINAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.25
   },
   {
-    "opcina": "ČEPIN",
+    "jedinica": "ČEPIN",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "DARDA",
+    "jedinica": "DARDA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DARUVAR",
+    "jedinica": "DARUVAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DAVOR",
+    "jedinica": "DAVOR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DEKANOVEC",
+    "jedinica": "DEKANOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DELNICE",
+    "jedinica": "DELNICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DESINIĆ",
+    "jedinica": "DESINIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DEŽANOVAC",
+    "jedinica": "DEŽANOVAC",
     "nizaStopa": 0.22,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DICMO",
+    "jedinica": "DICMO",
     "nizaStopa": 0.21600000000000003,
     "visaStopa": 0.324
   },
   {
-    "opcina": "DOBRINJ",
+    "jedinica": "DOBRINJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DOMAŠINEC",
+    "jedinica": "DOMAŠINEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJA DUBRAVA",
+    "jedinica": "DONJA DUBRAVA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJA MOTIČINA",
+    "jedinica": "DONJA MOTIČINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJA STUBICA",
+    "jedinica": "DONJA STUBICA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "DONJA VOĆA",
+    "jedinica": "DONJA VOĆA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "DONJI ANDRIJEVCI",
+    "jedinica": "DONJI ANDRIJEVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJI KRALJEVEC",
+    "jedinica": "DONJI KRALJEVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJI KUKURUZARI",
+    "jedinica": "DONJI KUKURUZARI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJI LAPAC",
+    "jedinica": "DONJI LAPAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJI MIHOLJAC",
+    "jedinica": "DONJI MIHOLJAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DONJI VIDOVEC",
+    "jedinica": "DONJI VIDOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DRAGALIĆ",
+    "jedinica": "DRAGALIĆ",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "DRAGANIĆ",
+    "jedinica": "DRAGANIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "DRAŽ",
+    "jedinica": "DRAŽ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DRENOVCI",
+    "jedinica": "DRENOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DRENJE",
+    "jedinica": "DRENJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DRNIŠ",
+    "jedinica": "DRNIŠ",
     "nizaStopa": 0.2,
     "visaStopa": 0.25
   },
   {
-    "opcina": "DRNJE",
+    "jedinica": "DRNJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DUBRAVA",
+    "jedinica": "DUBRAVA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DUBRAVICA",
+    "jedinica": "DUBRAVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DUBROVAČKO PRIMORJE",
+    "jedinica": "DUBROVAČKO PRIMORJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DUBROVNIK",
+    "jedinica": "DUBROVNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DUGA RESA",
+    "jedinica": "DUGA RESA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "DUGI RAT",
+    "jedinica": "DUGI RAT",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DUGO SELO",
+    "jedinica": "DUGO SELO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DUGOPOLJE",
+    "jedinica": "DUGOPOLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "DVOR",
+    "jedinica": "DVOR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ĐAKOVO",
+    "jedinica": "ĐAKOVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ĐELEKOVEC",
+    "jedinica": "ĐELEKOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ĐULOVAC",
+    "jedinica": "ĐULOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ĐURĐENOVAC",
+    "jedinica": "ĐURĐENOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ĐURĐEVAC",
+    "jedinica": "ĐURĐEVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ĐURMANEC",
+    "jedinica": "ĐURMANEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ERDUT",
+    "jedinica": "ERDUT",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ERNESTINOVO",
+    "jedinica": "ERNESTINOVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ERVENIK",
+    "jedinica": "ERVENIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "FARKAŠEVAC",
+    "jedinica": "FARKAŠEVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "FAŽANA - FASANA",
+    "jedinica": "FAŽANA - FASANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "FERDINANDOVAC",
+    "jedinica": "FERDINANDOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "FERIČANCI",
+    "jedinica": "FERIČANCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "FUNTANA - FONTANE",
+    "jedinica": "FUNTANA - FONTANE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "FUŽINE",
+    "jedinica": "FUŽINE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GALOVAC",
+    "jedinica": "GALOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GARČIN",
+    "jedinica": "GARČIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GAREŠNICA",
+    "jedinica": "GAREŠNICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GENERALSKI STOL",
+    "jedinica": "GENERALSKI STOL",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GLINA",
+    "jedinica": "GLINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GOLA",
+    "jedinica": "GOLA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORIČAN",
+    "jedinica": "GORIČAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORJANI",
+    "jedinica": "GORJANI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORNJA RIJEKA",
+    "jedinica": "GORNJA RIJEKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORNJA STUBICA",
+    "jedinica": "GORNJA STUBICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORNJA VRBA",
+    "jedinica": "GORNJA VRBA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORNJI BOGIĆEVCI",
+    "jedinica": "GORNJI BOGIĆEVCI",
     "nizaStopa": 0.22,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORNJI KNEGINEC",
+    "jedinica": "GORNJI KNEGINEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GORNJI MIHALJEVEC",
+    "jedinica": "GORNJI MIHALJEVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GOSPIĆ",
+    "jedinica": "GOSPIĆ",
     "nizaStopa": 0.22399999999999998,
     "visaStopa": 0.336
   },
   {
-    "opcina": "GRAČAC",
+    "jedinica": "GRAČAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GRAČIŠĆE",
+    "jedinica": "GRAČIŠĆE",
     "nizaStopa": 0.21,
     "visaStopa": 0.31
   },
   {
-    "opcina": "GRADAC",
+    "jedinica": "GRADAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "GRADEC",
+    "jedinica": "GRADEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GRADINA",
+    "jedinica": "GRADINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GRADIŠTE",
+    "jedinica": "GRADIŠTE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GROŽNJAN - GRISIGNANA",
+    "jedinica": "GROŽNJAN - GRISIGNANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GRUBIŠNO POLJE",
+    "jedinica": "GRUBIŠNO POLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GUNDINCI",
+    "jedinica": "GUNDINCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GUNJA",
+    "jedinica": "GUNJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "GVOZD",
+    "jedinica": "GVOZD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HERCEGOVAC",
+    "jedinica": "HERCEGOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HLEBINE",
+    "jedinica": "HLEBINE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HRAŠĆINA",
+    "jedinica": "HRAŠĆINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HRVACE",
+    "jedinica": "HRVACE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HRVATSKA DUBICA",
+    "jedinica": "HRVATSKA DUBICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HRVATSKA KOSTAJNICA",
+    "jedinica": "HRVATSKA KOSTAJNICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HUM NA SUTLI",
+    "jedinica": "HUM NA SUTLI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "HVAR",
+    "jedinica": "HVAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ILOK",
+    "jedinica": "ILOK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "IMOTSKI",
+    "jedinica": "IMOTSKI",
     "nizaStopa": 0.2,
     "visaStopa": 0.25
   },
   {
-    "opcina": "IVANEC",
+    "jedinica": "IVANEC",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "IVANIĆ-GRAD",
+    "jedinica": "IVANIĆ-GRAD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "IVANKOVO",
+    "jedinica": "IVANKOVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "IVANSKA",
+    "jedinica": "IVANSKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JAGODNJAK",
+    "jedinica": "JAGODNJAK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JAKOVLJE",
+    "jedinica": "JAKOVLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JAKŠIĆ",
+    "jedinica": "JAKŠIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JALŽABET",
+    "jedinica": "JALŽABET",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JANJINA",
+    "jedinica": "JANJINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JARMINA",
+    "jedinica": "JARMINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JASENICE",
+    "jedinica": "JASENICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JASENOVAC",
+    "jedinica": "JASENOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JASTREBARSKO",
+    "jedinica": "JASTREBARSKO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JELENJE",
+    "jedinica": "JELENJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JELSA",
+    "jedinica": "JELSA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "JESENJE",
+    "jedinica": "JESENJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "JOSIPDOL",
+    "jedinica": "JOSIPDOL",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KALI",
+    "jedinica": "KALI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KALINOVAC",
+    "jedinica": "KALINOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KALNIK",
+    "jedinica": "KALNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KAMANJE",
+    "jedinica": "KAMANJE",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "KANFANAR",
+    "jedinica": "KANFANAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KAPELA",
+    "jedinica": "KAPELA",
     "nizaStopa": 0.15,
     "visaStopa": 0.25
   },
   {
-    "opcina": "KAPTOL",
+    "jedinica": "KAPTOL",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KARLOBAG",
+    "jedinica": "KARLOBAG",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KARLOVAC",
+    "jedinica": "KARLOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "KAROJBA",
+    "jedinica": "KAROJBA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KASTAV",
+    "jedinica": "KASTAV",
     "nizaStopa": 0.2,
     "visaStopa": 0.336
   },
   {
-    "opcina": "KAŠTELA",
+    "jedinica": "KAŠTELA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KAŠTELIR-LABINCI - CASTELLIERE-S. DOMENICA",
+    "jedinica": "KAŠTELIR-LABINCI - CASTELLIERE-S. DOMENICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KIJEVO",
+    "jedinica": "KIJEVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KISTANJE",
+    "jedinica": "KISTANJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KLAKAR",
+    "jedinica": "KLAKAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KLANA",
+    "jedinica": "KLANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KLANJEC",
+    "jedinica": "KLANJEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KLENOVNIK",
+    "jedinica": "KLENOVNIK",
     "nizaStopa": 0.22,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KLINČA SELA",
+    "jedinica": "KLINČA SELA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KLIS",
-    "nizaStopa": 0.22,
-    "visaStopa": 0.33
-  },
-  {
-    "opcina": "KLOŠTAR IVANIĆ",
-    "nizaStopa": 0.2,
-    "visaStopa": 0.3
-  },
-  {
-    "opcina": "KLOŠTAR PODRAVSKI",
-    "nizaStopa": 0.2,
-    "visaStopa": 0.3
-  },
-  {
-    "opcina": "KNEŽEVI VINOGRADI",
-    "nizaStopa": 0.2,
-    "visaStopa": 0.3
-  },
-  {
-    "opcina": "KNIN",
+    "jedinica": "KLIS",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "KOLAN",
+    "jedinica": "KLOŠTAR IVANIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KOMIŽA",
+    "jedinica": "KLOŠTAR PODRAVSKI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KONAVLE",
+    "jedinica": "KNEŽEVI VINOGRADI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KONČANICA",
+    "jedinica": "KNIN",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "KOLAN",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "KOMIŽA",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "KONAVLE",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "KONČANICA",
     "nizaStopa": 0.22,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KONJŠČINA",
+    "jedinica": "KONJŠČINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KOPRIVNICA",
+    "jedinica": "KOPRIVNICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KOPRIVNIČKI BREGI",
+    "jedinica": "KOPRIVNIČKI BREGI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KOPRIVNIČKI IVANEC",
+    "jedinica": "KOPRIVNIČKI IVANEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KORČULA",
+    "jedinica": "KORČULA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KOSTRENA",
+    "jedinica": "KOSTRENA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KOŠKA",
+    "jedinica": "KOŠKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KOTORIBA",
+    "jedinica": "KOTORIBA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRALJEVEC NA SUTLI",
+    "jedinica": "KRALJEVEC NA SUTLI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRALJEVICA",
+    "jedinica": "KRALJEVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRAPINA",
+    "jedinica": "KRAPINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRAPINSKE TOPLICE",
+    "jedinica": "KRAPINSKE TOPLICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRAŠIĆ",
+    "jedinica": "KRAŠIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRAVARSKO",
+    "jedinica": "KRAVARSKO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRIŽ",
+    "jedinica": "KRIŽ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRIŽEVCI",
+    "jedinica": "KRIŽEVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRK",
+    "jedinica": "KRK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRNJAK",
+    "jedinica": "KRNJAK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KRŠAN",
+    "jedinica": "KRŠAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KUKLJICA",
+    "jedinica": "KUKLJICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KULA NORINSKA",
+    "jedinica": "KULA NORINSKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KUMROVEC",
+    "jedinica": "KUMROVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KUTINA",
+    "jedinica": "KUTINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "KUTJEVO",
+    "jedinica": "KUTJEVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LABIN",
+    "jedinica": "LABIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LANIŠĆE",
+    "jedinica": "LANIŠĆE",
     "nizaStopa": 0.21,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LASINJA",
+    "jedinica": "LASINJA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "LASTOVO",
+    "jedinica": "LASTOVO",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "LEĆEVICA",
+    "jedinica": "LEĆEVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LEGRAD",
+    "jedinica": "LEGRAD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LEKENIK",
+    "jedinica": "LEKENIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LEPOGLAVA",
+    "jedinica": "LEPOGLAVA",
     "nizaStopa": 0.21,
     "visaStopa": 0.31
   },
   {
-    "opcina": "LEVANJSKA VAROŠ",
+    "jedinica": "LEVANJSKA VAROŠ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LIPIK",
+    "jedinica": "LIPIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LIPOVLJANI",
+    "jedinica": "LIPOVLJANI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LIŠANE OSTROVIČKE",
+    "jedinica": "LIŠANE OSTROVIČKE",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "LIŽNJAN - LISIGNANO",
+    "jedinica": "LIŽNJAN - LISIGNANO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOBOR",
+    "jedinica": "LOBOR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOKVE",
+    "jedinica": "LOKVE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOKVIČIĆI",
+    "jedinica": "LOKVIČIĆI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOPAR",
+    "jedinica": "LOPAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOVAS",
+    "jedinica": "LOVAS",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOVINAC",
+    "jedinica": "LOVINAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOVRAN",
+    "jedinica": "LOVRAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LOVREĆ",
+    "jedinica": "LOVREĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LUDBREG",
+    "jedinica": "LUDBREG",
     "nizaStopa": 0.21600000000000003,
     "visaStopa": 0.336
   },
   {
-    "opcina": "LUKA",
+    "jedinica": "LUKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LUKAČ",
+    "jedinica": "LUKAČ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LUMBARDA",
+    "jedinica": "LUMBARDA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "LUPOGLAV",
+    "jedinica": "LUPOGLAV",
     "nizaStopa": 0.21,
     "visaStopa": 0.32
   },
   {
-    "opcina": "LJUBEŠĆICA",
+    "jedinica": "LJUBEŠĆICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MAČE",
+    "jedinica": "MAČE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MAGADENOVAC",
+    "jedinica": "MAGADENOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MAJUR",
+    "jedinica": "MAJUR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MAKARSKA",
+    "jedinica": "MAKARSKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "MALA SUBOTICA",
+    "jedinica": "MALA SUBOTICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MALI BUKOVEC",
+    "jedinica": "MALI BUKOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MALI LOŠINJ",
+    "jedinica": "MALI LOŠINJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MALINSKA-DUBAŠNICA",
+    "jedinica": "MALINSKA-DUBAŠNICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARČANA",
+    "jedinica": "MARČANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARIJA BISTRICA",
+    "jedinica": "MARIJA BISTRICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARIJA GORICA",
+    "jedinica": "MARIJA GORICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARIJANCI",
+    "jedinica": "MARIJANCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARINA",
+    "jedinica": "MARINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARKUŠICA",
+    "jedinica": "MARKUŠICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARTIJANEC",
+    "jedinica": "MARTIJANEC",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "MARTINSKA VES",
+    "jedinica": "MARTINSKA VES",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MARUŠEVEC",
+    "jedinica": "MARUŠEVEC",
     "nizaStopa": 0.21,
     "visaStopa": 0.31
   },
   {
-    "opcina": "MATULJI",
+    "jedinica": "MATULJI",
     "nizaStopa": 0.218,
     "visaStopa": 0.32799999999999996
   },
   {
-    "opcina": "MEDULIN",
+    "jedinica": "MEDULIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "METKOVIĆ",
+    "jedinica": "METKOVIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MIHOVLJAN",
+    "jedinica": "MIHOVLJAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MIKLEUŠ",
+    "jedinica": "MIKLEUŠ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MILNA",
+    "jedinica": "MILNA",
     "nizaStopa": 0.21,
     "visaStopa": 0.33
   },
   {
-    "opcina": "MLJET",
+    "jedinica": "MLJET",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "MOLVE",
+    "jedinica": "MOLVE",
     "nizaStopa": 0.15,
     "visaStopa": 0.25
   },
   {
-    "opcina": "MOŠĆENIČKA DRAGA",
+    "jedinica": "MOŠĆENIČKA DRAGA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MOTOVUN - MONTONA",
+    "jedinica": "MOTOVUN - MONTONA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MRKOPALJ",
+    "jedinica": "MRKOPALJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MUĆ",
+    "jedinica": "MUĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MURSKO SREDIŠĆE",
+    "jedinica": "MURSKO SREDIŠĆE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "MURTER - KORNATI",
+    "jedinica": "MURTER - KORNATI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NAŠICE",
+    "jedinica": "NAŠICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NEDELIŠĆE",
+    "jedinica": "NEDELIŠĆE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NEGOSLAVCI",
+    "jedinica": "NEGOSLAVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NEREŽIŠĆA",
+    "jedinica": "NEREŽIŠĆA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NETRETIĆ",
+    "jedinica": "NETRETIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NIJEMCI",
+    "jedinica": "NIJEMCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NIN",
+    "jedinica": "NIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVA BUKOVICA",
+    "jedinica": "NOVA BUKOVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVA GRADIŠKA",
+    "jedinica": "NOVA GRADIŠKA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "NOVA KAPELA",
+    "jedinica": "NOVA KAPELA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVA RAČA",
+    "jedinica": "NOVA RAČA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVALJA",
+    "jedinica": "NOVALJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVI GOLUBOVEC",
+    "jedinica": "NOVI GOLUBOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVI MAROF",
+    "jedinica": "NOVI MAROF",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVI VINODOLSKI",
+    "jedinica": "NOVI VINODOLSKI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVIGRAD",
+    "jedinica": "NOVIGRAD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVIGRAD - CITTANOVA",
+    "jedinica": "NOVIGRAD - CITTANOVA",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "NOVIGRAD PODRAVSKI",
+    "jedinica": "NOVIGRAD PODRAVSKI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVO VIRJE",
+    "jedinica": "NOVO VIRJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NOVSKA",
+    "jedinica": "NOVSKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "NUŠTAR",
+    "jedinica": "NUŠTAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OBROVAC",
+    "jedinica": "OBROVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OGULIN",
+    "jedinica": "OGULIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OKRUG",
+    "jedinica": "OKRUG",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OKUČANI",
+    "jedinica": "OKUČANI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OMIŠ",
+    "jedinica": "OMIŠ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OMIŠALJ",
+    "jedinica": "OMIŠALJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OPATIJA",
+    "jedinica": "OPATIJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OPRISAVCI",
+    "jedinica": "OPRISAVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OPRTALJ - PORTOLE",
+    "jedinica": "OPRTALJ - PORTOLE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OPUZEN",
+    "jedinica": "OPUZEN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ORAHOVICA",
+    "jedinica": "ORAHOVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OREBIĆ",
+    "jedinica": "OREBIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OREHOVICA",
+    "jedinica": "OREHOVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ORIOVAC",
+    "jedinica": "ORIOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ORLE",
+    "jedinica": "ORLE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OROSLAVJE*",
+    "jedinica": "OROSLAVJE*",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OSIJEK",
+    "jedinica": "OSIJEK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OTOČAC",
+    "jedinica": "OTOČAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OTOK",
+    "jedinica": "OTOK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OTOK",
+    "jedinica": "OTOK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "OZALJ",
+    "jedinica": "OZALJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PAG",
+    "jedinica": "PAG",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PAKOŠTANE",
+    "jedinica": "PAKOŠTANE",
     "nizaStopa": 0.21,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PAKRAC",
+    "jedinica": "PAKRAC",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "PAŠMAN",
+    "jedinica": "PAŠMAN",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "PAZIN",
+    "jedinica": "PAZIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PERUŠIĆ",
+    "jedinica": "PERUŠIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PETERANEC",
+    "jedinica": "PETERANEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PETLOVAC",
+    "jedinica": "PETLOVAC",
     "nizaStopa": 0.21,
     "visaStopa": 0.31
   },
   {
-    "opcina": "PETRIJANEC",
+    "jedinica": "PETRIJANEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PETRIJEVCI",
+    "jedinica": "PETRIJEVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PETRINJA",
+    "jedinica": "PETRINJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PETROVSKO",
+    "jedinica": "PETROVSKO",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "PIĆAN",
+    "jedinica": "PIĆAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PIROVAC",
+    "jedinica": "PIROVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PISAROVINA",
+    "jedinica": "PISAROVINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PITOMAČA",
+    "jedinica": "PITOMAČA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PLAŠKI",
+    "jedinica": "PLAŠKI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PLETERNICA",
+    "jedinica": "PLETERNICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PLITVIČKA JEZERA",
+    "jedinica": "PLITVIČKA JEZERA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PLOČE",
+    "jedinica": "PLOČE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PODBABLJE",
+    "jedinica": "PODBABLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PODCRKAVLJE",
+    "jedinica": "PODCRKAVLJE",
     "nizaStopa": 0.21600000000000003,
     "visaStopa": 0.336
   },
   {
-    "opcina": "PODGORA",
+    "jedinica": "PODGORA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PODGORAČ",
+    "jedinica": "PODGORAČ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PODRAVSKA MOSLAVINA",
+    "jedinica": "PODRAVSKA MOSLAVINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PODRAVSKE SESVETE",
+    "jedinica": "PODRAVSKE SESVETE",
     "nizaStopa": 0.21,
     "visaStopa": 0.32
   },
   {
-    "opcina": "PODSTRANA",
+    "jedinica": "PODSTRANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PODTUREN",
+    "jedinica": "PODTUREN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POJEZERJE",
+    "jedinica": "POJEZERJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POKUPSKO",
+    "jedinica": "POKUPSKO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POLAČA",
+    "jedinica": "POLAČA",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "POLIČNIK",
+    "jedinica": "POLIČNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POPOVAC",
+    "jedinica": "POPOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POPOVAČA",
+    "jedinica": "POPOVAČA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POREČ - PARENZO",
+    "jedinica": "POREČ - PARENZO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POSEDARJE",
+    "jedinica": "POSEDARJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POSTIRA",
+    "jedinica": "POSTIRA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POVLJANA",
+    "jedinica": "POVLJANA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "POŽEGA",
+    "jedinica": "POŽEGA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PREGRADA",
+    "jedinica": "PREGRADA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PREKO",
+    "jedinica": "PREKO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PRELOG",
+    "jedinica": "PRELOG",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "PRESEKA",
+    "jedinica": "PRESEKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PRGOMET",
+    "jedinica": "PRGOMET",
     "nizaStopa": 0.21,
     "visaStopa": 0.31
   },
   {
-    "opcina": "PRIBISLAVEC",
+    "jedinica": "PRIBISLAVEC",
     "nizaStopa": 0.218,
     "visaStopa": 0.32799999999999996
   },
   {
-    "opcina": "PRIMORSKI DOLAC",
+    "jedinica": "PRIMORSKI DOLAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PRIMOŠTEN",
+    "jedinica": "PRIMOŠTEN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PRIVLAKA",
+    "jedinica": "PRIVLAKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PRIVLAKA",
+    "jedinica": "PRIVLAKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PROLOŽAC",
+    "jedinica": "PROLOŽAC",
     "nizaStopa": 0.21,
     "visaStopa": 0.33
   },
   {
-    "opcina": "PROMINA",
+    "jedinica": "PROMINA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "PUČIŠĆA",
+    "jedinica": "PUČIŠĆA",
     "nizaStopa": 0.15,
     "visaStopa": 0.25
   },
   {
-    "opcina": "PULA - POLA",
+    "jedinica": "PULA - POLA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PUNAT",
+    "jedinica": "PUNAT",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PUNITOVCI",
+    "jedinica": "PUNITOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "PUŠĆA",
+    "jedinica": "PUŠĆA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RAB",
+    "jedinica": "RAB",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RADOBOJ",
+    "jedinica": "RADOBOJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RAKOVEC",
+    "jedinica": "RAKOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RAKOVICA",
+    "jedinica": "RAKOVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RASINJA",
+    "jedinica": "RASINJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RAŠA",
+    "jedinica": "RAŠA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RAVNA GORA",
+    "jedinica": "RAVNA GORA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RAŽANAC",
+    "jedinica": "RAŽANAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "REŠETARI",
+    "jedinica": "REŠETARI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RIBNIK",
+    "jedinica": "RIBNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RIJEKA",
+    "jedinica": "RIJEKA",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "ROGOZNICA",
+    "jedinica": "ROGOZNICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ROVINJ - ROVIGNO",
+    "jedinica": "ROVINJ - ROVIGNO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ROVIŠĆE",
+    "jedinica": "ROVIŠĆE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RUGVICA",
+    "jedinica": "RUGVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RUNOVIĆI",
+    "jedinica": "RUNOVIĆI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "RUŽIĆ",
+    "jedinica": "RUŽIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SABORSKO",
+    "jedinica": "SABORSKO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SALI",
+    "jedinica": "SALI",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "SAMOBOR",
+    "jedinica": "SAMOBOR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SATNICA ĐAKOVAČKA",
+    "jedinica": "SATNICA ĐAKOVAČKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SEGET",
+    "jedinica": "SEGET",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SELCA",
+    "jedinica": "SELCA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SELNICA",
+    "jedinica": "SELNICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SEMELJCI",
+    "jedinica": "SEMELJCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SENJ",
+    "jedinica": "SENJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SEVERIN",
+    "jedinica": "SEVERIN",
     "nizaStopa": 0.18,
     "visaStopa": 0.28
   },
   {
-    "opcina": "SIBINJ",
+    "jedinica": "SIBINJ",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "SIKIREVCI",
+    "jedinica": "SIKIREVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SINJ",
+    "jedinica": "SINJ",
     "nizaStopa": 0.18,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SIRAČ",
+    "jedinica": "SIRAČ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SISAK",
+    "jedinica": "SISAK",
     "nizaStopa": 0.23,
     "visaStopa": 0.34
   },
   {
-    "opcina": "SKRAD",
+    "jedinica": "SKRAD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SKRADIN",
+    "jedinica": "SKRADIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SLATINA",
+    "jedinica": "SLATINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SLAVONSKI BROD",
+    "jedinica": "SLAVONSKI BROD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SLAVONSKI ŠAMAC",
+    "jedinica": "SLAVONSKI ŠAMAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SLIVNO",
+    "jedinica": "SLIVNO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SLUNJ",
+    "jedinica": "SLUNJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SMOKVICA",
+    "jedinica": "SMOKVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SOKOLOVAC",
+    "jedinica": "SOKOLOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SOLIN",
+    "jedinica": "SOLIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SOPJE",
+    "jedinica": "SOPJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SPLIT",
+    "jedinica": "SPLIT",
     "nizaStopa": 0.215,
     "visaStopa": 0.3225
   },
   {
-    "opcina": "SRAČINEC",
+    "jedinica": "SRAČINEC",
     "nizaStopa": 0.22,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STANKOVCI",
+    "jedinica": "STANKOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STARA GRADIŠKA",
+    "jedinica": "STARA GRADIŠKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STARI GRAD",
+    "jedinica": "STARI GRAD",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "STARI JANKOVCI",
+    "jedinica": "STARI JANKOVCI",
     "nizaStopa": 0.15,
     "visaStopa": 0.25
   },
   {
-    "opcina": "STARI MIKANOVCI",
+    "jedinica": "STARI MIKANOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STARIGRAD",
+    "jedinica": "STARIGRAD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STARO PETROVO SELO",
+    "jedinica": "STARO PETROVO SELO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STON",
+    "jedinica": "STON",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "STRAHONINEC",
+    "jedinica": "STRAHONINEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STRIZIVOJNA",
+    "jedinica": "STRIZIVOJNA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STUBIČKE TOPLICE",
+    "jedinica": "STUBIČKE TOPLICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "STUPNIK",
+    "jedinica": "STUPNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SUĆURAJ",
+    "jedinica": "SUĆURAJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SUHOPOLJE",
+    "jedinica": "SUHOPOLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SUKOŠAN",
+    "jedinica": "SUKOŠAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SUNJA",
+    "jedinica": "SUNJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SUPETAR",
+    "jedinica": "SUPETAR",
     "nizaStopa": 0.22399999999999998,
     "visaStopa": 0.336
   },
   {
-    "opcina": "SUTIVAN",
+    "jedinica": "SUTIVAN",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "SVETA MARIJA",
+    "jedinica": "SVETA MARIJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETA NEDELJA",
+    "jedinica": "SVETA NEDELJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETA NEDELJA",
+    "jedinica": "SVETA NEDELJA",
     "nizaStopa": 0.18,
     "visaStopa": 0.28
   },
   {
-    "opcina": "SVETI ĐURĐ",
+    "jedinica": "SVETI ĐURĐ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI FILIP I JAKOV",
+    "jedinica": "SVETI FILIP I JAKOV",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI ILIJA",
+    "jedinica": "SVETI ILIJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI IVAN ZELINA",
+    "jedinica": "SVETI IVAN ZELINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI IVAN ŽABNO",
+    "jedinica": "SVETI IVAN ŽABNO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI JURAJ NA BREGU",
+    "jedinica": "SVETI JURAJ NA BREGU",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI KRIŽ ZAČRETJE",
+    "jedinica": "SVETI KRIŽ ZAČRETJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI LOVREČ",
+    "jedinica": "SVETI LOVREČ",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "SVETI MARTIN NA MURI",
+    "jedinica": "SVETI MARTIN NA MURI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI PETAR OREHOVEC",
+    "jedinica": "SVETI PETAR OREHOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETI PETAR U ŠUMI",
+    "jedinica": "SVETI PETAR U ŠUMI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "SVETVINČENAT",
+    "jedinica": "SVETVINČENAT",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠANDROVAC",
+    "jedinica": "ŠANDROVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠENKOVEC",
+    "jedinica": "ŠENKOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠESTANOVAC",
+    "jedinica": "ŠESTANOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠIBENIK",
+    "jedinica": "ŠIBENIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠKABRNJA",
+    "jedinica": "ŠKABRNJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠODOLOVCI",
+    "jedinica": "ŠODOLOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠOLTA",
+    "jedinica": "ŠOLTA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠPIŠIĆ BUKOVICA",
+    "jedinica": "ŠPIŠIĆ BUKOVICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠTEFANJE",
+    "jedinica": "ŠTEFANJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŠTITAR",
+    "jedinica": "ŠTITAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "ŠTRIGOVA",
+    "jedinica": "ŠTRIGOVA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TAR-VABRIGA - TORRE-ABREGA",
+    "jedinica": "TAR-VABRIGA - TORRE-ABREGA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TINJAN",
+    "jedinica": "TINJAN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TISNO",
+    "jedinica": "TISNO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TKON",
+    "jedinica": "TKON",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TOMPOJEVCI",
+    "jedinica": "TOMPOJEVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TOPUSKO",
+    "jedinica": "TOPUSKO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TORDINCI",
+    "jedinica": "TORDINCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TOUNJ",
+    "jedinica": "TOUNJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TOVARNIK",
+    "jedinica": "TOVARNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TRIBUNJ",
+    "jedinica": "TRIBUNJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TRILJ",
+    "jedinica": "TRILJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TRNAVA",
+    "jedinica": "TRNAVA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TRNOVEC BARTOLOVEČKI",
+    "jedinica": "TRNOVEC BARTOLOVEČKI",
     "nizaStopa": 0.22,
     "visaStopa": 0.32
   },
   {
-    "opcina": "TROGIR",
+    "jedinica": "TROGIR",
     "nizaStopa": 0.21600000000000003,
     "visaStopa": 0.324
   },
   {
-    "opcina": "TRPANJ",
+    "jedinica": "TRPANJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TRPINJA",
+    "jedinica": "TRPINJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "TUČEPI",
+    "jedinica": "TUČEPI",
     "nizaStopa": 0.2,
     "visaStopa": 0.33
   },
   {
-    "opcina": "TUHELJ",
+    "jedinica": "TUHELJ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "UDBINA",
+    "jedinica": "UDBINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "UMAG - UMAGO",
+    "jedinica": "UMAG - UMAGO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "UNEŠIĆ",
+    "jedinica": "UNEŠIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VALPOVO",
+    "jedinica": "VALPOVO",
     "nizaStopa": 0.22,
     "visaStopa": 0.336
   },
   {
-    "opcina": "VARAŽDIN",
+    "jedinica": "VARAŽDIN",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "VARAŽDINSKE TOPLICE",
+    "jedinica": "VARAŽDINSKE TOPLICE",
     "nizaStopa": 0.22,
     "visaStopa": 0.336
   },
   {
-    "opcina": "VELA LUKA",
+    "jedinica": "VELA LUKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKA",
+    "jedinica": "VELIKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKA GORICA",
+    "jedinica": "VELIKA GORICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKA KOPANICA",
+    "jedinica": "VELIKA KOPANICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKA LUDINA",
+    "jedinica": "VELIKA LUDINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKA PISANICA",
+    "jedinica": "VELIKA PISANICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKA TRNOVITICA",
+    "jedinica": "VELIKA TRNOVITICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKI BUKOVEC",
+    "jedinica": "VELIKI BUKOVEC",
     "nizaStopa": 0.21600000000000003,
     "visaStopa": 0.33
   },
   {
-    "opcina": "VELIKI GRĐEVAC",
+    "jedinica": "VELIKI GRĐEVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VELIKO TRGOVIŠĆE",
+    "jedinica": "VELIKO TRGOVIŠĆE",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "VELIKO TROJSTVO",
+    "jedinica": "VELIKO TROJSTVO",
     "nizaStopa": 0.175,
     "visaStopa": 0.275
   },
   {
-    "opcina": "VIDOVEC",
+    "jedinica": "VIDOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VILJEVO",
+    "jedinica": "VILJEVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VINICA",
+    "jedinica": "VINICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VINKOVCI",
+    "jedinica": "VINKOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VINODOLSKA OPĆINA",
+    "jedinica": "VINODOLSKA OPĆINA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIR",
+    "jedinica": "VIR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIRJE",
+    "jedinica": "VIRJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIROVITICA",
+    "jedinica": "VIROVITICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIS",
+    "jedinica": "VIS",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VISOKO",
+    "jedinica": "VISOKO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIŠKOVCI",
+    "jedinica": "VIŠKOVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIŠKOVO",
+    "jedinica": "VIŠKOVO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIŠNJAN - VISIGNANO",
+    "jedinica": "VIŠNJAN - VISIGNANO",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VIŽINADA - VISINADA",
+    "jedinica": "VIŽINADA - VISINADA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VLADISLAVCI",
+    "jedinica": "VLADISLAVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.25
   },
   {
-    "opcina": "VOĆIN",
+    "jedinica": "VOĆIN",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VODICE",
+    "jedinica": "VODICE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VODNJAN - DIGNANO",
+    "jedinica": "VODNJAN - DIGNANO",
     "nizaStopa": 0.22399999999999998,
     "visaStopa": 0.336
   },
   {
-    "opcina": "VOĐINCI",
+    "jedinica": "VOĐINCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VOJNIĆ",
+    "jedinica": "VOJNIĆ",
     "nizaStopa": 0.21,
     "visaStopa": 0.31
   },
   {
-    "opcina": "VRATIŠINEC",
+    "jedinica": "VRATIŠINEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRBANJA",
+    "jedinica": "VRBANJA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRBJE",
+    "jedinica": "VRBJE",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "VRBNIK",
+    "jedinica": "VRBNIK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRBOVEC",
+    "jedinica": "VRBOVEC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRBOVSKO",
+    "jedinica": "VRBOVSKO",
     "nizaStopa": 0.222,
     "visaStopa": 0.336
   },
   {
-    "opcina": "VRGORAC",
+    "jedinica": "VRGORAC",
     "nizaStopa": 0.22,
     "visaStopa": 0.25
   },
   {
-    "opcina": "VRHOVINE",
+    "jedinica": "VRHOVINE",
     "nizaStopa": 0.18,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRLIKA",
+    "jedinica": "VRLIKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRPOLJE",
+    "jedinica": "VRPOLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRSAR - ORSERA",
+    "jedinica": "VRSAR - ORSERA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VRSI",
+    "jedinica": "VRSI",
     "nizaStopa": 0.15,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VUKA",
+    "jedinica": "VUKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "VUKOVAR",
+    "jedinica": "VUKOVAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZABOK",
+    "jedinica": "ZABOK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZADAR",
+    "jedinica": "ZADAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZADVARJE",
+    "jedinica": "ZADVARJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZAGORSKA SELA",
+    "jedinica": "ZAGORSKA SELA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZAGREB",
+    "jedinica": "ZAGREB",
     "nizaStopa": 0.23600000000000002,
     "visaStopa": 0.354
   },
   {
-    "opcina": "ZAGVOZD",
+    "jedinica": "ZAGVOZD",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZAPREŠIĆ",
+    "jedinica": "ZAPREŠIĆ",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZAŽABLJE",
+    "jedinica": "ZAŽABLJE",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZDENCI",
+    "jedinica": "ZDENCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZEMUNIK DONJI",
+    "jedinica": "ZEMUNIK DONJI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZLATAR",
+    "jedinica": "ZLATAR",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZLATAR BISTRICA",
+    "jedinica": "ZLATAR BISTRICA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZMIJAVCI",
+    "jedinica": "ZMIJAVCI",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ZRINSKI TOPOLOVAC",
+    "jedinica": "ZRINSKI TOPOLOVAC",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŽAKANJE",
+    "jedinica": "ŽAKANJE",
     "nizaStopa": 0.22,
     "visaStopa": 0.33
   },
   {
-    "opcina": "ŽMINJ",
+    "jedinica": "ŽMINJ",
     "nizaStopa": 0.213,
     "visaStopa": 0.313
   },
   {
-    "opcina": "ŽUMBERAK",
+    "jedinica": "ŽUMBERAK",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŽUPA DUBROVAČKA",
+    "jedinica": "ŽUPA DUBROVAČKA",
     "nizaStopa": 0.2,
     "visaStopa": 0.3
   },
   {
-    "opcina": "ŽUPANJA",
+    "jedinica": "ŽUPANJA",
     "nizaStopa": 0.218,
     "visaStopa": 0.327
   }

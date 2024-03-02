@@ -2,14 +2,14 @@ import { load } from "cheerio"
 import { rawHtmlTables } from "./data/raw-html-tables"
 import { convertFromPercentage } from "../utils"
 
-type MunicipalityTaxRateRecord = {
-  opcina: string
+type PlaceTaxRecord = {
+  jedinica: string
   nizaStopa: number
   visaStopa: number
 }
 
 const generateTaxRecords = () => {
-  const taxRateRecords: MunicipalityTaxRateRecord[] = []
+  const taxRateRecords: PlaceTaxRecord[] = []
 
   const rows = rawHtmlTables
     .map((table) => {
@@ -23,10 +23,10 @@ const generateTaxRecords = () => {
     .flat()
 
   for (let i = 0; i < rows.length; i += 3) {
-    const opcina = rows[i]
+    const jedinica = rows[i]
 
     taxRateRecords.push({
-      opcina,
+      jedinica,
       nizaStopa: convertFromPercentage(rows[i + 1]),
       visaStopa: convertFromPercentage(rows[i + 2]),
     })
@@ -35,7 +35,7 @@ const generateTaxRecords = () => {
   return taxRateRecords
 }
 
-const writeTaxRecords = async (taxRecords: MunicipalityTaxRateRecord[]) => {
+const writeTaxRecords = async (taxRecords: PlaceTaxRecord[]) => {
   try {
     await Bun.write("data/porezi.json", JSON.stringify(taxRecords, null, 2), {
       createPath: true,
