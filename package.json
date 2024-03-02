@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
+    "prettier": "^3.2.5",
     "title-case": "^4.3.1"
   }
 }

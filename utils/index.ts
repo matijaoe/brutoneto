@@ -2,7 +2,7 @@ import { titleCase } from 'title-case'
 
 export const writeFile = async (
   path: string,
-  data: string
+  data: string,
 ): Promise<boolean> => {
   try {
     await Bun.write(path, data, { createPath: true })
@@ -21,4 +21,8 @@ export const localizedTitleCase = (str: string) => {
     locale: 'hr-HR',
     smallWords: new Set(['i', 'u', 'na', 'iz', 'uz', 'pri', 'kod', 'pod']),
   })
+}
+
+export const basicKebabCase = (str: string) => {
+  return str.replace(/[()]/g, '').replaceAll(/\s/g, '-').toLocaleLowerCase()
 }

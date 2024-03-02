@@ -1,3 +1,5 @@
+import { PlaceTax } from './generated/places'
+
 export const RATE = {
   /**
    * Pension contribution rate for the first pillar.
@@ -63,7 +65,7 @@ export function calcPensionContribution(gross: number): number {
  */
 export function calcIncomeAfterDeductions(
   gross: number,
-  pensionContribution: number
+  pensionContribution: number,
 ): number {
   return gross - pensionContribution
 }
@@ -80,7 +82,7 @@ export function calcIncomeAfterDeductions(
  */
 export function calcPersonalAllowance(
   income: number,
-  coefficient: number
+  coefficient: number,
 ): number {
   return Math.min(income, BASIC_PERSONAL_ALLOWANCE * coefficient)
 }
@@ -96,7 +98,7 @@ export function calcPersonalAllowance(
  */
 export function calcTaxableIncome(
   income: number,
-  personalAllowance: number
+  personalAllowance: number,
 ): number {
   return income - personalAllowance
 }
@@ -112,12 +114,12 @@ export function calcTaxableIncome(
  */
 export function calcTax(
   principal: number,
-  [taxRateLow, taxRateHigh]: [number, number]
+  [taxRateLow, taxRateHigh]: [number, number],
 ): number {
   const taxLower = Math.min(principal, HIGH_TAX_BRACKET_THRESHOLD) * taxRateLow
   const taxHigher = Math.max(
     (principal - HIGH_TAX_BRACKET_THRESHOLD) * taxRateHigh,
-    0
+    0,
   )
   return taxLower + taxHigher
 }
@@ -168,14 +170,20 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
   } = config ?? {}
 
   const pensionContribution = calcPensionContribution(gross)
+
   const income = calcIncomeAfterDeductions(gross, pensionContribution)
+
   const personalAllowance = calcPersonalAllowance(
     income,
-    personalAllowanceCoefficient
+    personalAllowanceCoefficient,
   )
+
   const taxableIncome = calcTaxableIncome(income, personalAllowance)
+
   const taxes = calcTax(taxableIncome, [taxRateLow, taxRateHigh])
+
   const net = calcFinalNet(income, taxes)
+
   return net
 }
 
@@ -253,3 +261,5 @@ export const brutoToNeto = grossToNet
  * @returns The calculated gross amount.
  */
 export const netoToBruto = netToGross
+
+console.log(brutoToNeto(3150, { ...PlaceTax['zagreb'] }))
