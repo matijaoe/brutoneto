@@ -436,7 +436,11 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     : undefined
 
   const wouldBeNetShareOfInitialGross = wouldBeNetFromInitialGross
-    ? parseFloat((net / wouldBeNetFromInitialGross).toFixed(2))
+    ? parseFloat((wouldBeNetFromInitialGross / initialGross).toFixed(2))
+    : undefined
+
+  const netShareOfWouldBeNet = wouldBeNetShareOfInitialGross
+    ? parseFloat((net / wouldBeNetShareOfInitialGross).toFixed(2))
     : undefined
 
   return {
@@ -471,6 +475,7 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
       initialGross: initialGross !== gross ? initialGross : undefined,
       wouldBeNetFromInitialGross,
       wouldBeNetShareOfInitialGross,
+      netShareOfWouldBeNet,
     },
   }
 }
