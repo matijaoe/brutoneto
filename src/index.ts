@@ -1,9 +1,13 @@
 import { PlaceKey, PlaceTaxes } from './generated/places'
+import taxesDataset from './generated/porezi.json'
 import { clamp, ensureFloat } from './utils'
 
 export * from './generated/places'
-import taxesDataset from './generated/porezi.json'
 export { taxesDataset }
+
+export const isValidPlace = (place: string): place is PlaceKey => {
+  return place in PlaceTaxes
+}
 
 export const RATE = {
   /**
@@ -373,7 +377,7 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceTaxes[place] : config
 
-  const grossOriginal = gross
+  const grossInitial = gross
 
   // subtract third pillar contribution from the gross
   gross -= thirdPillarContribution
@@ -409,9 +413,9 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
   const netShareOfGross = parseFloat((net / gross).toFixed(2))
   const netShareOfTotal = parseFloat((net / grossTotal).toFixed(2))
 
-  const netFromOriginalGross =
-    grossOriginal !== gross
-      ? grossToNet(grossOriginal, {
+  const netFromGrossInitial =
+    grossInitial !== gross
+      ? grossToNet(grossInitial, {
         place,
         taxRateHigh,
         taxRateLow,
@@ -422,7 +426,6 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
   return {
     net,
     gross,
-    grossOriginal,
     grossTotal,
     pension: {
       firstPilar,
@@ -449,7 +452,8 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     calculations: {
       netShareOfTotal,
       netShareOfGross,
-      netFromOriginalGross,
+      grossInitial: grossInitial !== gross ? grossInitial : undefined,
+      netFromGrossInitial,
     },
   }
 }
