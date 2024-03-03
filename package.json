@@ -2,7 +2,7 @@
   "name": "brutoneto",
   "module": "index.ts",
   "type": "module",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "name": "Matija Osrečki",
     "url": "https://github.com/matijaoe"
