@@ -54,7 +54,20 @@ export const BASIC_PERSONAL_ALLOWANCE = 560
  */
 export const PERSONAL_ALLOWANCE_COEFFICIENT = 1
 
+/**
+ * The non-taxable limit for the third pillar.
+ */
 export const THIRD_PILLAR_NON_TAXABLE_LIMIT = 67
+
+/**
+ * The minimum personal allowance coefficient.
+ */
+export const MIN_PERSONAL_ALLOWANCE_COEFFICIENT = 0.3
+
+/**
+ * The maximum personal allowance coefficient.
+ */
+export const MAX_PERSONAL_ALLOWANCE_COEFFICIENT = 6
 
 /**
  * Calculates the total pension contribution based on the gross salary.
@@ -377,7 +390,7 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceTaxes[place] : config
 
-  const grossInitial = gross
+  const initialGross = gross
 
   // subtract third pillar contribution from the gross
   gross -= thirdPillarContribution
@@ -408,25 +421,28 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
 
   const net = calcFinalNet(income, taxes)
 
-  const { healthInsuranceContribution, total: grossTotal } = grossToTotal(gross)
+  const { healthInsuranceContribution, total: totalCost } = grossToTotal(gross)
 
   const netShareOfGross = parseFloat((net / gross).toFixed(2))
-  const netShareOfTotal = parseFloat((net / grossTotal).toFixed(2))
+  const netShareOfTotal = parseFloat((net / totalCost).toFixed(2))
 
-  const netFromGrossInitial =
-    grossInitial !== gross
-      ? grossToNet(grossInitial, {
-        place,
-        taxRateHigh,
-        taxRateLow,
-        personalAllowanceCoefficient,
-      })
-      : undefined
+  const wouldBeNetFromInitialGross = initialGross !== gross
+    ? grossToNet(initialGross, {
+      place,
+      taxRateHigh,
+      taxRateLow,
+      personalAllowanceCoefficient,
+    })
+    : undefined
+
+  const wouldBeNetShareOfInitialGross = wouldBeNetFromInitialGross
+    ? parseFloat((net / wouldBeNetFromInitialGross).toFixed(2))
+    : undefined
 
   return {
     net,
     gross,
-    grossTotal,
+    totalCost,
     pension: {
       firstPilar,
       secondPillar,
@@ -452,8 +468,9 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     calculations: {
       netShareOfTotal,
       netShareOfGross,
-      grossInitial: grossInitial !== gross ? grossInitial : undefined,
-      netFromGrossInitial,
+      initialGross: initialGross !== gross ? initialGross : undefined,
+      wouldBeNetFromInitialGross,
+      wouldBeNetShareOfInitialGross,
     },
   }
 }
