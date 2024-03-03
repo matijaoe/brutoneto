@@ -1,5 +1,5 @@
 import { PlaceKey, PlaceTaxes } from './generated/places'
-import { clamp, ensureFloat } from './utils'
+import { clamp, ensureFloat, replaceDiacritics } from './utils'
 
 export const RATE = {
   /**
@@ -449,15 +449,3 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     },
   }
 }
-
-console.log(
-  detailedSalary(3150, {
-    place: 'sveta-nedelja-samobor',
-    thirdPillarContribution: 67,
-  }),
-)
-console.log(
-  detailedSalary(3150, {
-    place: 'sveta-nedelja-samobor',
-  }),
-)

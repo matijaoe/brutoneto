@@ -5,569 +5,569 @@
  * Type for all places in 'porezi.json'.
  */
 export type Place =
-  | 'Andrijaševci'
-  | 'Antunovac'
-  | 'Babina Greda'
-  | 'Bakar'
-  | 'Bale'
-  | 'Barban'
-  | 'Barilović'
-  | 'Baška'
-  | 'Baška Voda'
-  | 'Bebrina'
-  | 'Bedekovčina'
-  | 'Bedenica'
-  | 'Bednja'
-  | 'Beli Manastir'
-  | 'Belica'
-  | 'Belišće'
-  | 'Benkovac'
-  | 'Berek'
-  | 'Beretinec'
-  | 'Bibinje'
-  | 'Bilice'
-  | 'Bilje'
-  | 'Biograd na Moru'
-  | 'Biskupija'
-  | 'Bistra'
-  | 'Bizovac'
-  | 'Bjelovar'
-  | 'Blato'
-  | 'Bogdanovci'
-  | 'Bol'
-  | 'Borovo'
-  | 'Bosiljevo'
-  | 'Bošnjaci'
-  | 'Brckovljani'
-  | 'Brdovec'
-  | 'Brela'
-  | 'Brestovac'
-  | 'Breznica'
-  | 'Breznički Hum'
-  | 'Brinje'
-  | 'Brod Moravice'
-  | 'Brodski Stupnik'
-  | 'Brtonigla'
-  | 'Budinščina'
-  | 'Buje'
-  | 'Bukovlje'
-  | 'Buzet'
-  | 'Cerna'
-  | 'Cernik'
-  | 'Cerovlje'
-  | 'Cestica'
-  | 'Cetingrad'
-  | 'Cista Provo'
-  | 'Civljane'
-  | 'Cres'
-  | 'Crikvenica'
-  | 'Crnac'
-  | 'Čabar'
-  | 'Čačinci'
-  | 'Čađavica'
-  | 'Čaglin'
-  | 'Čakovec'
-  | 'Čavle'
-  | 'Čazma'
-  | 'Čeminac'
-  | 'Čepin'
-  | 'Darda'
-  | 'Daruvar'
-  | 'Davor'
-  | 'Dekanovec'
-  | 'Delnice'
-  | 'Desinić'
-  | 'Dežanovac'
-  | 'Dicmo'
-  | 'Dobrinj'
-  | 'Domašinec'
-  | 'Donja Dubrava'
-  | 'Donja Motičina'
-  | 'Donja Stubica'
-  | 'Donja Voća'
-  | 'Donji Andrijevci'
-  | 'Donji Kraljevec'
-  | 'Donji Kukuruzari'
-  | 'Donji Lapac'
-  | 'Donji Miholjac'
-  | 'Donji Vidovec'
-  | 'Dragalić'
-  | 'Draganić'
-  | 'Draž'
-  | 'Drenovci'
-  | 'Drenje'
-  | 'Drniš'
-  | 'Drnje'
-  | 'Dubrava'
-  | 'Dubravica'
-  | 'Dubrovačko Primorje'
-  | 'Dubrovnik'
-  | 'Duga Resa'
-  | 'Dugi Rat'
-  | 'Dugo Selo'
-  | 'Dugopolje'
-  | 'Dvor'
-  | 'Đakovo'
-  | 'Đelekovec'
-  | 'Đulovac'
-  | 'Đurđenovac'
-  | 'Đurđevac'
-  | 'Đurmanec'
-  | 'Erdut'
-  | 'Ernestinovo'
-  | 'Ervenik'
-  | 'Farkaševac'
-  | 'Fažana'
-  | 'Ferdinandovac'
-  | 'Feričanci'
-  | 'Funtana'
-  | 'Fužine'
-  | 'Galovac'
-  | 'Garčin'
-  | 'Garešnica'
-  | 'Generalski Stol'
-  | 'Glina'
-  | 'Gola'
-  | 'Goričan'
-  | 'Gorjani'
-  | 'Gornja Rijeka'
-  | 'Gornja Stubica'
-  | 'Gornja Vrba'
-  | 'Gornji Bogićevci'
-  | 'Gornji Kneginec'
-  | 'Gornji Mihaljevec'
-  | 'Gospić'
-  | 'Gračac'
-  | 'Gračišće'
-  | 'Gradac'
-  | 'Gradec'
-  | 'Gradina'
-  | 'Gradište'
-  | 'Grožnjan'
-  | 'Grubišno Polje'
-  | 'Gundinci'
-  | 'Gunja'
-  | 'Gvozd'
-  | 'Hercegovac'
-  | 'Hlebine'
-  | 'Hrašćina'
-  | 'Hrvace'
-  | 'Hrvatska Dubica'
-  | 'Hrvatska Kostajnica'
-  | 'Hum na Sutli'
-  | 'Hvar'
-  | 'Ilok'
-  | 'Imotski'
-  | 'Ivanec'
-  | 'Ivanić-Grad'
-  | 'Ivankovo'
-  | 'Ivanska'
-  | 'Jagodnjak'
-  | 'Jakovlje'
-  | 'Jakšić'
-  | 'Jalžabet'
-  | 'Janjina'
-  | 'Jarmina'
-  | 'Jasenice'
-  | 'Jasenovac'
-  | 'Jastrebarsko'
-  | 'Jelenje'
-  | 'Jelsa'
-  | 'Jesenje'
-  | 'Josipdol'
-  | 'Kali'
-  | 'Kalinovac'
-  | 'Kalnik'
-  | 'Kamanje'
-  | 'Kanfanar'
-  | 'Kapela'
-  | 'Kaptol'
-  | 'Karlobag'
-  | 'Karlovac'
-  | 'Karojba'
-  | 'Kastav'
-  | 'Kaštela'
-  | 'Kaštelir-Labinci'
-  | 'Kijevo'
-  | 'Kistanje'
-  | 'Klakar'
-  | 'Klana'
-  | 'Klanjec'
-  | 'Klenovnik'
-  | 'Klinča Sela'
-  | 'Klis'
-  | 'Kloštar Ivanić'
-  | 'Kloštar Podravski'
-  | 'Kneževi Vinogradi'
-  | 'Knin'
-  | 'Kolan'
-  | 'Komiža'
-  | 'Konavle'
-  | 'Končanica'
-  | 'Konjščina'
-  | 'Koprivnica'
-  | 'Koprivnički Bregi'
-  | 'Koprivnički Ivanec'
-  | 'Korčula'
-  | 'Kostrena'
-  | 'Koška'
-  | 'Kotoriba'
-  | 'Kraljevec na Sutli'
-  | 'Kraljevica'
-  | 'Krapina'
-  | 'Krapinske Toplice'
-  | 'Krašić'
-  | 'Kravarsko'
-  | 'Križ'
-  | 'Križevci'
-  | 'Krk'
-  | 'Krnjak'
-  | 'Kršan'
-  | 'Kukljica'
-  | 'Kula Norinska'
-  | 'Kumrovec'
-  | 'Kutina'
-  | 'Kutjevo'
-  | 'Labin'
-  | 'Lanišće'
-  | 'Lasinja'
-  | 'Lastovo'
-  | 'Lećevica'
-  | 'Legrad'
-  | 'Lekenik'
-  | 'Lepoglava'
-  | 'Levanjska Varoš'
-  | 'Lipik'
-  | 'Lipovljani'
-  | 'Lišane Ostrovičke'
-  | 'Ližnjan'
-  | 'Lobor'
-  | 'Lokve'
-  | 'Lokvičići'
-  | 'Lopar'
-  | 'Lovas'
-  | 'Lovinac'
-  | 'Lovran'
-  | 'Lovreć'
-  | 'Ludbreg'
-  | 'Luka'
-  | 'Lukač'
-  | 'Lumbarda'
-  | 'Lupoglav'
-  | 'Ljubešćica'
-  | 'Mače'
-  | 'Magadenovac'
-  | 'Majur'
-  | 'Makarska'
-  | 'Mala Subotica'
-  | 'Mali Bukovec'
-  | 'Mali Lošinj'
-  | 'Malinska-Dubašnica'
-  | 'Marčana'
-  | 'Marija Bistrica'
-  | 'Marija Gorica'
-  | 'Marijanci'
-  | 'Marina'
-  | 'Markušica'
-  | 'Martijanec'
-  | 'Martinska Ves'
-  | 'Maruševec'
-  | 'Matulji'
-  | 'Medulin'
-  | 'Metković'
-  | 'Mihovljan'
-  | 'Mikleuš'
-  | 'Milna'
-  | 'Mljet'
-  | 'Molve'
-  | 'Mošćenička Draga'
-  | 'Motovun'
-  | 'Mrkopalj'
-  | 'Muć'
-  | 'Mursko Središće'
-  | 'Murter-Kornati'
-  | 'Našice'
-  | 'Nedelišće'
-  | 'Negoslavci'
-  | 'Nerežišća'
-  | 'Netretić'
-  | 'Nijemci'
-  | 'Nin'
-  | 'Nova Bukovica'
-  | 'Nova Gradiška'
-  | 'Nova Kapela'
-  | 'Nova Rača'
-  | 'Novalja'
-  | 'Novi Golubovec'
-  | 'Novi Marof'
-  | 'Novi Vinodolski'
-  | 'Novigrad'
-  | 'Novigrad-Cittanova'
-  | 'Novigrad Podravski'
-  | 'Novo Virje'
-  | 'Novska'
-  | 'Nuštar'
-  | 'Obrovac'
-  | 'Ogulin'
-  | 'Okrug'
-  | 'Okučani'
-  | 'Omiš'
-  | 'Omišalj'
-  | 'Opatija'
-  | 'Oprisavci'
-  | 'Oprtalj'
-  | 'Opuzen'
-  | 'Orahovica'
-  | 'Orebić'
-  | 'Orehovica'
-  | 'Oriovac'
-  | 'Orle'
-  | 'Oroslavje*'
-  | 'Osijek'
-  | 'Otočac'
-  | 'Otok (Sinj)'
-  | 'Otok (Vinkovci)'
-  | 'Ozalj'
-  | 'Pag'
-  | 'Pakoštane'
-  | 'Pakrac'
-  | 'Pašman'
-  | 'Pazin'
-  | 'Perušić'
-  | 'Peteranec'
-  | 'Petlovac'
-  | 'Petrijanec'
-  | 'Petrijevci'
-  | 'Petrinja'
-  | 'Petrovsko'
-  | 'Pićan'
-  | 'Pirovac'
-  | 'Pisarovina'
-  | 'Pitomača'
-  | 'Plaški'
-  | 'Pleternica'
-  | 'Plitvička Jezera'
-  | 'Ploče'
-  | 'Podbablje'
-  | 'Podcrkavlje'
-  | 'Podgora'
-  | 'Podgorač'
-  | 'Podravska Moslavina'
-  | 'Podravske Sesvete'
-  | 'Podstrana'
-  | 'Podturen'
-  | 'Pojezerje'
-  | 'Pokupsko'
-  | 'Polača'
-  | 'Poličnik'
-  | 'Popovac'
-  | 'Popovača'
-  | 'Poreč'
-  | 'Posedarje'
-  | 'Postira'
-  | 'Povljana'
-  | 'Požega'
-  | 'Pregrada'
-  | 'Preko'
-  | 'Prelog'
-  | 'Preseka'
-  | 'Prgomet'
-  | 'Pribislavec'
-  | 'Primorski Dolac'
-  | 'Primošten'
-  | 'Privlaka (Vukovar)'
-  | 'Privlaka (Zadar)'
-  | 'Proložac'
-  | 'Promina'
-  | 'Pučišća'
-  | 'Pula'
-  | 'Punat'
-  | 'Punitovci'
-  | 'Pušća'
-  | 'Rab'
-  | 'Radoboj'
-  | 'Rakovec'
-  | 'Rakovica'
-  | 'Rasinja'
-  | 'Raša'
-  | 'Ravna Gora'
-  | 'Ražanac'
-  | 'Rešetari'
-  | 'Ribnik'
-  | 'Rijeka'
-  | 'Rogoznica'
-  | 'Rovinj'
-  | 'Rovišće'
-  | 'Rugvica'
-  | 'Runovići'
-  | 'Ružić'
-  | 'Saborsko'
-  | 'Sali'
-  | 'Samobor'
-  | 'Satnica Đakovačka'
-  | 'Seget'
-  | 'Selca'
-  | 'Selnica'
-  | 'Semeljci'
-  | 'Senj'
-  | 'Severin'
-  | 'Sibinj'
-  | 'Sikirevci'
-  | 'Sinj'
-  | 'Sirač'
-  | 'Sisak'
-  | 'Skrad'
-  | 'Skradin'
-  | 'Slatina'
-  | 'Slavonski Brod'
-  | 'Slavonski Šamac'
-  | 'Slivno'
-  | 'Slunj'
-  | 'Smokvica'
-  | 'Sokolovac'
-  | 'Solin'
-  | 'Sopje'
-  | 'Split'
-  | 'Sračinec'
-  | 'Stankovci'
-  | 'Stara Gradiška'
-  | 'Stari Grad'
-  | 'Stari Jankovci'
-  | 'Stari Mikanovci'
-  | 'Starigrad'
-  | 'Staro Petrovo Selo'
-  | 'Ston'
-  | 'Strahoninec'
-  | 'Strizivojna'
-  | 'Stubičke Toplice'
-  | 'Stupnik'
-  | 'Sućuraj'
-  | 'Suhopolje'
-  | 'Sukošan'
-  | 'Sunja'
-  | 'Supetar'
-  | 'Sutivan'
-  | 'Sveta Marija'
-  | 'Sveta Nedelja (Labin)'
-  | 'Sveta Nedelja (Samobor)'
-  | 'Sveti Đurđ'
-  | 'Sveti Filip i Jakov'
-  | 'Sveti Ilija'
-  | 'Sveti Ivan Zelina'
-  | 'Sveti Ivan Žabno'
-  | 'Sveti Juraj na Bregu'
-  | 'Sveti Križ Začretje'
-  | 'Sveti Lovreč'
-  | 'Sveti Martin na Muri'
-  | 'Sveti Petar Orehovec'
-  | 'Sveti Petar u Šumi'
-  | 'Svetvinčenat'
-  | 'Šandrovac'
-  | 'Šenkovec'
-  | 'Šestanovac'
-  | 'Šibenik'
-  | 'Škabrnja'
-  | 'Šodolovci'
-  | 'Šolta'
-  | 'Špišić Bukovica'
-  | 'Štefanje'
-  | 'Štitar'
-  | 'Štrigova'
-  | 'Tar-Vabriga'
-  | 'Tinjan'
-  | 'Tisno'
-  | 'Tkon'
-  | 'Tompojevci'
-  | 'Topusko'
-  | 'Tordinci'
-  | 'Tounj'
-  | 'Tovarnik'
-  | 'Tribunj'
-  | 'Trilj'
-  | 'Trnava'
-  | 'Trnovec Bartolovečki'
-  | 'Trogir'
-  | 'Trpanj'
-  | 'Trpinja'
-  | 'Tučepi'
-  | 'Tuhelj'
-  | 'Udbina'
-  | 'Umag'
-  | 'Unešić'
-  | 'Valpovo'
-  | 'Varaždin'
-  | 'Varaždinske Toplice'
-  | 'Vela Luka'
-  | 'Velika'
-  | 'Velika Gorica'
-  | 'Velika Kopanica'
-  | 'Velika Ludina'
-  | 'Velika Pisanica'
-  | 'Velika Trnovitica'
-  | 'Veliki Bukovec'
-  | 'Veliki Grđevac'
-  | 'Veliko Trgovišće'
-  | 'Veliko Trojstvo'
-  | 'Vidovec'
-  | 'Viljevo'
-  | 'Vinica'
-  | 'Vinkovci'
-  | 'Vinodolska Općina'
-  | 'Vir'
-  | 'Virje'
-  | 'Virovitica'
-  | 'Vis'
-  | 'Visoko'
-  | 'Viškovci'
-  | 'Viškovo'
-  | 'Višnjan'
-  | 'Vižinada'
-  | 'Vladislavci'
-  | 'Voćin'
-  | 'Vodice'
-  | 'Vodnjan'
-  | 'Vođinci'
-  | 'Vojnić'
-  | 'Vratišinec'
-  | 'Vrbanja'
-  | 'Vrbje'
-  | 'Vrbnik'
-  | 'Vrbovec'
-  | 'Vrbovsko'
-  | 'Vrgorac'
-  | 'Vrhovine'
-  | 'Vrlika'
-  | 'Vrpolje'
-  | 'Vrsar'
-  | 'Vrsi'
-  | 'Vuka'
-  | 'Vukovar'
-  | 'Zabok'
-  | 'Zadar'
-  | 'Zadvarje'
-  | 'Zagorska Sela'
-  | 'Zagreb'
-  | 'Zagvozd'
-  | 'Zaprešić'
-  | 'Zažablje'
-  | 'Zdenci'
-  | 'Zemunik Donji'
-  | 'Zlatar'
-  | 'Zlatar Bistrica'
-  | 'Zmijavci'
-  | 'Zrinski Topolovac'
-  | 'Žakanje'
-  | 'Žminj'
-  | 'Žumberak'
-  | 'Župa Dubrovačka'
-  | 'Županja'
+  | "Andrijaševci"
+  | "Antunovac"
+  | "Babina Greda"
+  | "Bakar"
+  | "Bale"
+  | "Barban"
+  | "Barilović"
+  | "Baška"
+  | "Baška Voda"
+  | "Bebrina"
+  | "Bedekovčina"
+  | "Bedenica"
+  | "Bednja"
+  | "Beli Manastir"
+  | "Belica"
+  | "Belišće"
+  | "Benkovac"
+  | "Berek"
+  | "Beretinec"
+  | "Bibinje"
+  | "Bilice"
+  | "Bilje"
+  | "Biograd na Moru"
+  | "Biskupija"
+  | "Bistra"
+  | "Bizovac"
+  | "Bjelovar"
+  | "Blato"
+  | "Bogdanovci"
+  | "Bol"
+  | "Borovo"
+  | "Bosiljevo"
+  | "Bošnjaci"
+  | "Brckovljani"
+  | "Brdovec"
+  | "Brela"
+  | "Brestovac"
+  | "Breznica"
+  | "Breznički Hum"
+  | "Brinje"
+  | "Brod Moravice"
+  | "Brodski Stupnik"
+  | "Brtonigla"
+  | "Budinščina"
+  | "Buje"
+  | "Bukovlje"
+  | "Buzet"
+  | "Cerna"
+  | "Cernik"
+  | "Cerovlje"
+  | "Cestica"
+  | "Cetingrad"
+  | "Cista Provo"
+  | "Civljane"
+  | "Cres"
+  | "Crikvenica"
+  | "Crnac"
+  | "Čabar"
+  | "Čačinci"
+  | "Čađavica"
+  | "Čaglin"
+  | "Čakovec"
+  | "Čavle"
+  | "Čazma"
+  | "Čeminac"
+  | "Čepin"
+  | "Darda"
+  | "Daruvar"
+  | "Davor"
+  | "Dekanovec"
+  | "Delnice"
+  | "Desinić"
+  | "Dežanovac"
+  | "Dicmo"
+  | "Dobrinj"
+  | "Domašinec"
+  | "Donja Dubrava"
+  | "Donja Motičina"
+  | "Donja Stubica"
+  | "Donja Voća"
+  | "Donji Andrijevci"
+  | "Donji Kraljevec"
+  | "Donji Kukuruzari"
+  | "Donji Lapac"
+  | "Donji Miholjac"
+  | "Donji Vidovec"
+  | "Dragalić"
+  | "Draganić"
+  | "Draž"
+  | "Drenovci"
+  | "Drenje"
+  | "Drniš"
+  | "Drnje"
+  | "Dubrava"
+  | "Dubravica"
+  | "Dubrovačko Primorje"
+  | "Dubrovnik"
+  | "Duga Resa"
+  | "Dugi Rat"
+  | "Dugo Selo"
+  | "Dugopolje"
+  | "Dvor"
+  | "Đakovo"
+  | "Đelekovec"
+  | "Đulovac"
+  | "Đurđenovac"
+  | "Đurđevac"
+  | "Đurmanec"
+  | "Erdut"
+  | "Ernestinovo"
+  | "Ervenik"
+  | "Farkaševac"
+  | "Fažana"
+  | "Ferdinandovac"
+  | "Feričanci"
+  | "Funtana"
+  | "Fužine"
+  | "Galovac"
+  | "Garčin"
+  | "Garešnica"
+  | "Generalski Stol"
+  | "Glina"
+  | "Gola"
+  | "Goričan"
+  | "Gorjani"
+  | "Gornja Rijeka"
+  | "Gornja Stubica"
+  | "Gornja Vrba"
+  | "Gornji Bogićevci"
+  | "Gornji Kneginec"
+  | "Gornji Mihaljevec"
+  | "Gospić"
+  | "Gračac"
+  | "Gračišće"
+  | "Gradac"
+  | "Gradec"
+  | "Gradina"
+  | "Gradište"
+  | "Grožnjan"
+  | "Grubišno Polje"
+  | "Gundinci"
+  | "Gunja"
+  | "Gvozd"
+  | "Hercegovac"
+  | "Hlebine"
+  | "Hrašćina"
+  | "Hrvace"
+  | "Hrvatska Dubica"
+  | "Hrvatska Kostajnica"
+  | "Hum na Sutli"
+  | "Hvar"
+  | "Ilok"
+  | "Imotski"
+  | "Ivanec"
+  | "Ivanić-Grad"
+  | "Ivankovo"
+  | "Ivanska"
+  | "Jagodnjak"
+  | "Jakovlje"
+  | "Jakšić"
+  | "Jalžabet"
+  | "Janjina"
+  | "Jarmina"
+  | "Jasenice"
+  | "Jasenovac"
+  | "Jastrebarsko"
+  | "Jelenje"
+  | "Jelsa"
+  | "Jesenje"
+  | "Josipdol"
+  | "Kali"
+  | "Kalinovac"
+  | "Kalnik"
+  | "Kamanje"
+  | "Kanfanar"
+  | "Kapela"
+  | "Kaptol"
+  | "Karlobag"
+  | "Karlovac"
+  | "Karojba"
+  | "Kastav"
+  | "Kaštela"
+  | "Kaštelir-Labinci"
+  | "Kijevo"
+  | "Kistanje"
+  | "Klakar"
+  | "Klana"
+  | "Klanjec"
+  | "Klenovnik"
+  | "Klinča Sela"
+  | "Klis"
+  | "Kloštar Ivanić"
+  | "Kloštar Podravski"
+  | "Kneževi Vinogradi"
+  | "Knin"
+  | "Kolan"
+  | "Komiža"
+  | "Konavle"
+  | "Končanica"
+  | "Konjščina"
+  | "Koprivnica"
+  | "Koprivnički Bregi"
+  | "Koprivnički Ivanec"
+  | "Korčula"
+  | "Kostrena"
+  | "Koška"
+  | "Kotoriba"
+  | "Kraljevec na Sutli"
+  | "Kraljevica"
+  | "Krapina"
+  | "Krapinske Toplice"
+  | "Krašić"
+  | "Kravarsko"
+  | "Križ"
+  | "Križevci"
+  | "Krk"
+  | "Krnjak"
+  | "Kršan"
+  | "Kukljica"
+  | "Kula Norinska"
+  | "Kumrovec"
+  | "Kutina"
+  | "Kutjevo"
+  | "Labin"
+  | "Lanišće"
+  | "Lasinja"
+  | "Lastovo"
+  | "Lećevica"
+  | "Legrad"
+  | "Lekenik"
+  | "Lepoglava"
+  | "Levanjska Varoš"
+  | "Lipik"
+  | "Lipovljani"
+  | "Lišane Ostrovičke"
+  | "Ližnjan"
+  | "Lobor"
+  | "Lokve"
+  | "Lokvičići"
+  | "Lopar"
+  | "Lovas"
+  | "Lovinac"
+  | "Lovran"
+  | "Lovreć"
+  | "Ludbreg"
+  | "Luka"
+  | "Lukač"
+  | "Lumbarda"
+  | "Lupoglav"
+  | "Ljubešćica"
+  | "Mače"
+  | "Magadenovac"
+  | "Majur"
+  | "Makarska"
+  | "Mala Subotica"
+  | "Mali Bukovec"
+  | "Mali Lošinj"
+  | "Malinska-Dubašnica"
+  | "Marčana"
+  | "Marija Bistrica"
+  | "Marija Gorica"
+  | "Marijanci"
+  | "Marina"
+  | "Markušica"
+  | "Martijanec"
+  | "Martinska Ves"
+  | "Maruševec"
+  | "Matulji"
+  | "Medulin"
+  | "Metković"
+  | "Mihovljan"
+  | "Mikleuš"
+  | "Milna"
+  | "Mljet"
+  | "Molve"
+  | "Mošćenička Draga"
+  | "Motovun"
+  | "Mrkopalj"
+  | "Muć"
+  | "Mursko Središće"
+  | "Murter-Kornati"
+  | "Našice"
+  | "Nedelišće"
+  | "Negoslavci"
+  | "Nerežišća"
+  | "Netretić"
+  | "Nijemci"
+  | "Nin"
+  | "Nova Bukovica"
+  | "Nova Gradiška"
+  | "Nova Kapela"
+  | "Nova Rača"
+  | "Novalja"
+  | "Novi Golubovec"
+  | "Novi Marof"
+  | "Novi Vinodolski"
+  | "Novigrad"
+  | "Novigrad-Cittanova"
+  | "Novigrad Podravski"
+  | "Novo Virje"
+  | "Novska"
+  | "Nuštar"
+  | "Obrovac"
+  | "Ogulin"
+  | "Okrug"
+  | "Okučani"
+  | "Omiš"
+  | "Omišalj"
+  | "Opatija"
+  | "Oprisavci"
+  | "Oprtalj"
+  | "Opuzen"
+  | "Orahovica"
+  | "Orebić"
+  | "Orehovica"
+  | "Oriovac"
+  | "Orle"
+  | "Oroslavje*"
+  | "Osijek"
+  | "Otočac"
+  | "Otok (Sinj)"
+  | "Otok (Vinkovci)"
+  | "Ozalj"
+  | "Pag"
+  | "Pakoštane"
+  | "Pakrac"
+  | "Pašman"
+  | "Pazin"
+  | "Perušić"
+  | "Peteranec"
+  | "Petlovac"
+  | "Petrijanec"
+  | "Petrijevci"
+  | "Petrinja"
+  | "Petrovsko"
+  | "Pićan"
+  | "Pirovac"
+  | "Pisarovina"
+  | "Pitomača"
+  | "Plaški"
+  | "Pleternica"
+  | "Plitvička Jezera"
+  | "Ploče"
+  | "Podbablje"
+  | "Podcrkavlje"
+  | "Podgora"
+  | "Podgorač"
+  | "Podravska Moslavina"
+  | "Podravske Sesvete"
+  | "Podstrana"
+  | "Podturen"
+  | "Pojezerje"
+  | "Pokupsko"
+  | "Polača"
+  | "Poličnik"
+  | "Popovac"
+  | "Popovača"
+  | "Poreč"
+  | "Posedarje"
+  | "Postira"
+  | "Povljana"
+  | "Požega"
+  | "Pregrada"
+  | "Preko"
+  | "Prelog"
+  | "Preseka"
+  | "Prgomet"
+  | "Pribislavec"
+  | "Primorski Dolac"
+  | "Primošten"
+  | "Privlaka (Vukovar)"
+  | "Privlaka (Zadar)"
+  | "Proložac"
+  | "Promina"
+  | "Pučišća"
+  | "Pula"
+  | "Punat"
+  | "Punitovci"
+  | "Pušća"
+  | "Rab"
+  | "Radoboj"
+  | "Rakovec"
+  | "Rakovica"
+  | "Rasinja"
+  | "Raša"
+  | "Ravna Gora"
+  | "Ražanac"
+  | "Rešetari"
+  | "Ribnik"
+  | "Rijeka"
+  | "Rogoznica"
+  | "Rovinj"
+  | "Rovišće"
+  | "Rugvica"
+  | "Runovići"
+  | "Ružić"
+  | "Saborsko"
+  | "Sali"
+  | "Samobor"
+  | "Satnica Đakovačka"
+  | "Seget"
+  | "Selca"
+  | "Selnica"
+  | "Semeljci"
+  | "Senj"
+  | "Severin"
+  | "Sibinj"
+  | "Sikirevci"
+  | "Sinj"
+  | "Sirač"
+  | "Sisak"
+  | "Skrad"
+  | "Skradin"
+  | "Slatina"
+  | "Slavonski Brod"
+  | "Slavonski Šamac"
+  | "Slivno"
+  | "Slunj"
+  | "Smokvica"
+  | "Sokolovac"
+  | "Solin"
+  | "Sopje"
+  | "Split"
+  | "Sračinec"
+  | "Stankovci"
+  | "Stara Gradiška"
+  | "Stari Grad"
+  | "Stari Jankovci"
+  | "Stari Mikanovci"
+  | "Starigrad"
+  | "Staro Petrovo Selo"
+  | "Ston"
+  | "Strahoninec"
+  | "Strizivojna"
+  | "Stubičke Toplice"
+  | "Stupnik"
+  | "Sućuraj"
+  | "Suhopolje"
+  | "Sukošan"
+  | "Sunja"
+  | "Supetar"
+  | "Sutivan"
+  | "Sveta Marija"
+  | "Sveta Nedelja (Labin)"
+  | "Sveta Nedelja (Samobor)"
+  | "Sveti Đurđ"
+  | "Sveti Filip i Jakov"
+  | "Sveti Ilija"
+  | "Sveti Ivan Zelina"
+  | "Sveti Ivan Žabno"
+  | "Sveti Juraj na Bregu"
+  | "Sveti Križ Začretje"
+  | "Sveti Lovreč"
+  | "Sveti Martin na Muri"
+  | "Sveti Petar Orehovec"
+  | "Sveti Petar u Šumi"
+  | "Svetvinčenat"
+  | "Šandrovac"
+  | "Šenkovec"
+  | "Šestanovac"
+  | "Šibenik"
+  | "Škabrnja"
+  | "Šodolovci"
+  | "Šolta"
+  | "Špišić Bukovica"
+  | "Štefanje"
+  | "Štitar"
+  | "Štrigova"
+  | "Tar-Vabriga"
+  | "Tinjan"
+  | "Tisno"
+  | "Tkon"
+  | "Tompojevci"
+  | "Topusko"
+  | "Tordinci"
+  | "Tounj"
+  | "Tovarnik"
+  | "Tribunj"
+  | "Trilj"
+  | "Trnava"
+  | "Trnovec Bartolovečki"
+  | "Trogir"
+  | "Trpanj"
+  | "Trpinja"
+  | "Tučepi"
+  | "Tuhelj"
+  | "Udbina"
+  | "Umag"
+  | "Unešić"
+  | "Valpovo"
+  | "Varaždin"
+  | "Varaždinske Toplice"
+  | "Vela Luka"
+  | "Velika"
+  | "Velika Gorica"
+  | "Velika Kopanica"
+  | "Velika Ludina"
+  | "Velika Pisanica"
+  | "Velika Trnovitica"
+  | "Veliki Bukovec"
+  | "Veliki Grđevac"
+  | "Veliko Trgovišće"
+  | "Veliko Trojstvo"
+  | "Vidovec"
+  | "Viljevo"
+  | "Vinica"
+  | "Vinkovci"
+  | "Vinodolska Općina"
+  | "Vir"
+  | "Virje"
+  | "Virovitica"
+  | "Vis"
+  | "Visoko"
+  | "Viškovci"
+  | "Viškovo"
+  | "Višnjan"
+  | "Vižinada"
+  | "Vladislavci"
+  | "Voćin"
+  | "Vodice"
+  | "Vodnjan"
+  | "Vođinci"
+  | "Vojnić"
+  | "Vratišinec"
+  | "Vrbanja"
+  | "Vrbje"
+  | "Vrbnik"
+  | "Vrbovec"
+  | "Vrbovsko"
+  | "Vrgorac"
+  | "Vrhovine"
+  | "Vrlika"
+  | "Vrpolje"
+  | "Vrsar"
+  | "Vrsi"
+  | "Vuka"
+  | "Vukovar"
+  | "Zabok"
+  | "Zadar"
+  | "Zadvarje"
+  | "Zagorska Sela"
+  | "Zagreb"
+  | "Zagvozd"
+  | "Zaprešić"
+  | "Zažablje"
+  | "Zdenci"
+  | "Zemunik Donji"
+  | "Zlatar"
+  | "Zlatar Bistrica"
+  | "Zmijavci"
+  | "Zrinski Topolovac"
+  | "Žakanje"
+  | "Žminj"
+  | "Žumberak"
+  | "Župa Dubrovačka"
+  | "Županja";
 
 /**
  * Tax rates for different places in Croatia.
  * Generated off of the data from 'porezi.json'.
  */
 export const PlaceTaxes = {
-  andrijaševci: {
+  andrijasevci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -575,7 +575,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'babina-greda': {
+  "babina-greda": {
     taxRateLow: 0.21,
     taxRateHigh: 0.315,
   },
@@ -591,15 +591,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  barilović: {
+  barilovic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  baška: {
+  baska: {
     taxRateLow: 0.15,
     taxRateHigh: 0.25,
   },
-  'baška-voda': {
+  "baska-voda": {
     taxRateLow: 0.17,
     taxRateHigh: 0.27,
   },
@@ -607,7 +607,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  bedekovčina: {
+  bedekovcina: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -619,7 +619,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'beli-manastir': {
+  "beli-manastir": {
     taxRateLow: 0.2,
     taxRateHigh: 0.25,
   },
@@ -627,7 +627,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  belišće: {
+  belisce: {
     taxRateLow: 0.214,
     taxRateHigh: 0.321,
   },
@@ -655,7 +655,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'biograd-na-moru': {
+  "biograd-na-moru": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -695,7 +695,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  bošnjaci: {
+  bosnjaci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -719,7 +719,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'breznički-hum': {
+  "breznicki-hum": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -727,11 +727,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'brod-moravice': {
+  "brod-moravice": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'brodski-stupnik': {
+  "brodski-stupnik": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -739,7 +739,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  budinščina: {
+  budinscina: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -775,7 +775,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'cista-provo': {
+  "cista-provo": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -795,39 +795,39 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  čabar: {
+  cabar: {
     taxRateLow: 0.22,
     taxRateHigh: 0.3,
   },
-  čačinci: {
+  cačinci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  čađavica: {
+  cadavica: {
     taxRateLow: 0.2,
     taxRateHigh: 0.25,
   },
-  čaglin: {
+  caglin: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  čakovec: {
+  cakovec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  čavle: {
+  cavle: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  čazma: {
+  cazma: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  čeminac: {
+  ceminac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.25,
   },
-  čepin: {
+  cepin: {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
@@ -851,11 +851,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  desinić: {
+  desinic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  dežanovac: {
+  dezanovac: {
     taxRateLow: 0.22,
     taxRateHigh: 0.3,
   },
@@ -867,59 +867,59 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  domašinec: {
+  domasinec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donja-dubrava': {
+  "donja-dubrava": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donja-motičina': {
+  "donja-moticina": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donja-stubica': {
+  "donja-stubica": {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'donja-voća': {
+  "donja-voca": {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'donji-andrijevci': {
+  "donji-andrijevci": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donji-kraljevec': {
+  "donji-kraljevec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donji-kukuruzari': {
+  "donji-kukuruzari": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donji-lapac': {
+  "donji-lapac": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donji-miholjac': {
+  "donji-miholjac": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'donji-vidovec': {
+  "donji-vidovec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  dragalić: {
+  dragalic: {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  draganić: {
+  draganic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.33,
   },
-  draž: {
+  draz: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -931,7 +931,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  drniš: {
+  drnis: {
     taxRateLow: 0.2,
     taxRateHigh: 0.25,
   },
@@ -947,7 +947,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'dubrovačko-primorje': {
+  "dubrovacko-primorje": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -955,15 +955,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'duga-resa': {
+  "duga-resa": {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'dugi-rat': {
+  "dugi-rat": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'dugo-selo': {
+  "dugo-selo": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -975,27 +975,27 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  đakovo: {
+  dakovo: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  đelekovec: {
+  delekovec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  đulovac: {
+  dulovac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  đurđenovac: {
+  durđenovac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  đurđevac: {
+  durđevac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  đurmanec: {
+  durmanec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1011,11 +1011,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  farkaševac: {
+  farkasevac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  fažana: {
+  fazana: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1023,7 +1023,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  feričanci: {
+  fericanci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1031,7 +1031,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  fužine: {
+  fuzine: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1039,15 +1039,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  garčin: {
+  garcin: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  garešnica: {
+  garesnica: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'generalski-stol': {
+  "generalski-stol": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1059,7 +1059,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  goričan: {
+  gorican: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1067,39 +1067,39 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'gornja-rijeka': {
+  "gornja-rijeka": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'gornja-stubica': {
+  "gornja-stubica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'gornja-vrba': {
+  "gornja-vrba": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'gornji-bogićevci': {
+  "gornji-bogicevci": {
     taxRateLow: 0.22,
     taxRateHigh: 0.3,
   },
-  'gornji-kneginec': {
+  "gornji-kneginec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'gornji-mihaljevec': {
+  "gornji-mihaljevec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  gospić: {
+  gospic: {
     taxRateLow: 0.224,
     taxRateHigh: 0.336,
   },
-  gračac: {
+  gracac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  gračišće: {
+  gracisce: {
     taxRateLow: 0.21,
     taxRateHigh: 0.31,
   },
@@ -1115,15 +1115,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  gradište: {
+  gradiste: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  grožnjan: {
+  groznjan: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'grubišno-polje': {
+  "grubisno-polje": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1147,7 +1147,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  hrašćina: {
+  hrascina: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1155,15 +1155,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'hrvatska-dubica': {
+  "hrvatska-dubica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'hrvatska-kostajnica': {
+  "hrvatska-kostajnica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'hum-na-sutli': {
+  "hum-na-sutli": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1183,7 +1183,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'ivanić-grad': {
+  "ivanic-grad": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1203,11 +1203,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  jakšić: {
+  jaksic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  jalžabet: {
+  jalzabet: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1291,11 +1291,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.336,
   },
-  kaštela: {
+  kastela: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'kaštelir-labinci': {
+  "kastelir-labinci": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1323,7 +1323,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.3,
   },
-  'klinča-sela': {
+  "klinca-sela": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1331,15 +1331,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'kloštar-ivanić': {
+  "klostar-ivanic": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'kloštar-podravski': {
+  "klostar-podravski": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'kneževi-vinogradi': {
+  "knezevi-vinogradi": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1351,7 +1351,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  komiža: {
+  komiza: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1359,11 +1359,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  končanica: {
+  koncanica: {
     taxRateLow: 0.22,
     taxRateHigh: 0.3,
   },
-  konjščina: {
+  konjscina: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1371,15 +1371,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'koprivnički-bregi': {
+  "koprivnicki-bregi": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'koprivnički-ivanec': {
+  "koprivnicki-ivanec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  korčula: {
+  korcula: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1387,7 +1387,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  koška: {
+  koska: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1395,7 +1395,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'kraljevec-na-sutli': {
+  "kraljevec-na-sutli": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1407,11 +1407,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'krapinske-toplice': {
+  "krapinske-toplice": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  krašić: {
+  krasic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1419,11 +1419,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  križ: {
+  kriz: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  križevci: {
+  krizevci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1435,7 +1435,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  kršan: {
+  krsan: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1443,7 +1443,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'kula-norinska': {
+  "kula-norinska": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1463,7 +1463,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  lanišće: {
+  lanisce: {
     taxRateLow: 0.21,
     taxRateHigh: 0.3,
   },
@@ -1475,7 +1475,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  lećevica: {
+  lecevica: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1491,7 +1491,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.21,
     taxRateHigh: 0.31,
   },
-  'levanjska-varoš': {
+  "levanjska-varos": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1503,11 +1503,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'lišane-ostrovičke': {
+  "lisane-ostrovicke": {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  ližnjan: {
+  liznjan: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1519,7 +1519,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  lokvičići: {
+  lokvicici: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1539,7 +1539,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  lovreć: {
+  lovrec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1551,7 +1551,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  lukač: {
+  lukac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1563,11 +1563,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.21,
     taxRateHigh: 0.32,
   },
-  ljubešćica: {
+  ljubescica: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  mače: {
+  mace: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1583,31 +1583,31 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.33,
   },
-  'mala-subotica': {
+  "mala-subotica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'mali-bukovec': {
+  "mali-bukovec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'mali-lošinj': {
+  "mali-losinj": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'malinska-dubašnica': {
+  "malinska-dubasnica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  marčana: {
+  marcana: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'marija-bistrica': {
+  "marija-bistrica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'marija-gorica': {
+  "marija-gorica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1619,7 +1619,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  markušica: {
+  markusica: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1627,11 +1627,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'martinska-ves': {
+  "martinska-ves": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  maruševec: {
+  marusevec: {
     taxRateLow: 0.21,
     taxRateHigh: 0.31,
   },
@@ -1643,7 +1643,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  metković: {
+  metkovic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1651,7 +1651,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  mikleuš: {
+  mikleus: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1667,7 +1667,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.15,
     taxRateHigh: 0.25,
   },
-  'mošćenička-draga': {
+  "moscenicka-draga": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1679,23 +1679,23 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  muć: {
+  muc: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'mursko-središće': {
+  "mursko-sredisce": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'murter-kornati': {
+  "murter-kornati": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  našice: {
+  nasice: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  nedelišće: {
+  nedelisce: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1703,11 +1703,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  nerežišća: {
+  nerezisca: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  netretić: {
+  netretic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1719,19 +1719,19 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'nova-bukovica': {
+  "nova-bukovica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'nova-gradiška': {
+  "nova-gradiska": {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'nova-kapela': {
+  "nova-kapela": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'nova-rača': {
+  "nova-raca": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1739,15 +1739,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'novi-golubovec': {
+  "novi-golubovec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'novi-marof': {
+  "novi-marof": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'novi-vinodolski': {
+  "novi-vinodolski": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1755,15 +1755,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'novigrad-cittanova': {
+  "novigrad-cittanova": {
     taxRateLow: 0.2,
     taxRateHigh: 0.33,
   },
-  'novigrad-podravski': {
+  "novigrad-podravski": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'novo-virje': {
+  "novo-virje": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1771,7 +1771,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  nuštar: {
+  nustar: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1787,15 +1787,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  okučani: {
+  okucani: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  omiš: {
+  omis: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  omišalj: {
+  omisalj: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1819,7 +1819,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  orebić: {
+  orebic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1835,7 +1835,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'oroslavje*': {
+  "oroslavje*": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1843,15 +1843,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  otočac: {
+  otocac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'otok-sinj': {
+  "otok-sinj": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'otok-vinkovci': {
+  "otok-vinkovci": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1863,7 +1863,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  pakoštane: {
+  pakostane: {
     taxRateLow: 0.21,
     taxRateHigh: 0.3,
   },
@@ -1871,7 +1871,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  pašman: {
+  pasman: {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
@@ -1879,7 +1879,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  perušić: {
+  perusic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1907,7 +1907,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  pićan: {
+  pican: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1919,11 +1919,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  pitomača: {
+  pitomaca: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  plaški: {
+  plaski: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1931,11 +1931,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'plitvička-jezera': {
+  "plitvicka-jezera": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  ploče: {
+  ploce: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1951,15 +1951,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  podgorač: {
+  podgorac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'podravska-moslavina': {
+  "podravska-moslavina": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'podravske-sesvete': {
+  "podravske-sesvete": {
     taxRateLow: 0.21,
     taxRateHigh: 0.32,
   },
@@ -1979,11 +1979,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  polača: {
+  polaca: {
     taxRateLow: 0.2,
     taxRateHigh: 0.33,
   },
-  poličnik: {
+  policnik: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -1991,11 +1991,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  popovača: {
+  popovaca: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  poreč: {
+  porec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2011,7 +2011,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  požega: {
+  pozega: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2039,23 +2039,23 @@ export const PlaceTaxes = {
     taxRateLow: 0.218,
     taxRateHigh: 0.328,
   },
-  'primorski-dolac': {
+  "primorski-dolac": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  primošten: {
+  primosten: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'privlaka-vukovar': {
+  "privlaka-vukovar": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'privlaka-zadar': {
+  "privlaka-zadar": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  proložac: {
+  prolozac: {
     taxRateLow: 0.21,
     taxRateHigh: 0.33,
   },
@@ -2063,7 +2063,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  pučišća: {
+  pucisca: {
     taxRateLow: 0.15,
     taxRateHigh: 0.25,
   },
@@ -2079,7 +2079,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  pušća: {
+  pusca: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2103,19 +2103,19 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  raša: {
+  rasa: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'ravna-gora': {
+  "ravna-gora": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  ražanac: {
+  razanac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  rešetari: {
+  resetari: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2135,7 +2135,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  rovišće: {
+  rovisce: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2143,11 +2143,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  runovići: {
+  runovici: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  ružić: {
+  ruzic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2163,7 +2163,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'satnica-đakovačka': {
+  "satnica-dakovacka": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2203,7 +2203,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.18,
     taxRateHigh: 0.3,
   },
-  sirač: {
+  sirac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2223,11 +2223,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'slavonski-brod': {
+  "slavonski-brod": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'slavonski-šamac': {
+  "slavonski-samac": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2259,7 +2259,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.215,
     taxRateHigh: 0.3225,
   },
-  sračinec: {
+  sracinec: {
     taxRateLow: 0.22,
     taxRateHigh: 0.3,
   },
@@ -2267,19 +2267,19 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'stara-gradiška': {
+  "stara-gradiska": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'stari-grad': {
+  "stari-grad": {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'stari-jankovci': {
+  "stari-jankovci": {
     taxRateLow: 0.15,
     taxRateHigh: 0.25,
   },
-  'stari-mikanovci': {
+  "stari-mikanovci": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2287,7 +2287,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'staro-petrovo-selo': {
+  "staro-petrovo-selo": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2303,7 +2303,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'stubičke-toplice': {
+  "stubicke-toplice": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2311,7 +2311,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  sućuraj: {
+  sucuraj: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2319,7 +2319,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  sukošan: {
+  sukosan: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2335,111 +2335,111 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'sveta-marija': {
+  "sveta-marija": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveta-nedelja-labin': {
+  "sveta-nedelja-labin": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveta-nedelja-samobor': {
+  "sveta-nedelja-samobor": {
     taxRateLow: 0.18,
     taxRateHigh: 0.28,
   },
-  'sveti-đurđ': {
+  "sveti-durđ": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-filip-i-jakov': {
+  "sveti-filip-i-jakov": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-ilija': {
+  "sveti-ilija": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-ivan-zelina': {
+  "sveti-ivan-zelina": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-ivan-žabno': {
+  "sveti-ivan-zabno": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-juraj-na-bregu': {
+  "sveti-juraj-na-bregu": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-križ-začretje': {
+  "sveti-kriz-zacretje": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-lovreč': {
+  "sveti-lovrec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.33,
   },
-  'sveti-martin-na-muri': {
+  "sveti-martin-na-muri": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-petar-orehovec': {
+  "sveti-petar-orehovec": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'sveti-petar-u-šumi': {
+  "sveti-petar-u-sumi": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  svetvinčenat: {
+  svetvincenat: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  šandrovac: {
+  sandrovac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  šenkovec: {
+  senkovec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  šestanovac: {
+  sestanovac: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  šibenik: {
+  sibenik: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  škabrnja: {
+  skabrnja: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  šodolovci: {
+  sodolovci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  šolta: {
+  solta: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'špišić-bukovica': {
+  "spišic-bukovica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  štefanje: {
+  stefanje: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  štitar: {
+  stitar: {
     taxRateLow: 0.2,
     taxRateHigh: 0.33,
   },
-  štrigova: {
+  strigova: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'tar-vabriga': {
+  "tar-vabriga": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2487,7 +2487,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'trnovec-bartolovečki': {
+  "trnovec-bartolovecki": {
     taxRateLow: 0.22,
     taxRateHigh: 0.32,
   },
@@ -2503,7 +2503,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  tučepi: {
+  tucepi: {
     taxRateLow: 0.2,
     taxRateHigh: 0.33,
   },
@@ -2519,7 +2519,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  unešić: {
+  unesic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2527,15 +2527,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.22,
     taxRateHigh: 0.336,
   },
-  varaždin: {
+  varazdin: {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'varaždinske-toplice': {
+  "varazdinske-toplice": {
     taxRateLow: 0.22,
     taxRateHigh: 0.336,
   },
-  'vela-luka': {
+  "vela-luka": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2543,39 +2543,39 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'velika-gorica': {
+  "velika-gorica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'velika-kopanica': {
+  "velika-kopanica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'velika-ludina': {
+  "velika-ludina": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'velika-pisanica': {
+  "velika-pisanica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'velika-trnovitica': {
+  "velika-trnovitica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'veliki-bukovec': {
+  "veliki-bukovec": {
     taxRateLow: 0.216,
     taxRateHigh: 0.33,
   },
-  'veliki-grđevac': {
+  "veliki-grdevac": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'veliko-trgovišće': {
+  "veliko-trgovisce": {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  'veliko-trojstvo': {
+  "veliko-trojstvo": {
     taxRateLow: 0.175,
     taxRateHigh: 0.275,
   },
@@ -2595,7 +2595,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'vinodolska-općina': {
+  "vinodolska-opcina": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2619,19 +2619,19 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  viškovci: {
+  viskovci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  viškovo: {
+  viskovo: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  višnjan: {
+  visnjan: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  vižinada: {
+  vizinada: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2639,7 +2639,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.25,
   },
-  voćin: {
+  vocin: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2651,15 +2651,15 @@ export const PlaceTaxes = {
     taxRateLow: 0.224,
     taxRateHigh: 0.336,
   },
-  vođinci: {
+  vodinci: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  vojnić: {
+  vojnic: {
     taxRateLow: 0.21,
     taxRateHigh: 0.31,
   },
-  vratišinec: {
+  vratisinec: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2727,7 +2727,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'zagorska-sela': {
+  "zagorska-sela": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2739,11 +2739,11 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  zaprešić: {
+  zapresic: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  zažablje: {
+  zazablje: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2751,7 +2751,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'zemunik-donji': {
+  "zemunik-donji": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2759,7 +2759,7 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'zlatar-bistrica': {
+  "zlatar-bistrica": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
@@ -2767,30 +2767,30 @@ export const PlaceTaxes = {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'zrinski-topolovac': {
+  "zrinski-topolovac": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  žakanje: {
+  zakanje: {
     taxRateLow: 0.22,
     taxRateHigh: 0.33,
   },
-  žminj: {
+  zminj: {
     taxRateLow: 0.213,
     taxRateHigh: 0.313,
   },
-  žumberak: {
+  zumberak: {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  'župa-dubrovačka': {
+  "zupa-dubrovacka": {
     taxRateLow: 0.2,
     taxRateHigh: 0.3,
   },
-  županja: {
+  zupanja: {
     taxRateLow: 0.218,
     taxRateHigh: 0.327,
   },
-} as const
+} as const;
 
-export type PlaceKey = keyof typeof PlaceTaxes
+export type PlaceKey = keyof typeof PlaceTaxes;

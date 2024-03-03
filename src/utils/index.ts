@@ -58,3 +58,12 @@ export function clamp(
 
   return Math.min(max, Math.max(min, val))
 }
+
+export const replaceDiacritics = (str: string) => {
+  return str
+    .replace(/š/i, 's')
+    .replace(/č/i, 'c')
+    .replace(/ć/i, 'c')
+    .replace(/ž/i, 'z')
+    .replace(/đ/i, 'd')
+}

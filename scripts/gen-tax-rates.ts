@@ -3,8 +3,9 @@ import {
   basicKebabCase,
   convertFromPercentage,
   localizedTitleCase,
+  replaceDiacritics,
   writeFile,
-} from '../utils'
+} from '../src/utils'
 import { rawHtmlTables } from './data/raw-html-tables'
 
 type PlaceTaxesRecord = {
@@ -42,20 +43,20 @@ const generateTaxRecords = () => {
 
 const writeTaxRecords = async (taxRecords: PlaceTaxesRecord[]) => {
   const written = await writeFile(
-    'generated/porezi.json',
+    'src/generated/porezi.json',
     JSON.stringify(taxRecords, null, 2),
   )
   if (written) {
-    console.log('✅ Tax rates written to "/generated/porezi.json"')
+    console.log('✅ Tax rates written to "/src/generated/porezi.json"')
   } else {
     console.error('❌ Error writing tax rates file')
   }
 }
 const writeGeneratedCode = async (content: string) => {
-  const written = await writeFile('generated/places.ts', content)
+  const written = await writeFile('src/generated/places.ts', content)
   if (written) {
     console.log(
-      '✅ Places code generated and written to "/generated/places.ts"',
+      '✅ Places code generated and written to "/src/generated/places.ts"',
     )
   } else {
     console.error('❌ Error writing places type file')
@@ -68,7 +69,7 @@ const places = taxRecords.map((record) => record.jedinica)
 const PlaceTaxesObject = taxRecords.reduce(
   (acc, record) => {
     const { jedinica, visaStopa, nizaStopa } = record
-    const key = basicKebabCase(jedinica)
+    const key = basicKebabCase(replaceDiacritics(jedinica))
     acc[key] = {
       taxRateLow: nizaStopa,
       taxRateHigh: visaStopa,

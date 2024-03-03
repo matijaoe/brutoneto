@@ -18,7 +18,15 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "types": [
-      "bun-types" // add Bun global
-    ]
-  }
+      "@types/bun" // add Bun global
+    ],
+    "outDir": "./dist",
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "./dist/**/*"
+  ]
 }
