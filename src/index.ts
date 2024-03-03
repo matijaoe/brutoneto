@@ -1,10 +1,16 @@
 import { PlaceKey, PlaceTaxes } from './generated/places'
 import taxesDataset from './generated/porezi.json'
-import { clamp, ensureFloat } from './utils'
+import { ensureFloat } from './utils'
 
 export * from './generated/places'
+// TODO: not working
 export { taxesDataset }
 
+/**
+ * Checks if a given place is a valid PlaceKey.
+ * @param place - The place to check.
+ * @returns A boolean indicating whether the place is a valid PlaceKey.
+ */
 export const isValidPlace = (place: string): place is PlaceKey => {
   return place in PlaceTaxes
 }
@@ -74,28 +80,15 @@ export const MAX_PERSONAL_ALLOWANCE_COEFFICIENT = 6
  * @param gross - The gross salary.
  * @returns Contributions per pension pillar and the total pension contribution.
  */
-export function calcPensionContribution(
-  gross: number,
-  options?: {
-    thirdPillar: number
-  },
-) {
-  let { thirdPillar = 0 } = options ?? {}
-
+export function calcMandatoryPensionContribution(gross: number) {
   const firstPilar = ensureFloat(gross * RATE.PENSION_CONTRIBUTION_PILLAR_1)
   const secondPillar = ensureFloat(gross * RATE.PENSION_CONTRIBUTION_PILLAR_2)
 
-  thirdPillar = clamp(thirdPillar, {
-    min: 0,
-    max: THIRD_PILLAR_NON_TAXABLE_LIMIT,
-  })
-
-  const total = firstPilar + secondPillar + thirdPillar
+  const total = firstPilar + secondPillar
 
   return {
     firstPilar,
     secondPillar,
-    thirdPillar,
     total,
   }
 }
@@ -215,6 +208,7 @@ interface GrossToNetConfig {
  * @returns The net income.
  * @throws Error if the place specified in the configuration is unknown.
  */
+// TODO: net with third pillar is not calculated correctly
 export function grossToNet(gross: number, config?: GrossToNetConfig): number {
   config ??= {}
   const {
@@ -234,22 +228,21 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
     )
   ) {
     throw new Error(
-      `Third pillar contribution must be positive and up to ${THIRD_PILLAR_NON_TAXABLE_LIMIT}. Got: ${thirdPillarContribution}`,
+      `Third pillar contribution can't be negative and must be up to ${THIRD_PILLAR_NON_TAXABLE_LIMIT}. Got: ${thirdPillarContribution}.`,
     )
   }
-
-  gross -= thirdPillarContribution
 
   const {
     taxRateLow = RATE.TAX_LOW_BRACKET,
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceTaxes[place] : config
 
-  const { total: pensionContribution } = calcPensionContribution(gross, {
-    thirdPillar: thirdPillarContribution,
-  })
+  const realGross = gross - thirdPillarContribution
 
-  const income = calcIncomeAfterDeductions(gross, pensionContribution)
+  const { total: pensionContribution } =
+    calcMandatoryPensionContribution(realGross)
+
+  const income = calcIncomeAfterDeductions(realGross, pensionContribution)
 
   const personalAllowance = calcPersonalAllowance(
     income,
@@ -381,7 +374,7 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     )
   ) {
     throw new Error(
-      `Third pillar contribution must be a positive and up to ${THIRD_PILLAR_NON_TAXABLE_LIMIT}. Got: ${thirdPillarContribution}`,
+      `Third pillar contribution can't be negative and must be up to ${THIRD_PILLAR_NON_TAXABLE_LIMIT}. Got: ${thirdPillarContribution}`,
     )
   }
 
@@ -390,21 +383,16 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceTaxes[place] : config
 
-  const initialGross = gross
-
-  // subtract third pillar contribution from the gross
-  gross -= thirdPillarContribution
-
   const {
     firstPilar,
     secondPillar,
-    thirdPillar,
     total: pensionContribution,
-  } = calcPensionContribution(gross, {
-    thirdPillar: thirdPillarContribution,
-  })
+  } = calcMandatoryPensionContribution(gross)
 
-  const income = calcIncomeAfterDeductions(gross, pensionContribution)
+  const initalGross = gross
+  const realGross = initalGross - thirdPillarContribution
+
+  const income = calcIncomeAfterDeductions(realGross, pensionContribution)
 
   const personalAllowance = calcPersonalAllowance(
     income,
@@ -421,37 +409,44 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
 
   const net = calcFinalNet(income, taxes)
 
-  const { healthInsuranceContribution, total: totalCost } = grossToTotal(gross)
+  const { healthInsuranceContribution, total: totalCost } =
+    grossToTotal(realGross)
 
-  const netShareOfGross = parseFloat((net / gross).toFixed(2))
-  const netShareOfTotal = parseFloat((net / totalCost).toFixed(2))
+  // Calculations
 
-  const wouldBeNetFromInitialGross = initialGross !== gross
-    ? grossToNet(initialGross, {
-      place,
-      taxRateHigh,
-      taxRateLow,
-      personalAllowanceCoefficient,
-    })
-    : undefined
+  const netShareOfTotal = ensureFloat(net / totalCost)
+  const netShareOfGross = ensureFloat(net / realGross) // gross after third pillar deduction from which everything is calculated
+  const netShareOfInitialGross = ensureFloat(net / initalGross)
+
+  const wouldBeNetFromInitialGross =
+    realGross !== initalGross
+      ? grossToNet(initalGross, {
+          place,
+          taxRateHigh,
+          taxRateLow,
+          personalAllowanceCoefficient,
+        })
+      : undefined
 
   const wouldBeNetShareOfInitialGross = wouldBeNetFromInitialGross
-    ? parseFloat((wouldBeNetFromInitialGross / initialGross).toFixed(2))
+    ? ensureFloat(wouldBeNetFromInitialGross / initalGross)
     : undefined
 
-  const netShareOfWouldBeNet = wouldBeNetFromInitialGross
-    ? parseFloat((net / wouldBeNetFromInitialGross).toFixed(2))
+  const netDifference = wouldBeNetFromInitialGross
+    ? ensureFloat(net - wouldBeNetFromInitialGross)
     : undefined
 
   return {
     net,
-    gross,
+    gross: realGross,
+    initalGross,
     totalCost,
     pension: {
       firstPilar,
       secondPillar,
-      thirdPillar,
-      total: pensionContribution,
+      thirdPillar: thirdPillarContribution,
+      mandatoryTotal: pensionContribution,
+      total: pensionContribution + thirdPillarContribution,
     },
     income,
     taxes: {
@@ -463,7 +458,7 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     taxableIncome,
     personalAllowance,
     variables: {
-      place: place ?? null,
+      place: place ?? undefined,
       taxRateLow,
       taxRateHigh,
       personalAllowanceCoefficient,
@@ -472,10 +467,10 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     calculations: {
       netShareOfTotal,
       netShareOfGross,
-      initialGross: initialGross !== gross ? initialGross : undefined,
+      netShareOfInitialGross,
       wouldBeNetFromInitialGross,
       wouldBeNetShareOfInitialGross,
-      netShareOfWouldBeNet,
+      netDifference,
     },
   }
 }
