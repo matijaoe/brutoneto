@@ -1,5 +1,9 @@
 import { PlaceKey, PlaceTaxes } from './generated/places'
-import { clamp, ensureFloat, replaceDiacritics } from './utils'
+import { clamp, ensureFloat } from './utils'
+
+export * from './generated/places'
+import taxesDataset from './generated/porezi.json'
+export { taxesDataset }
 
 export const RATE = {
   /**
@@ -408,11 +412,11 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
   const netFromOriginalGross =
     grossOriginal !== gross
       ? grossToNet(grossOriginal, {
-          place,
-          taxRateHigh,
-          taxRateLow,
-          personalAllowanceCoefficient,
-        })
+        place,
+        taxRateHigh,
+        taxRateLow,
+        personalAllowanceCoefficient,
+      })
       : undefined
 
   return {

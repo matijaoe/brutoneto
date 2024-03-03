@@ -64,7 +64,7 @@ const writeGeneratedCode = async (content: string) => {
 }
 
 const taxRecords = generateTaxRecords()
-const places = taxRecords.map((record) => record.jedinica)
+const placeNames = taxRecords.map((record) => record.jedinica)
 
 const PlaceTaxesObject = taxRecords.reduce(
   (acc, record) => {
@@ -79,6 +79,8 @@ const PlaceTaxesObject = taxRecords.reduce(
   {} as Record<string, { taxRateLow: number; taxRateHigh: number }>,
 )
 
+const places = Object.keys(PlaceTaxesObject) as (keyof typeof PlaceTaxesObject)[]
+
 import prettier from 'prettier'
 
 const generateCode = async () => {
@@ -91,7 +93,7 @@ const generateCode = async () => {
     /**
      * Type for all places in 'porezi.json'.
     */
-    export type Place = ${places.map((place) => `| '${place}'`).join(' ')}
+    export type PlaceName = ${placeNames.map((place) => `| '${place}'`).join(' ')}
   `
 
   const PlaceTaxesCode = `
@@ -106,7 +108,11 @@ const generateCode = async () => {
   export type PlaceKey = keyof typeof PlaceTaxes
   `
 
-  const content = `${comment}\n\n${PlaceTypeCode}\n\n${PlaceTaxesCode}\n\n${PlaceKeyCode}`
+  const placesCode = `
+  export const places: PlaceKey[] = ${JSON.stringify(places, null, 2)} as const
+  `
+
+  const content = `${comment}\n\n${PlaceTypeCode}\n\n${PlaceTaxesCode}\n\n${PlaceKeyCode}\n\n${placesCode}`
 
   const formattedCode = await prettier.format(content, { parser: 'typescript' })
 
