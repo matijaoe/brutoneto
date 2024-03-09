@@ -1,6 +1,6 @@
 import { expect, test } from 'bun:test'
 import { grossToNet } from '.'
-import { PlaceTaxes } from './generated/places'
+import { PlaceMap } from './generated/places'
 
 const gross = 3000
 
@@ -21,7 +21,7 @@ test('gross to net (default tax rates)', () => {
   const res3 = grossToNet(gross, { place: 'samobor' })
   expect(res3).toBe(expectedNet)
 
-  const res4 = grossToNet(gross, { ...PlaceTaxes['samobor'] })
+  const res4 = grossToNet(gross, { ...PlaceMap['samobor'] })
   expect(res4).toBe(expectedNet)
 })
 
@@ -36,6 +36,6 @@ test('gross to net (custom tax rates)', () => {
   const res2 = grossToNet(gross, { place: 'zagreb' })
   expect(res2).toBe(expectedNet)
 
-  const res3 = grossToNet(gross, { ...PlaceTaxes['zagreb'] })
+  const res3 = grossToNet(gross, { ...PlaceMap['zagreb'] })
   expect(res3).toBe(expectedNet)
 })

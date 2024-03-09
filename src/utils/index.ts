@@ -48,7 +48,7 @@ export function clamp(
   if (Array.isArray(range)) {
     ;[min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY] = range
   } else {
-    ;({ min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY } =
+    ; ({ min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY } =
       range)
   }
 

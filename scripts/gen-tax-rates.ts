@@ -66,20 +66,21 @@ const writeGeneratedCode = async (content: string) => {
 const taxRecords = generateTaxRecords()
 const placeNames = taxRecords.map((record) => record.jedinica)
 
-const PlaceTaxesObject = taxRecords.reduce(
+const PlaceMap = taxRecords.reduce(
   (acc, record) => {
     const { jedinica, visaStopa, nizaStopa } = record
     const key = basicKebabCase(replaceDiacritics(jedinica))
     acc[key] = {
+      name: jedinica,
       taxRateLow: nizaStopa,
       taxRateHigh: visaStopa,
     }
     return acc
   },
-  {} as Record<string, { taxRateLow: number; taxRateHigh: number }>,
+  {} as Record<string, { name: string, taxRateLow: number; taxRateHigh: number }>,
 )
 
-const places = Object.keys(PlaceTaxesObject) as (keyof typeof PlaceTaxesObject)[]
+const places = Object.keys(PlaceMap) as (keyof typeof PlaceMap)[]
 
 import prettier from 'prettier'
 
@@ -89,30 +90,26 @@ const generateCode = async () => {
     // Do not modify it manually.
   `
 
-  const PlaceTypeCode = `
+  const PlaceMap_code = `
+    /**
+     * Tax rates for different places in Croatia.
+     * Generated off of the data from 'porezi.json'.
+    */
+    export const PlaceMap = ${JSON.stringify(PlaceMap, null, 2)} as const
+  `
+
+  const Place_code = `export type Place = keyof typeof PlaceMap`
+
+  const Places_code = `export const places: Place[] = ${JSON.stringify(places, null, 2)} as const`
+
+  const PlaceType_code = `
     /**
      * Type for all places in 'porezi.json'.
     */
     export type PlaceName = ${placeNames.map((place) => `| '${place}'`).join(' ')}
   `
 
-  const PlaceTaxesCode = `
-    /**
-     * Tax rates for different places in Croatia.
-     * Generated off of the data from 'porezi.json'.
-    */
-    export const PlaceTaxes = ${JSON.stringify(PlaceTaxesObject, null, 2)} as const
-  `
-
-  const PlaceKeyCode = `
-  export type PlaceKey = keyof typeof PlaceTaxes
-  `
-
-  const placesCode = `
-  export const places: PlaceKey[] = ${JSON.stringify(places, null, 2)} as const
-  `
-
-  const content = `${comment}\n\n${PlaceTypeCode}\n\n${PlaceTaxesCode}\n\n${PlaceKeyCode}\n\n${placesCode}`
+  const content = `${comment}\n\n${PlaceMap_code}\n\n${Place_code}\n\n${Places_code}\n\n${PlaceType_code}`
 
   const formattedCode = await prettier.format(content, { parser: 'typescript' })
 
