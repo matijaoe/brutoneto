@@ -1,5 +1,5 @@
 import { netToGross } from './calculations/gross'
-import { grossToNet } from './calculations/net'
+import { detailedSalary, grossToNet } from './calculations/net'
 
 export * from './generated/places'
 

@@ -1,5 +1,6 @@
 import { PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
 import { Place, PlaceMap } from '../generated/places'
+import { toDecimal } from '../utils'
 import { grossToNet } from './net'
 
 type NetToGrossConfig = {
@@ -7,11 +8,12 @@ type NetToGrossConfig = {
   taxRateLow?: number
   taxRateHigh?: number
   personalAllowanceCoefficient?: number
-  increment?: number
 }
 
 /**
  * Calculates the gross amount based on the given net amount.
+ *
+ * Using binary search to find the gross amount.
  *
  * @alias netoToBruto
  *
@@ -25,7 +27,6 @@ export function netToGross(net: number, config?: NetToGrossConfig): number {
   const {
     place,
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
-    increment = 0.01,
   } = config
 
   if (place && !PlaceMap[place]) {
@@ -37,21 +38,25 @@ export function netToGross(net: number, config?: NetToGrossConfig): number {
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceMap[place] : config
 
-  let gross = net
-  while (true) {
-    const calculatedNet = grossToNet(gross, {
+  let lowerBound = toDecimal(0)
+  let upperBound = toDecimal(net * 2) // Assuming gross will not be more than twice the net
+  let gross = lowerBound
+
+  while (upperBound.minus(lowerBound).greaterThan(0.01)) {
+    // Stop if the difference is less than 1 cent
+    gross = lowerBound.plus(upperBound).dividedBy(2)
+    const calculatedNet = grossToNet(gross.toNumber(), {
       taxRateLow,
       taxRateHigh,
       personalAllowanceCoefficient,
     })
 
-    if (calculatedNet >= net) {
-      break
+    if (calculatedNet < net) {
+      lowerBound = gross
+    } else {
+      upperBound = gross
     }
-
-    gross += increment
   }
 
-  return parseFloat(gross.toFixed(2))
+  return gross.toDP(2).toNumber()
 }
-

@@ -1,9 +1,10 @@
+import { Decimal } from 'decimal.js'
 import {
   BASIC_PERSONAL_ALLOWANCE,
   HIGH_TAX_BRACKET_THRESHOLD,
   RATE,
 } from '../constants'
-import { ensureFloat } from '../utils'
+import { toDecimal } from '../utils'
 
 /**
  * Calculates the total pension contribution based on the gross salary.
@@ -11,15 +12,16 @@ import { ensureFloat } from '../utils'
  * @returns Contributions per pension pillar and the total pension contribution.
  */
 export function calcMandatoryPensionContribution(gross: number) {
-  const firstPilar = ensureFloat(gross * RATE.PENSION_CONTRIBUTION_PILLAR_1)
-  const secondPillar = ensureFloat(gross * RATE.PENSION_CONTRIBUTION_PILLAR_2)
+  const firstPillar = toDecimal(gross).mul(RATE.PENSION_CONTRIBUTION_PILLAR_1)
 
-  const total = firstPilar + secondPillar
+  const secondPillar = toDecimal(gross).mul(RATE.PENSION_CONTRIBUTION_PILLAR_2)
+
+  const total = firstPillar.add(secondPillar)
 
   return {
-    firstPilar,
-    secondPillar,
-    total,
+    firstPilar: firstPillar.toNumber(),
+    secondPillar: secondPillar.toNumber(),
+    total: total.toNumber(),
   }
 }
 
@@ -34,7 +36,7 @@ export function calcIncomeAfterDeductions(
   gross: number,
   pensionContribution: number,
 ): number {
-  return gross - pensionContribution
+  return Decimal.sub(gross, pensionContribution).toNumber()
 }
 
 /**
@@ -51,7 +53,8 @@ export function calcPersonalAllowance(
   income: number,
   coefficient: number,
 ): number {
-  return Math.min(income, BASIC_PERSONAL_ALLOWANCE * coefficient)
+  const personalAllowance = toDecimal(BASIC_PERSONAL_ALLOWANCE).mul(coefficient)
+  return Decimal.min(income, personalAllowance).toNumber()
 }
 
 /**
@@ -67,7 +70,7 @@ export function calcTaxableIncome(
   income: number,
   personalAllowance: number,
 ): number {
-  return income - personalAllowance
+  return Decimal.sub(income, personalAllowance).toNumber()
 }
 
 /**
@@ -83,17 +86,24 @@ export function calcTax(
   principal: number,
   [taxRateLow, taxRateHigh]: [number, number],
 ) {
-  const taxLower = ensureFloat(
-    Math.min(principal, HIGH_TAX_BRACKET_THRESHOLD) * taxRateLow,
+  const $principal = toDecimal(principal)
+
+  const lowerBracketAmount = Decimal.min($principal, HIGH_TAX_BRACKET_THRESHOLD)
+  const taxLower = lowerBracketAmount.mul(taxRateLow).toDP(2)
+
+  const higherTaxPrincipal = Decimal.max(
+    $principal.sub(HIGH_TAX_BRACKET_THRESHOLD),
+    0,
   )
-  const taxHigher = ensureFloat(
-    Math.max((principal - HIGH_TAX_BRACKET_THRESHOLD) * taxRateHigh, 0),
-  )
-  const total = taxLower + taxHigher
+  const highBracketAmount = higherTaxPrincipal.mul(taxRateHigh)
+  const taxHigher = Decimal.max(highBracketAmount, 0).toDP(2)
+
+  const total = taxLower.add(taxHigher).toDP(2)
+
   return {
-    taxLower,
-    taxHigher,
-    total,
+    taxLower: taxLower.toNumber(),
+    taxHigher: taxHigher.toNumber(),
+    total: total.toNumber(),
   }
 }
 
@@ -107,7 +117,7 @@ export function calcTax(
  * @returns The final net income after deducting the taxes.
  */
 export function calcFinalNet(income: number, taxes: number): number {
-  return income - taxes
+  return Decimal.sub(income, taxes).toDP(2).toNumber()
 }
 
 /**
@@ -117,7 +127,9 @@ export function calcFinalNet(income: number, taxes: number): number {
  * @returns The calculated health insurance contribution.
  */
 export function calcHealthInsuranceContribution(gross: number): number {
-  return ensureFloat(gross * RATE.HEALTH_INSURANCE_CONTRIBUTION)
+  return Decimal.mul(gross, RATE.HEALTH_INSURANCE_CONTRIBUTION)
+    .toDP(2)
+    .toNumber()
 }
 
 /**
@@ -128,8 +140,12 @@ export function calcHealthInsuranceContribution(gross: number): number {
  */
 export function grossToTotal(gross: number) {
   const healthInsuranceContribution = calcHealthInsuranceContribution(gross)
+  const total = Decimal.add(gross, healthInsuranceContribution)
+    .toDP(2)
+    .toNumber()
+
   return {
     healthInsuranceContribution,
-    total: gross + healthInsuranceContribution,
+    total,
   }
 }

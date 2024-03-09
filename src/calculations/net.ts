@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js'
 import {
   BASIC_PERSONAL_ALLOWANCE,
   PERSONAL_ALLOWANCE_COEFFICIENT,
@@ -5,7 +6,7 @@ import {
   THIRD_PILLAR_NON_TAXABLE_LIMIT,
 } from '../constants'
 import { Place, PlaceMap } from '../generated/places'
-import { ensureFloat } from '../utils'
+import { isBetween, toDecimal } from '../utils'
 import {
   calcFinalNet,
   calcIncomeAfterDeductions,
@@ -22,6 +23,25 @@ type GrossToNetConfig = {
   taxRateHigh?: number
   personalAllowanceCoefficient?: number
   thirdPillarContribution?: number
+}
+
+const handleThirdPillar = (
+  thirdPillarContribution: number,
+  opts?: { strict?: boolean },
+) => {
+  const { strict = true } = opts ?? {}
+  const inRange = isBetween(thirdPillarContribution, {
+    min: 0,
+    max: THIRD_PILLAR_NON_TAXABLE_LIMIT,
+  })
+
+  if (!inRange && strict) {
+    throw new Error(
+      `Third pillar contribution can't be negative and must be up to ${THIRD_PILLAR_NON_TAXABLE_LIMIT}. Got: ${thirdPillarContribution}.`,
+    )
+  }
+
+  return inRange
 }
 
 /**
@@ -46,23 +66,14 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
     throw new Error(`Unknown place "${place}"`)
   }
 
-  if (
-    !(
-      thirdPillarContribution >= 0 &&
-      thirdPillarContribution <= THIRD_PILLAR_NON_TAXABLE_LIMIT
-    )
-  ) {
-    throw new Error(
-      `Third pillar contribution can't be negative and must be up to ${THIRD_PILLAR_NON_TAXABLE_LIMIT}. Got: ${thirdPillarContribution}.`,
-    )
-  }
+  handleThirdPillar(thirdPillarContribution)
 
   const {
     taxRateLow = RATE.TAX_LOW_BRACKET,
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceMap[place] : config
 
-  const realGross = gross - thirdPillarContribution
+  const realGross = Decimal.sub(gross, thirdPillarContribution).toNumber()
 
   const { total: pensionContribution } =
     calcMandatoryPensionContribution(realGross)
@@ -103,16 +114,7 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     throw new Error(`Unknown place "${place}"`)
   }
 
-  if (
-    !(
-      thirdPillarContribution >= 0 &&
-      thirdPillarContribution <= THIRD_PILLAR_NON_TAXABLE_LIMIT
-    )
-  ) {
-    throw new Error(
-      `Third pillar contribution can't be negative and must be up to ${THIRD_PILLAR_NON_TAXABLE_LIMIT}. Got: ${thirdPillarContribution}`,
-    )
-  }
+  handleThirdPillar(thirdPillarContribution)
 
   const {
     taxRateLow = RATE.TAX_LOW_BRACKET,
@@ -125,8 +127,9 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     total: pensionContribution,
   } = calcMandatoryPensionContribution(gross)
 
-  const initalGross = gross
-  const realGross = initalGross - thirdPillarContribution
+  const originalGross = gross
+  const realGross = Decimal.sub(gross, thirdPillarContribution).toNumber()
+  const matchingGross = originalGross === realGross
 
   const income = calcIncomeAfterDeductions(realGross, pensionContribution)
 
@@ -145,38 +148,41 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
 
   const net = calcFinalNet(income, taxes)
 
-  const { healthInsuranceContribution, total: totalCost } =
+  const { healthInsuranceContribution, total: totalCostToEmployer } =
     grossToTotal(realGross)
 
   // Calculations
 
-  const netShareOfTotal = ensureFloat(net / totalCost)
-  const netShareOfGross = ensureFloat(net / realGross) // gross after third pillar deduction from which everything is calculated
-  const netShareOfInitialGross = ensureFloat(net / initalGross)
+  const $net = toDecimal(net)
 
-  const wouldBeNetFromInitialGross =
-    realGross !== initalGross
-      ? grossToNet(initalGross, {
-          place,
-          taxRateHigh,
-          taxRateLow,
-          personalAllowanceCoefficient,
-        })
-      : undefined
+  const netShareOfTotal = $net.div(totalCostToEmployer).toDP(2).toNumber()
+  const netShareOfGross = $net.div(realGross).toDP(2).toNumber()
+  const netShareOfInitialGross = !matchingGross
+    ? $net.div(originalGross).toDP(2).toNumber()
+    : undefined
+
+  const wouldBeNetFromInitialGross = !matchingGross
+    ? grossToNet(originalGross, {
+        place,
+        taxRateHigh,
+        taxRateLow,
+        personalAllowanceCoefficient,
+      })
+    : undefined
 
   const wouldBeNetShareOfInitialGross = wouldBeNetFromInitialGross
-    ? ensureFloat(wouldBeNetFromInitialGross / initalGross)
+    ? Decimal.div(wouldBeNetFromInitialGross, originalGross).toDP(2).toNumber()
     : undefined
 
   const netDifference = wouldBeNetFromInitialGross
-    ? ensureFloat(net - wouldBeNetFromInitialGross)
+    ? Decimal.sub(net, wouldBeNetFromInitialGross).abs().toDP(2).toNumber()
     : undefined
 
   return {
     net,
     gross: realGross,
-    initalGross,
-    totalCost,
+    originalGross: !matchingGross ? originalGross : undefined,
+    totalCostToEmployer,
     pension: {
       firstPilar,
       secondPillar,
@@ -184,15 +190,15 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
       mandatoryTotal: pensionContribution,
       total: pensionContribution + thirdPillarContribution,
     },
-    income,
     taxes: {
       lowerBracket: taxLower,
       higherBracket: taxHigher,
       total: taxes,
     },
     healthInsurance: healthInsuranceContribution,
-    taxableIncome,
+    income,
     personalAllowance,
+    taxableIncome,
     variables: {
       place: place ?? undefined,
       taxRateLow,

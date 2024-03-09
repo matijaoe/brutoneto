@@ -1,36 +1,14 @@
 {
   "name": "brutoneto",
-  "module": "index.ts",
-  "type": "module",
   "version": "0.0.9",
   "author": {
     "name": "Matija Osrečki",
     "url": "https://github.com/matijaoe"
   },
-  "license": "MIT",
   "repository": {
     "url": "https://github.com/matijaoe/brutoneto"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "scripts": {
-    "generate": "bun run scripts/gen-tax-rates.ts",
-    "dev": "bun run src/index.ts",
-    "build": "bun run build.ts",
-    "prepack": "bun run build",
-    "bump": "bumpp",
-    "release": "bumpp && npm publish"
-  },
-  "files": [
-    "dist"
-  ],
-  "paths": {
-    "src": "./src/index.ts"
-  },
+  "module": "index.ts",
   "devDependencies": {
     "@types/bun": "^1.0.8",
     "bumpp": "^9.3.0",
@@ -42,6 +20,28 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "paths": {
+    "src": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "bun run scripts/gen-tax-rates.ts",
+    "dev": "bun run src/index.ts",
+    "build": "bun run build.ts",
+    "prepack": "bun run build",
+    "bump": "bumpp",
+    "release": "bumpp && npm publish"
+  },
+  "type": "module",
   "dependencies": {
     "decimal.js": "^10.4.3"
   }
