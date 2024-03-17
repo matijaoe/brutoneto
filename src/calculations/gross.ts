@@ -1,9 +1,10 @@
 import { PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
-import { Place, PlaceMap } from '../generated/places'
+import type { Place } from '../generated/places'
+import { PlaceMap } from '../generated/places'
 import { toDecimal } from '../utils'
 import { grossToNet } from './net'
 
-export type NetToGrossConfig = {
+export interface NetToGrossConfig {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number
@@ -29,9 +30,8 @@ export function netToGross(net: number, config?: NetToGrossConfig): number {
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
   } = config
 
-  if (place && !PlaceMap[place]) {
+  if (place && !PlaceMap[place])
     throw new Error(`Unknown place "${place}"`)
-  }
 
   const {
     taxRateLow = RATE.TAX_LOW_BRACKET,
@@ -51,11 +51,10 @@ export function netToGross(net: number, config?: NetToGrossConfig): number {
       personalAllowanceCoefficient,
     })
 
-    if (calculatedNet < net) {
+    if (calculatedNet < net)
       lowerBound = gross
-    } else {
+    else
       upperBound = gross
-    }
   }
 
   return gross.toDP(2).toNumber()

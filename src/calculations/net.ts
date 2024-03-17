@@ -5,7 +5,8 @@ import {
   RATE,
   THIRD_PILLAR_NON_TAXABLE_LIMIT,
 } from '../constants'
-import { Place, PlaceMap } from '../generated/places'
+import type { Place } from '../generated/places'
+import { PlaceMap } from '../generated/places'
 import { isBetween, toDecimal } from '../utils'
 import {
   calcFinalNet,
@@ -17,7 +18,7 @@ import {
   grossToTotal,
 } from './salary'
 
-export type GrossToNetConfig = {
+export interface GrossToNetConfig {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number
@@ -25,10 +26,7 @@ export type GrossToNetConfig = {
   thirdPillarContribution?: number
 }
 
-const handleThirdPillar = (
-  thirdPillarContribution: number,
-  opts?: { strict?: boolean },
-) => {
+function handleThirdPillar(thirdPillarContribution: number, opts?: { strict?: boolean }) {
   const { strict = true } = opts ?? {}
   const inRange = isBetween(thirdPillarContribution, {
     min: 0,
@@ -62,9 +60,8 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
   } = config
 
-  if (place && !PlaceMap[place]) {
+  if (place && !PlaceMap[place])
     throw new Error(`Unknown place "${place}"`)
-  }
 
   handleThirdPillar(thirdPillarContribution)
 
@@ -75,8 +72,8 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
 
   const realGross = Decimal.sub(gross, thirdPillarContribution).toNumber()
 
-  const { total: pensionContribution } =
-    calcMandatoryPensionContribution(realGross)
+  const { total: pensionContribution }
+    = calcMandatoryPensionContribution(realGross)
 
   const income = calcIncomeAfterDeductions(realGross, pensionContribution)
 
@@ -110,9 +107,8 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
   } = config
 
-  if (place && !PlaceMap[place]) {
+  if (place && !PlaceMap[place])
     throw new Error(`Unknown place "${place}"`)
-  }
 
   handleThirdPillar(thirdPillarContribution)
 
@@ -148,8 +144,8 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
 
   const net = calcFinalNet(income, taxes)
 
-  const { healthInsuranceContribution, total: totalCostToEmployer } =
-    grossToTotal(realGross)
+  const { healthInsuranceContribution, total: totalCostToEmployer }
+    = grossToTotal(realGross)
 
   // Calculations
 

@@ -1,6 +1,6 @@
 export {
   getPlaceTax,
-  isValidPlace
+  isValidPlace,
 } from './src/utils/places'
 
 export {
@@ -29,12 +29,12 @@ export {
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   PERSONAL_ALLOWANCE_COEFFICIENT,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
-  THIRD_PILLAR_NON_TAXABLE_LIMIT
+  THIRD_PILLAR_NON_TAXABLE_LIMIT,
 } from './src/constants'
 
 export {
   Place,
   PlaceMap,
   PlaceName,
-  places
+  places,
 } from './src/generated/places'
