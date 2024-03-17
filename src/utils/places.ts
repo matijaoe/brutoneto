@@ -8,6 +8,7 @@ import { Place, PlaceMap } from '../generated/places'
 export const isValidPlace = (place: string): place is Place => {
   return place in PlaceMap
 }
+
 export const getPlaceTax = (place: Place) => {
   return PlaceMap[place]
 }

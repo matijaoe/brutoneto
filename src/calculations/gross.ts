@@ -3,7 +3,7 @@ import { Place, PlaceMap } from '../generated/places'
 import { toDecimal } from '../utils'
 import { grossToNet } from './net'
 
-type NetToGrossConfig = {
+export type NetToGrossConfig = {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number

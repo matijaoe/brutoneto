@@ -17,7 +17,7 @@ import {
   grossToTotal,
 } from './salary'
 
-type GrossToNetConfig = {
+export type GrossToNetConfig = {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number
@@ -163,11 +163,11 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
 
   const wouldBeNetFromInitialGross = !matchingGross
     ? grossToNet(originalGross, {
-        place,
-        taxRateHigh,
-        taxRateLow,
-        personalAllowanceCoefficient,
-      })
+      place,
+      taxRateHigh,
+      taxRateLow,
+      personalAllowanceCoefficient,
+    })
     : undefined
 
   const wouldBeNetShareOfInitialGross = wouldBeNetFromInitialGross
