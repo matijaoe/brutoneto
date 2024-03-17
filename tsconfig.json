@@ -23,8 +23,9 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.json"
+    "**/*.ts",
+    "**/*.js",
+    "**/*.json"
   ],
   "exclude": [
     "node_modules",

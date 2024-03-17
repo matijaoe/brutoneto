@@ -9,7 +9,7 @@ import {
 } from '../src/utils'
 import { rawHtmlTables } from './data/raw-html-tables'
 
-interface PlaceTaxesRecord {
+type PlaceTaxesRecord = {
   jedinica: string
   nizaStopa: number
   visaStopa: number
@@ -23,7 +23,7 @@ function generateTaxRecords() {
       const $ = load(table)
       const rows = $('table table tbody td')
         .get()
-        .map(td => $(td).text())
+        .map((td) => $(td).text())
 
       return rows
     })
@@ -47,10 +47,12 @@ async function writeTaxRecords(taxRecords: PlaceTaxesRecord[]) {
     'src/generated/porezi.json',
     JSON.stringify(taxRecords, null, 2),
   )
-  if (written)
+
+  if (written) {
     console.log('✅ Tax rates written to "/src/generated/porezi.json"')
-  else
+  } else {
     console.error('❌ Error writing tax rates file')
+  }
 }
 async function writeGeneratedCode(content: string) {
   const written = await writeFile('src/generated/places.ts', content)
@@ -58,14 +60,13 @@ async function writeGeneratedCode(content: string) {
     console.log(
       '✅ Places code generated and written to "/src/generated/places.ts"',
     )
-  }
-  else {
+  } else {
     console.error('❌ Error writing places type file')
   }
 }
 
 const taxRecords = generateTaxRecords()
-const placeNames = taxRecords.map(record => record.jedinica)
+const placeNames = taxRecords.map((record) => record.jedinica)
 
 const PlaceMap = taxRecords.reduce(
   (acc, record) => {
@@ -81,7 +82,7 @@ const PlaceMap = taxRecords.reduce(
   {} as Record<string, { name: string, taxRateLow: number, taxRateHigh: number }>,
 )
 
-const places = Object.keys(PlaceMap) as (keyof typeof PlaceMap)[]
+const places = Object.keys(PlaceMap)
 
 async function generateCode() {
   const comment = `
@@ -89,7 +90,7 @@ async function generateCode() {
     // Do not modify it manually.
   `
 
-  const PlaceMap_code = `
+  const PlaceMapCode = `
     /**
      * Tax rates for different places in Croatia.
      * Generated off of the data from 'porezi.json'.
@@ -97,24 +98,24 @@ async function generateCode() {
     export const PlaceMap = ${JSON.stringify(PlaceMap, null, 2)} as const
   `
 
-  const Place_code = `export type Place = keyof typeof PlaceMap`
+  const PlaceCode = `export type Place = keyof typeof PlaceMap`
 
-  const Places_code = `export const places: Place[] = ${JSON.stringify(places, null, 2)} as const`
+  const PlacesCode = `export const places: Place[] = ${JSON.stringify(places, null, 2)} as const`
 
-  const PlaceType_code = `
+  const PlaceTypeCode = `
     /**
      * Type for all places in 'porezi.json'.
     */
-    export type PlaceName = ${placeNames.map(place => `| '${place}'`).join(' ')}
+    export type PlaceName = ${placeNames.map((place) => `| '${place}'`).join(' ')}
   `
 
-  const content = `${comment}\n\n${PlaceMap_code}\n\n${Place_code}\n\n${Places_code}\n\n${PlaceType_code}`
+  const content = `${comment}\n\n${PlaceMapCode}\n\n${PlaceCode}\n\n${PlacesCode}\n\n${PlaceTypeCode}`
 
   const formattedCode = await prettier.format(content, { parser: 'typescript' })
 
   return formattedCode
 }
 
-writeTaxRecords(taxRecords)
+await writeTaxRecords(taxRecords)
 
-writeGeneratedCode(await generateCode())
+await writeGeneratedCode(await generateCode())

@@ -5,8 +5,7 @@ export async function writeFile(path: string, data: string): Promise<boolean> {
   try {
     await Bun.write(path, data, { createPath: true })
     return true
-  }
-  catch (err) {
+  } catch (err) {
     return false
   }
 }
@@ -42,14 +41,14 @@ export function clamp(
 
   if (Array.isArray(range)) {
     ;[min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY] = range
-  }
-  else {
+  } else {
     ; ({ min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY }
       = range)
   }
 
-  if (min > max)
+  if (min > max) {
     throw new Error('max must be greater than min')
+  }
 
   return Math.min(max, Math.max(min, val))
 }
@@ -106,26 +105,28 @@ export function range(...args: [number] | [number, number, number?]): number[] {
     start = 0
     step = 1
     end = length - 1
-  }
-  else {
+  } else {
     ;[start, end, step = 1] = args
     length = Math.ceil(Math.abs((end - start) / step))
   }
 
-  if (start === end)
+  if (start === end) {
     return []
+  }
 
   const isAsc = start < end
 
-  if (isAsc && step < 0)
+  if (isAsc && step < 0) {
     throw new Error('The step must be greater than 0.')
+  }
 
   step = isAsc ? step : -Math.abs(step)
 
   const result = Array.from<number>({ length })
 
-  for (let i = 0; i < length; i++)
+  for (let i = 0; i < length; i++) {
     result[i] = start + i * step
+  }
 
   return result
 }
@@ -157,8 +158,7 @@ export function isBetween(
   let min: number, max: number
   if (Array.isArray(range)) {
     ;[min, max] = range
-  }
-  else {
+  } else {
     ; ({ min, max } = range)
   }
   return val >= min && val <= max

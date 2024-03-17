@@ -18,7 +18,7 @@ import {
   grossToTotal,
 } from './salary'
 
-export interface GrossToNetConfig {
+export type GrossToNetConfig = {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number
@@ -60,8 +60,9 @@ export function grossToNet(gross: number, config?: GrossToNetConfig): number {
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
   } = config
 
-  if (place && !PlaceMap[place])
+  if (place && !PlaceMap[place]) {
     throw new Error(`Unknown place "${place}"`)
+  }
 
   handleThirdPillar(thirdPillarContribution)
 
@@ -107,8 +108,9 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
   } = config
 
-  if (place && !PlaceMap[place])
+  if (place && !PlaceMap[place]) {
     throw new Error(`Unknown place "${place}"`)
+  }
 
   handleThirdPillar(thirdPillarContribution)
 
