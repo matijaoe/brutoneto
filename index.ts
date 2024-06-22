@@ -1,6 +1,10 @@
 export {
-  getPlaceTax,
   isValidPlace,
+  getPlaceTax,
+  getPlacesTaxes,
+  getPlacesOptions,
+  getPlaces,
+  getDefaultTax,
 } from './src/utils/places'
 
 export {
@@ -34,7 +38,5 @@ export {
 
 export {
   Place,
-  PlaceMap,
   PlaceName,
-  places,
 } from './src/generated/places'

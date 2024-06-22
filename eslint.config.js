@@ -7,7 +7,7 @@ export default antfu({
       'no-alert': 'warn',
       'no-await-in-loop': 'error',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'no-param-reassign': 'warn',
+      'no-param-reassign': 'off',
       'no-unused-vars': [
         'error',
         {
