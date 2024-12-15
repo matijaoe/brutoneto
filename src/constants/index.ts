@@ -30,13 +30,13 @@ export const RATE = {
  * Threshold for the high tax bracket.
  * @note prag za višu poreznu stopu
  */
-export const HIGH_TAX_BRACKET_THRESHOLD = 4200
+export const HIGH_TAX_BRACKET_THRESHOLD = 5000
 
 /**
  * Basic personal allowance.
  * @note osnovni osobni odbitak
  */
-export const BASIC_PERSONAL_ALLOWANCE = 560
+export const BASIC_PERSONAL_ALLOWANCE = 600
 /**
  * Coefficient for the personal allowance.
  * @note koeficijent osobnog odbitka
