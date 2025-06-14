@@ -1,18 +1,18 @@
 import { titleCase } from 'title-case'
-
-// Utilities only for generation scripts - not exported from main package
+import { Decimal } from '../src/lib/decimal'
 
 export async function writeFile(path: string, data: string): Promise<boolean> {
   try {
     await Bun.write(path, data, { createPath: true })
     return true
-  } catch (error) {
+  } catch (err) {
     return false
   }
 }
 
 export function convertFromPercentage(value: string) {
-  return Number.parseFloat((Number.parseFloat(value.replace('%', '')) / 100).toFixed(4))
+  const percentage = Number.parseFloat(value.replace('%', '')) / 100
+  return new Decimal(percentage).toDP(4).toNumber()
 }
 
 export function localizedTitleCase(str: string) {

@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js'
+export { Decimal } from './lib/decimal'
 
 export function clamp(
   val: number,
@@ -128,8 +128,4 @@ export function isBetween(
     ; ({ min, max } = range)
   }
   return val >= min && val <= max
-}
-
-export function toDecimal(num: number): Decimal {
-  return new Decimal(num)
 }

@@ -1,4 +1,3 @@
-import Decimal from 'decimal.js'
 import {
   BASIC_PERSONAL_ALLOWANCE,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
@@ -9,7 +8,8 @@ import {
 } from '../constants'
 import type { Place } from '../data/places'
 import { PlaceMap } from '../data/places'
-import { isBetween, toDecimal } from '../utils'
+import { isBetween } from '../utils'
+import { Decimal } from '../lib/decimal'
 import {
   calcFinalNet,
   calcIncomeAfterDeductions,
@@ -91,7 +91,7 @@ export function grossToNetBreakdown(gross: number, config?: SalaryConfig) {
   } = calcMandatoryPensionContribution(gross)
 
   const originalGross = gross
-  const realGross = Decimal.sub(gross, thirdPillarContribution).toNumber()
+  const realGross = new Decimal(gross).sub(thirdPillarContribution).toDP(2).toNumber()
   const matchingGross = originalGross === realGross
 
   const income = calcIncomeAfterDeductions(realGross, pensionContribution)
@@ -116,7 +116,7 @@ export function grossToNetBreakdown(gross: number, config?: SalaryConfig) {
 
   // Calculations
 
-  const $net = toDecimal(net)
+  const $net = new Decimal(net)
 
   const netShareOfTotal = $net.div(totalCostToEmployer).toDP(2).toNumber()
   const netShareOfGross = $net.div(realGross).toDP(2).toNumber()
@@ -134,11 +134,11 @@ export function grossToNetBreakdown(gross: number, config?: SalaryConfig) {
     : undefined
 
   const wouldBeNetShareOfInitialGross = wouldBeNetFromInitialGross
-    ? Decimal.div(wouldBeNetFromInitialGross, originalGross).toDP(2).toNumber()
+    ? new Decimal(wouldBeNetFromInitialGross).div(originalGross).toDP(2).toNumber()
     : undefined
 
   const netDifference = wouldBeNetFromInitialGross
-    ? Decimal.sub(net, wouldBeNetFromInitialGross).abs().toDP(2).toNumber()
+    ? new Decimal(net).sub(wouldBeNetFromInitialGross).abs().toDP(2).toNumber()
     : undefined
 
   return {
@@ -219,7 +219,7 @@ export function grossToNet(gross: number, config?: SalaryConfig): number {
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceMap[place] : config
 
-  const realGross = Decimal.sub(gross, thirdPillarContribution).toNumber()
+  const realGross = new Decimal(gross).sub(thirdPillarContribution).toDP(2).toNumber()
 
   const { total: pensionContribution }
     = calcMandatoryPensionContribution(realGross)

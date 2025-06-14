@@ -7,6 +7,7 @@
       "ESNext"
     ],
     "moduleDetection": "force",
+
     "module": "esnext",
     "moduleResolution": "bundler",
     "types": [

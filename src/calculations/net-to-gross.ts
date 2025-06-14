@@ -1,7 +1,7 @@
+import { Decimal } from '../lib/decimal'
 import { BASIC_PERSONAL_ALLOWANCE, HIGH_TAX_BRACKET_THRESHOLD, PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
 import type { Place } from '../data/places'
 import { PlaceMap } from '../data/places'
-import { toDecimal } from '../utils'
 
 export type NetToGrossConfig = {
   place?: Place
@@ -71,5 +71,5 @@ export function netToGross(
   }
 
   // round to euro-cents
-  return toDecimal(gross).toDP(2).toNumber()
+  return new Decimal(gross).toDP(2).toNumber()
 }
