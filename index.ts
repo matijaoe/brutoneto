@@ -42,3 +42,11 @@ export {
   Place,
   PlaceName,
 } from './src/data/places'
+
+// Precision utilities (optional for custom calculations)
+export {
+  roundEuros,
+  assertValidSalary,
+  assertFinitePositive,
+  percent,
+} from './src/utils/precision'

@@ -12,14 +12,14 @@ import { Decimal } from '../lib/decimal'
  */
 export function calcMandatoryPensionContribution(gross: number) {
   const grossDecimal = new Decimal(gross)
-  const firstPillar = grossDecimal.mul(RATE.PENSION_CONTRIBUTION_PILLAR_1)
-  const secondPillar = grossDecimal.mul(RATE.PENSION_CONTRIBUTION_PILLAR_2)
-  const total = firstPillar.add(secondPillar)
+  const firstPillar = grossDecimal.mul(RATE.PENSION_CONTRIBUTION_PILLAR_1).toNumber()
+  const secondPillar = grossDecimal.mul(RATE.PENSION_CONTRIBUTION_PILLAR_2).toNumber()
+  const total = firstPillar + secondPillar
 
   return {
-    firstPillar: firstPillar.toDP(2).toNumber(),
-    secondPillar: secondPillar.toDP(2).toNumber(),
-    total: total.toDP(2).toNumber(),
+    firstPillar,
+    secondPillar,
+    total,
   }
 }
 
@@ -34,7 +34,7 @@ export function calcIncomeAfterDeductions(
   gross: number,
   pensionContribution: number,
 ): number {
-  return new Decimal(gross).sub(pensionContribution).toDP(2).toNumber()
+  return new Decimal(gross).sub(pensionContribution).toNumber()
 }
 
 /**
@@ -51,10 +51,8 @@ export function calcPersonalAllowance(
   income: number,
   coefficient: number,
 ): number {
-  const personalAllowance = new Decimal(BASIC_PERSONAL_ALLOWANCE).mul(coefficient)
-  const incomeDecimal = new Decimal(income)
-  const minValue = incomeDecimal.lessThan(personalAllowance) ? incomeDecimal : personalAllowance
-  return minValue.toDP(2).toNumber()
+  const personalAllowance = BASIC_PERSONAL_ALLOWANCE * coefficient
+  return Math.min(income, personalAllowance)
 }
 
 /**
@@ -62,15 +60,15 @@ export function calcPersonalAllowance(
  *
  * @note porezna osnovica
  *
- * @param {number} income - The total income.
- * @param {number} personalAllowance - The personal allowance.
- * @returns {number} The taxable income.
+ * @param income - The total income.
+ * @param personalAllowance - The personal allowance.
+ * @returns The taxable income.
  */
 export function calcTaxableIncome(
   income: number,
   personalAllowance: number,
 ): number {
-  return new Decimal(income).sub(personalAllowance).toDP(2).toNumber()
+  return new Decimal(income).sub(personalAllowance).toNumber()
 }
 
 /**
@@ -79,7 +77,9 @@ export function calcTaxableIncome(
  * @note porez
  *
  * @param principal - The principal amount.
- * @param taxRates - An array containing the low and high tax rates.
+ * @param taxRates - An array containing the low and high tax rates [taxRateLow, taxRateHigh].
+ * @param taxRates."0" - The low tax rate.
+ * @param taxRates."1" - The high tax rate.
  * @returns Tax amounts for the low and high tax brackets, and the total tax amount.
  */
 export function calcTax(
@@ -115,7 +115,7 @@ export function calcTax(
  * @returns The final net income after deducting the taxes.
  */
 export function calcFinalNet(income: number, taxes: number): number {
-  return new Decimal(income).sub(taxes).toDP(2).toNumber()
+  return new Decimal(income).sub(taxes).toNumber()
 }
 
 /**
@@ -125,7 +125,7 @@ export function calcFinalNet(income: number, taxes: number): number {
  * @returns The calculated health insurance contribution.
  */
 export function calcHealthInsuranceContribution(gross: number): number {
-  return new Decimal(gross).mul(RATE.HEALTH_INSURANCE_CONTRIBUTION).toDP(2).toNumber()
+  return new Decimal(gross).mul(RATE.HEALTH_INSURANCE_CONTRIBUTION).toNumber()
 }
 
 /**
