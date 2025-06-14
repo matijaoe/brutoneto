@@ -19,7 +19,7 @@ export function calcMandatoryPensionContribution(gross: number) {
   const total = firstPillar.add(secondPillar)
 
   return {
-    firstPilar: firstPillar.toNumber(),
+    firstPillar: firstPillar.toNumber(),
     secondPillar: secondPillar.toNumber(),
     total: total.toNumber(),
   }

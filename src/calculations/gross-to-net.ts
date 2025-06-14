@@ -1,6 +1,8 @@
 import Decimal from 'decimal.js'
 import {
   BASIC_PERSONAL_ALLOWANCE,
+  MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
+  MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   PERSONAL_ALLOWANCE_COEFFICIENT,
   RATE,
   THIRD_PILLAR_NON_TAXABLE_LIMIT,
@@ -60,6 +62,17 @@ export function grossToNetBreakdown(gross: number, config?: SalaryConfig) {
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
   } = config
 
+  if (
+    !isBetween(personalAllowanceCoefficient, [
+      MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
+      MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
+    ])
+  ) {
+    throw new Error(
+      `personalAllowanceCoefficient must be between ${MIN_PERSONAL_ALLOWANCE_COEFFICIENT} and ${MAX_PERSONAL_ALLOWANCE_COEFFICIENT}. Got: ${personalAllowanceCoefficient}.`,
+    )
+  }
+
   if (place && !PlaceMap[place]) {
     throw new Error(`Unknown place "${place}"`)
   }
@@ -72,7 +85,7 @@ export function grossToNetBreakdown(gross: number, config?: SalaryConfig) {
   } = place ? PlaceMap[place] : config
 
   const {
-    firstPilar,
+    firstPillar,
     secondPillar,
     total: pensionContribution,
   } = calcMandatoryPensionContribution(gross)
@@ -134,7 +147,7 @@ export function grossToNetBreakdown(gross: number, config?: SalaryConfig) {
     originalGross: !matchingGross ? originalGross : undefined,
     totalCostToEmployer,
     pension: {
-      firstPilar,
+      firstPillar,
       secondPillar,
       thirdPillar: thirdPillarContribution,
       mandatoryTotal: pensionContribution,
@@ -185,6 +198,15 @@ export function grossToNet(gross: number, config?: SalaryConfig): number {
     thirdPillarContribution = 0,
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
   } = config
+
+  if (
+    personalAllowanceCoefficient < MIN_PERSONAL_ALLOWANCE_COEFFICIENT
+    || personalAllowanceCoefficient > MAX_PERSONAL_ALLOWANCE_COEFFICIENT
+  ) {
+    throw new Error(
+      `personalAllowanceCoefficient must be between ${MIN_PERSONAL_ALLOWANCE_COEFFICIENT} and ${MAX_PERSONAL_ALLOWANCE_COEFFICIENT}. Got: ${personalAllowanceCoefficient}.`,
+    )
+  }
 
   if (place && !PlaceMap[place]) {
     throw new Error(`Unknown place "${place}"`)
