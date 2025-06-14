@@ -1,15 +1,115 @@
 # brutoneto
 
-To install dependencies:
+Croatian salary calculation library (bruto/neto conversions) - now as a monorepo with multiple packages.
+
+## Packages
+
+| Package | Description | Publishable |
+|---------|-------------|-------------|
+| `@brutoneto/core` | Pure salary calculation engine | ✅ |
+| `@brutoneto/cli` | Command-line tool | ✅ |
+| `@brutoneto/api` | REST API service | ❌ |
+| `@brutoneto/web` | Vue.js web interface | ❌ |
+
+## Installation
 
 ```bash
-bun install
+pnpm install
 ```
 
-To run:
+## Development
+
+### Build all packages
+```bash
+pnpm run build
+```
+
+### Run tests
+```bash
+pnpm run test
+```
+
+### Lint all packages
+```bash
+pnpm run lint
+```
+
+### Generate tax data
+```bash
+pnpm run generate
+```
+
+### Run individual packages
+
+**Web interface (Vue.js):**
+```bash
+pnpm run dev
+# or
+pnpm --filter @brutoneto/web run dev
+```
+
+**API service:**
+```bash
+pnpm run dev:api
+# or
+pnpm --filter @brutoneto/api run dev
+```
+
+**CLI tool:**
+```bash
+pnpm run dev:cli
+# or
+pnpm --filter @brutoneto/cli run dev
+```
+
+**Core library:**
+```bash
+pnpm --filter @brutoneto/core run dev
+```
+
+### Start production API
+```bash
+pnpm run start:api
+```
+
+## Package Development
+
+To work on a specific package:
 
 ```bash
-bun run index.ts
+# Install dependencies for specific package
+pnpm --filter @brutoneto/core install
+
+# Build specific package
+pnpm --filter @brutoneto/core run build
+
+# Test specific package
+pnpm --filter @brutoneto/core run test
 ```
 
-This project was created using `bun init` in bun v1.0.18. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## CLI Usage
+
+After building the CLI package:
+
+```bash
+# Calculate net salary
+brutoneto 5000
+
+# Calculate with specific place
+brutoneto 5000 --place zagreb
+
+# Show detailed breakdown
+brutoneto 5000 --place zagreb --breakdown
+```
+
+## API Usage
+
+Start the API service and make HTTP requests:
+
+```bash
+# Get net salary from gross
+GET /gross-to-net/5000?place=zagreb&breakdown=true
+
+# Get gross salary from net
+GET /net-to-gross/3500?place=zagreb
+```

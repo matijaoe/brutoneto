@@ -113,7 +113,7 @@ export default antfu({
         paths: [
           {
             name: 'decimal.js',
-            message: 'Import Decimal from src/lib/decimal instead so global config is applied.',
+            message: 'Import Decimal from @brutoneto/core lib/decimal instead so global config is applied.',
           },
         ],
       },
