@@ -1,8 +1,7 @@
-import { PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
+import { BASIC_PERSONAL_ALLOWANCE, HIGH_TAX_BRACKET_THRESHOLD, PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
 import type { Place } from '../data/places'
 import { PlaceMap } from '../data/places'
 import { toDecimal } from '../utils'
-import { grossToNet } from './gross-to-net'
 
 export type NetToGrossConfig = {
   place?: Place
@@ -14,7 +13,8 @@ export type NetToGrossConfig = {
 /**
  * Calculates the gross amount based on the given net amount.
  *
- * Using binary search to find the gross amount.
+ * Exact, closed-form inversion of grossToNet.
+ * Pass values in €, get gross in € (rounded to two decimals).
  *
  * @alias netoToBruto
  *
@@ -23,12 +23,14 @@ export type NetToGrossConfig = {
  * @returns The calculated gross amount.
  * @throws Error if the place specified in the configuration is unknown.
  */
-export function netToGross(net: number, config?: NetToGrossConfig): number {
-  config ??= {}
+export function netToGross(
+  net: number,
+  config: NetToGrossConfig = {},
+): number {
   const {
     place,
     personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
-  } = config ?? {}
+  } = config
 
   if (place && !PlaceMap[place]) {
     throw new Error(`Unknown place "${place}"`)
@@ -39,25 +41,35 @@ export function netToGross(net: number, config?: NetToGrossConfig): number {
     taxRateHigh = RATE.TAX_HIGH_BRACKET,
   } = place ? PlaceMap[place] : config
 
-  let lowerBound = toDecimal(0)
-  let upperBound = toDecimal(net * 2) // Assuming gross will not be more than twice the net
-  let gross = lowerBound
+  /* ---------- fixed parameters ---------- */
+  const contributionRate
+    = RATE.PENSION_CONTRIBUTION_PILLAR_1
+    + RATE.PENSION_CONTRIBUTION_PILLAR_2
+  const allowance = BASIC_PERSONAL_ALLOWANCE * personalAllowanceCoefficient
+  const threshold = HIGH_TAX_BRACKET_THRESHOLD
 
-  while (upperBound.minus(lowerBound).greaterThan(0.01)) {
-    // Stop if the difference is less than 1 cent
-    gross = lowerBound.plus(upperBound).dividedBy(2)
-    const calculatedNet = grossToNet(gross.toNumber(), {
-      taxRateLow,
-      taxRateHigh,
-      personalAllowanceCoefficient,
-    })
+  /* ---------- net at the bracket frontier ---------- */
+  const grossAtLimit = (threshold + allowance) / (1 - contributionRate)
+  const netAtLimit
+    = grossAtLimit * (1 - contributionRate) * (1 - taxRateLow)
+    + allowance * taxRateLow
 
-    if (calculatedNet < net) {
-      lowerBound = gross
-    } else {
-      upperBound = gross
-    }
+  /* ---------- solve N = A·G + B ---------- */
+  let gross: number
+
+  if (net <= netAtLimit) {
+    // low-rate bracket
+    const A = (1 - contributionRate) * (1 - taxRateLow)
+    const B = allowance * taxRateLow
+    gross = (net - B) / A
+  } else {
+    // high-rate bracket
+    const A = (1 - contributionRate) * (1 - taxRateHigh)
+    const B = allowance * taxRateHigh
+      - threshold * (taxRateLow - taxRateHigh)
+    gross = (net - B) / A
   }
 
-  return gross.toDP(2).toNumber()
+  // round to euro-cents
+  return toDecimal(gross).toDP(2).toNumber()
 }
