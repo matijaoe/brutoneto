@@ -6,7 +6,7 @@ import {
   localizedTitleCase,
   replaceDiacritics,
   writeFile,
-} from '../src/utils'
+} from './utils'
 import { rawHtmlTables } from './data/raw-html-tables'
 
 type PlaceTaxesRecord = {
@@ -44,21 +44,21 @@ function generateTaxRecords() {
 
 async function writeTaxRecords(taxRecords: PlaceTaxesRecord[]) {
   const written = await writeFile(
-    'src/generated/porezi.json',
+    'src/data/places.json',
     JSON.stringify(taxRecords, null, 2),
   )
 
   if (written) {
-    console.log('✅ Tax rates written to "/src/generated/porezi.json"')
+    console.log('✅ Tax rates written to "/src/data/places.json"')
   } else {
     console.error('❌ Error writing tax rates file')
   }
 }
 async function writeGeneratedCode(content: string) {
-  const written = await writeFile('src/generated/places.ts', content)
+  const written = await writeFile('src/data/places.ts', content)
   if (written) {
     console.log(
-      '✅ Places code generated and written to "/src/generated/places.ts"',
+      '✅ Places code generated and written to "/src/data/places.ts"',
     )
   } else {
     console.error('❌ Error writing places type file')

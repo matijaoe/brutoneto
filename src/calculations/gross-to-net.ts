@@ -5,8 +5,8 @@ import {
   RATE,
   THIRD_PILLAR_NON_TAXABLE_LIMIT,
 } from '../constants'
-import type { Place } from '../generated/places'
-import { PlaceMap } from '../generated/places'
+import type { Place } from '../data/places'
+import { PlaceMap } from '../data/places'
 import { isBetween, toDecimal } from '../utils'
 import {
   calcFinalNet,
@@ -18,7 +18,7 @@ import {
   grossToTotal,
 } from './salary'
 
-export type GrossToNetConfig = {
+export type SalaryConfig = {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number
@@ -26,6 +26,7 @@ export type GrossToNetConfig = {
   thirdPillarContribution?: number
 }
 
+// Utility function specific to gross-to-net calculations
 function handleThirdPillar(thirdPillarContribution: number, opts?: { strict?: boolean }) {
   const { strict = true } = opts ?? {}
   const inRange = isBetween(thirdPillarContribution, {
@@ -43,64 +44,15 @@ function handleThirdPillar(thirdPillarContribution: number, opts?: { strict?: bo
 }
 
 /**
- * Calculates the net income based on the gross income and optional configuration.
- *
- * @alias brutoToNeto
- *
- * @param gross - The gross income.
- * @param config - Optional configuration for tax rates and personal allowance coefficient.
- * @returns The net income.
- * @throws Error if the place specified in the configuration is unknown.
- */
-export function grossToNet(gross: number, config?: GrossToNetConfig): number {
-  config ??= {}
-  const {
-    place,
-    thirdPillarContribution = 0,
-    personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
-  } = config
-
-  if (place && !PlaceMap[place]) {
-    throw new Error(`Unknown place "${place}"`)
-  }
-
-  handleThirdPillar(thirdPillarContribution)
-
-  const {
-    taxRateLow = RATE.TAX_LOW_BRACKET,
-    taxRateHigh = RATE.TAX_HIGH_BRACKET,
-  } = place ? PlaceMap[place] : config
-
-  const realGross = Decimal.sub(gross, thirdPillarContribution).toNumber()
-
-  const { total: pensionContribution }
-    = calcMandatoryPensionContribution(realGross)
-
-  const income = calcIncomeAfterDeductions(realGross, pensionContribution)
-
-  const personalAllowance = calcPersonalAllowance(
-    income,
-    personalAllowanceCoefficient,
-  )
-
-  const taxableIncome = calcTaxableIncome(income, personalAllowance)
-
-  const { total: taxes } = calcTax(taxableIncome, [taxRateLow, taxRateHigh])
-
-  const net = calcFinalNet(income, taxes)
-
-  return net
-}
-
-/**
- * Calculates the detailed salary information based on the gross salary and optional configuration.
+ * Calculates comprehensive salary breakdown based on gross salary.
+ * Provides detailed breakdown of all salary components (taxes, contributions, etc.).
  *
  * @param gross - The gross salary amount.
  * @param config - Optional configuration object.
- * @returns An object containing detailed salary information.
+ * @returns An object containing detailed salary breakdown.
  * @throws Error if the place specified in the configuration is unknown.
  */
-export function detailedSalary(gross: number, config?: GrossToNetConfig) {
+export function grossToNetBreakdown(gross: number, config?: SalaryConfig) {
   config ??= {}
   const {
     place,
@@ -213,4 +165,55 @@ export function detailedSalary(gross: number, config?: GrossToNetConfig) {
       netDifference,
     },
   }
+}
+
+/**
+ * Calculates the net income based on the gross income.
+ * This is a simplified, faster version of calculateSalary that returns only the net amount.
+ *
+ * @alias brutoToNeto
+ *
+ * @param gross - The gross income.
+ * @param config - Optional configuration for tax rates and personal allowance coefficient.
+ * @returns The net income.
+ * @throws Error if the place specified in the configuration is unknown.
+ */
+export function grossToNet(gross: number, config?: SalaryConfig): number {
+  config ??= {}
+  const {
+    place,
+    thirdPillarContribution = 0,
+    personalAllowanceCoefficient = PERSONAL_ALLOWANCE_COEFFICIENT,
+  } = config
+
+  if (place && !PlaceMap[place]) {
+    throw new Error(`Unknown place "${place}"`)
+  }
+
+  handleThirdPillar(thirdPillarContribution)
+
+  const {
+    taxRateLow = RATE.TAX_LOW_BRACKET,
+    taxRateHigh = RATE.TAX_HIGH_BRACKET,
+  } = place ? PlaceMap[place] : config
+
+  const realGross = Decimal.sub(gross, thirdPillarContribution).toNumber()
+
+  const { total: pensionContribution }
+    = calcMandatoryPensionContribution(realGross)
+
+  const income = calcIncomeAfterDeductions(realGross, pensionContribution)
+
+  const personalAllowance = calcPersonalAllowance(
+    income,
+    personalAllowanceCoefficient,
+  )
+
+  const taxableIncome = calcTaxableIncome(income, personalAllowance)
+
+  const { total: taxes } = calcTax(taxableIncome, [taxRateLow, taxRateHigh])
+
+  const net = calcFinalNet(income, taxes)
+
+  return net
 }

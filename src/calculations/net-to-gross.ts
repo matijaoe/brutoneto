@@ -1,8 +1,8 @@
 import { PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
-import type { Place } from '../generated/places'
-import { PlaceMap } from '../generated/places'
+import type { Place } from '../data/places'
+import { PlaceMap } from '../data/places'
 import { toDecimal } from '../utils'
-import { grossToNet } from './net'
+import { grossToNet } from './gross-to-net'
 
 export type NetToGrossConfig = {
   place?: Place
