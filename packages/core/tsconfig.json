@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true,
+    "rootDir": "."
+  },
+  "include": [
+    "src/**/*.ts",
+    "scripts/**/*.ts",
+    "index.ts",
+    "build.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

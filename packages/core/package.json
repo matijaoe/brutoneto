@@ -1,0 +1,43 @@
+{
+  "name": "@brutoneto/core",
+  "type": "module",
+  "version": "0.3.0",
+  "author": {
+    "name": "Matija Osrečki",
+    "url": "https://github.com/matijaoe"
+  },
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/matijaoe/brutoneto"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "module": "index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "generate": "bun run scripts/gen-tax-rates.ts",
+    "dev": "bun run src/index.ts",
+    "build": "bun run build.ts",
+    "prepack": "bun run build",
+    "lint": "eslint src",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "decimal.js": "^10.5.0"
+  },
+  "devDependencies": {
+    "bun-plugin-dts": "^0.2.4",
+    "cheerio": "^1.1.0",
+    "title-case": "^4.3.2",
+    "vitest": "^3.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

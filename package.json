@@ -1,7 +1,7 @@
 {
-  "name": "brutoneto",
+  "name": "brutoneto-monorepo",
   "type": "module",
-  "version": "0.3.0",
+  "private": true,
   "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
   "author": {
     "name": "Matija Osrečki",
@@ -11,33 +11,11 @@
   "repository": {
     "url": "https://github.com/matijaoe/brutoneto"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "module": "index.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "generate": "bun run scripts/gen-tax-rates.ts",
-    "dev": "bun run src/index.ts",
-    "build": "bun run build.ts",
-    "prepack": "bun run build",
-    "bump": "bumpp",
-    "release": "bumpp && npm publish",
-    "lint": "eslint .",
-    "format": "eslint . --fix",
-    "test": "vitest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "decimal.js": "^10.5.0",
-    "vitest": "^3.2.3"
+    "build": "pnpm --filter @brutoneto/core run build",
+    "test": "pnpm --filter @brutoneto/core run test",
+    "lint": "pnpm --filter @brutoneto/core run lint",
+    "generate": "pnpm --filter @brutoneto/core run generate"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.3",
@@ -47,9 +25,8 @@
     "cheerio": "^1.1.0",
     "eslint": "^8.57.1",
     "prettier": "^3.5.3",
-    "title-case": "^4.3.2"
-  },
-  "paths": {
-    "src": "./src/index.ts"
+    "title-case": "^4.3.2",
+    "typescript": "^5",
+    "vitest": "^3.2.3"
   }
 }
