@@ -5,26 +5,28 @@ export {
   getPlacesOptions,
   getPlaces,
   getDefaultTax,
-} from './src/utils/places'
+} from './src/places'
 
+// Main salary calculations
 export {
-  // gross
-  NetToGrossConfig,
-  netToGross,
-  // net
-  GrossToNetConfig,
+  grossToNetBreakdown,
   grossToNet,
-  detailedSalary,
-  // other
+  type SalaryConfig,
+} from './src/calculations/gross-to-net'
+
+// Net-to-gross calculation
+export {
+  netToGross,
+  type NetToGrossConfig,
+} from './src/calculations/net-to-gross'
+
+// Calculation utilities (for custom calculations)
+export {
   calcMandatoryPensionContribution,
-  calcIncomeAfterDeductions,
   calcPersonalAllowance,
-  calcTaxableIncome,
   calcTax,
-  calcFinalNet,
-  calcHealthInsuranceContribution,
   grossToTotal,
-} from './src/calculations'
+} from './src/calculations/salary'
 
 export {
   RATE,
@@ -39,4 +41,12 @@ export {
 export {
   Place,
   PlaceName,
-} from './src/generated/places'
+} from './src/data/places'
+
+// Precision utilities (optional for custom calculations)
+export {
+  roundEuros,
+  assertValidSalary,
+  assertFinitePositive,
+  percent,
+} from './src/utils/precision'

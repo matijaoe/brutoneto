@@ -1,0 +1,1232 @@
+[
+  {
+    "jedinica": "Brodski Stupnik",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Klenovnik",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Nin",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Novigrad-Cittanova",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Podgora",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Vrbanja",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Andrijaševci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Bale-Valle",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Barban",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Bebrina",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Bednja",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Brtonigla-Verteneglio",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Čaglin",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Čeminac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Čepin",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Donji Lapac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Dugi Rat",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Dvor",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Fužine",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Gradina",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Gunja",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Hlebine",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Jakšić",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Jelsa",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Kamanje",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Karojba",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Krnjak",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ližnjan-Lisignano",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lokvičići",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Luka",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lumbarda",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Marijanci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Medulin",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Nova Kapela",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Novigrad",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Orebić",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Orle",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Peteranec",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Plitvička Jezera",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Posedarje",
+    "nizaStopa": 0.18,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Privlaka (Zadar)",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Radoboj",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Ribnik",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Stara Gradiška",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ston",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Suhopolje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sutivan",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Sveti Ilija",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sveti Križ Začretje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sveti Petar u Šumi",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Šodolovci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Tordinci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Tučepi",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Vojnić",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Imotski",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Komiža",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Križevci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Makarska",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Novi Marof",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Požega",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Petrinja",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Zagreb",
+    "nizaStopa": 0.23,
+    "visaStopa": 0.35
+  },
+  {
+    "jedinica": "Čađavica",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Draganić",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Duga Resa",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Gornji Bogićevci",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Gospić",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Klakar",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Milna",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Mrkopalj",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ogulin",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Omiš",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Pula-Pola",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Stari Mikanovci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sveti Ivan Zelina",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sveti Lovreč",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Udbina",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Vrgorac",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Vuka",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Zdenci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Žakanje",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Antunovac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Beretinec",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Biskupija",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Bol",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Darda",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Drenovci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Dugo Selo",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Erdut",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Hrvace",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Klis",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Lanišće",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lastovo",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Mali Bukovec",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Matulji",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Mihovljan",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Podcrkavlje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Pokupsko",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Poličnik",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Pregrada",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Raša",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Rovišće",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ružić",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Stari Jankovci",
+    "nizaStopa": 0.15,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Trogir",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Viškovo",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Vođinci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Žminj",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Kastav",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Otočac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Rijeka",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Sinj",
+    "nizaStopa": 0.18,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sisak",
+    "nizaStopa": 0.23,
+    "visaStopa": 0.34
+  },
+  {
+    "jedinica": "Slunj",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Virovitica",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Županja",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Babina Greda",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Baška Voda",
+    "nizaStopa": 0.17,
+    "visaStopa": 0.27
+  },
+  {
+    "jedinica": "Bedenica",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Bilje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Borovo",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Donja Voća",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Drenje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Drniš",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Đurđenovac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Grožnjan-Grisignana",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Hercegovac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Končanica",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lišane Ostrovičke",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Martijanec",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Semeljci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sibinj",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Veliki Grđevac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Vižinada-Visinada",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Žumberak",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Župa Dubrovačka",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Beli Manastir",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Čabar",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Nova Gradiška",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Split",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Sveta Nedelja (Samobor)",
+    "nizaStopa": 0.18,
+    "visaStopa": 0.28
+  },
+  {
+    "jedinica": "Varaždinske Toplice",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Brckovljani",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Brinje",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Cerna",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Dežanovac",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Dragalić",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Kanfanar",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Kapela",
+    "nizaStopa": 0.15,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Krapina",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lasinja",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Lobor",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lupoglav",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Marija Gorica",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Markušica",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Maruševec",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Negoslavci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Oprtalj-Portole",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Perušić",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Punat",
+    "nizaStopa": 0.15,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sirač",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sopje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Sračinec",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Starigrad",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Tribunj",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Trnovec Bartolovečki",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Velika",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Visoko",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Vladislavci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Vrbje",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Vrsi",
+    "nizaStopa": 0.15,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Buje-Buie",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Donja Stubica",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Donji Andrijevci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Glina",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ilok",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Jastrebarsko",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Karlovac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Novi Vinodolski",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Novska",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ozalj",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Pag",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Pakrac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Samobor",
+    "nizaStopa": 0.18,
+    "visaStopa": 0.27
+  },
+  {
+    "jedinica": "Stari Grad",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Valpovo",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Varaždin",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Vodnjan-Dignano",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Vrbovsko",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Vrlika",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Belišće",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Brdovec",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Čačinci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Goričan",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Gradac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Kravarsko",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lipik",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Magadenovac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Okrug",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Petrijanec",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Ploče",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Primošten",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Tisno",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Velika Kopanica",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Vrhovine",
+    "nizaStopa": 0.18,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Buzet",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Daruvar",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ivanec",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Knin",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Bizovac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ernestinovo",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Kaptol",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lepoglava",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Lukač",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Dicmo",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.32
+  },
+  {
+    "jedinica": "Grubišno Polje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Klinča Sela",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Lekenik",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Supetar",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Baška",
+    "nizaStopa": 0.15,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Bilice",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Bjelovar",
+    "nizaStopa": 0.18,
+    "visaStopa": 0.28
+  },
+  {
+    "jedinica": "Breznica",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Jasenovac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Ludbreg",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Pazin",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Štitar",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Tar-Vabriga-Torre-Abrega",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Veliki Bukovec",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Kijevo",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Mljet",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Rešetari",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Veliko Trojstvo",
+    "nizaStopa": 0.17,
+    "visaStopa": 0.27
+  },
+  {
+    "jedinica": "Crnac",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Molve",
+    "nizaStopa": 0.15,
+    "visaStopa": 0.25
+  },
+  {
+    "jedinica": "Veliko Trgovišće",
+    "nizaStopa": 0.22,
+    "visaStopa": 0.33
+  },
+  {
+    "jedinica": "Vinica",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Gračišće",
+    "nizaStopa": 0.21,
+    "visaStopa": 0.31
+  },
+  {
+    "jedinica": "Stankovci",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Trpanj",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Vidovec",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Hrašćina",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Severin",
+    "nizaStopa": 0.18,
+    "visaStopa": 0.28
+  },
+  {
+    "jedinica": "Pitomača",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Vodice",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  },
+  {
+    "jedinica": "Oroslavje",
+    "nizaStopa": 0.2,
+    "visaStopa": 0.3
+  }
+]

@@ -1,29 +1,4 @@
-import Decimal from 'decimal.js'
-import { titleCase } from 'title-case'
-
-export async function writeFile(path: string, data: string): Promise<boolean> {
-  try {
-    await Bun.write(path, data, { createPath: true })
-    return true
-  } catch (err) {
-    return false
-  }
-}
-
-export function convertFromPercentage(value: string) {
-  return Number.parseFloat((Number.parseFloat(value.replace('%', '')) / 100).toFixed(4))
-}
-
-export function localizedTitleCase(str: string) {
-  return titleCase(str.toLocaleLowerCase(), {
-    locale: 'hr-HR',
-    smallWords: new Set(['i', 'u', 'na', 'iz', 'uz', 'pri', 'kod', 'pod']),
-  })
-}
-
-export function basicKebabCase(str: string) {
-  return str.replace(/[()]/g, '').replaceAll(/\s/g, '-').toLocaleLowerCase()
-}
+export { Decimal } from './lib/decimal'
 
 export function clamp(
   val: number,
@@ -51,15 +26,6 @@ export function clamp(
   }
 
   return Math.min(max, Math.max(min, val))
-}
-
-export function replaceDiacritics(str: string) {
-  return str
-    .replace(/š/i, 's')
-    .replace(/č/i, 'c')
-    .replace(/ć/i, 'c')
-    .replace(/ž/i, 'z')
-    .replace(/đ/i, 'd')
 }
 
 /**
@@ -162,8 +128,4 @@ export function isBetween(
     ; ({ min, max } = range)
   }
   return val >= min && val <= max
-}
-
-export function toDecimal(num: number): Decimal {
-  return new Decimal(num)
 }

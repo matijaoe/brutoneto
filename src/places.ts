@@ -1,6 +1,8 @@
-import { RATE } from '../constants'
-import type { Place } from '../generated/places'
-import { PlaceMap, places } from '../generated/places'
+import { RATE } from './constants'
+import type { Place } from './data/places'
+import { PlaceMap, places } from './data/places'
+
+// TODO: update taxes, not correct anymore
 
 /**
  * Checks if a given place is a valid Place.

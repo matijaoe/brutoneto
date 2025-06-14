@@ -2,6 +2,7 @@
   "name": "brutoneto",
   "type": "module",
   "version": "0.3.0",
+  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
   "author": {
     "name": "Matija Osrečki",
     "url": "https://github.com/matijaoe"
@@ -28,26 +29,27 @@
     "bump": "bumpp",
     "release": "bumpp && npm publish",
     "lint": "eslint .",
-    "format": "eslint . --fix"
+    "format": "eslint . --fix",
+    "test": "vitest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "decimal.js": "^10.4.3"
+    "decimal.js": "^10.5.0",
+    "vitest": "^3.2.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.8.3",
-    "@types/bun": "^1.0.8",
-    "bumpp": "^9.3.0",
-    "bun-plugin-dts": "^0.2.1",
-    "cheerio": "^1.0.0-rc.12",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
-    "title-case": "^4.3.1"
+    "@antfu/eslint-config": "^2.27.3",
+    "@types/bun": "^1.2.16",
+    "bumpp": "^9.11.1",
+    "bun-plugin-dts": "^0.2.4",
+    "cheerio": "^1.1.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.5.3",
+    "title-case": "^4.3.2"
   },
   "paths": {
     "src": "./src/index.ts"
-  },
-  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c"
+  }
 }
