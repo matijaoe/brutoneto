@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/matijaoe/brutoneto"
+    "url": "git+https://github.com/matijaoe/brutoneto.git"
   },
   "exports": {
     ".": {
