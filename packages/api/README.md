@@ -2,6 +2,12 @@
 
 REST API for Croatian salary calculations (bruto/neto conversions) built with [Nitro](https://nitro.unjs.io/).
 
+## Quick Start
+
+Visit the root endpoint to get started:
+- **API Info**: `/api/` - Basic API information and documentation links
+- **Interactive Docs**: `/_scalar` - Modern API documentation interface
+
 ## Development
 
 ```bash
@@ -51,8 +57,9 @@ curl "http://localhost:3000/api/neto/4000?ltax=0.25&htax=0.35"
 curl "http://localhost:3000/api/bruto/2500?place=split"
 ```
 
-### Tax Information
+### Places and Tax Information
 
+- **GET** `/api/places` - List all Croatian places with metadata
 - **GET** `/api/taxes/` - List all Croatian places
 - **GET** `/api/taxes/default` - Get default tax rates
 - **GET** `/api/taxes/{place}` - Get tax rates for specific place
@@ -60,7 +67,10 @@ curl "http://localhost:3000/api/bruto/2500?place=split"
 #### Examples
 
 ```bash
-# Get all places
+# Get all places with metadata
+curl "http://localhost:3000/api/places"
+
+# Get all places (taxes format)
 curl "http://localhost:3000/api/taxes/"
 
 # Get Zagreb tax rates
