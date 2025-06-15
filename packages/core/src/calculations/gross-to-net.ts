@@ -9,8 +9,8 @@ import {
 import type { Place } from '../data/places'
 import { PlaceMap } from '../data/places'
 import { Decimal } from '../lib/decimal'
-import { assertValidSalary, roundEuros } from '../utils/precision'
 import { isBetween } from '../utils'
+import { assertValidSalary, roundEuros } from '../utils/precision'
 import {
   calcFinalNet,
   calcIncomeAfterDeductions,
@@ -21,7 +21,7 @@ import {
   grossToTotal,
 } from './salary'
 
-export type SalaryConfig = {
+export interface SalaryConfig {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number
