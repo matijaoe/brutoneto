@@ -1,5 +1,18 @@
-import { getPlaces } from '@brutoneto/core'
+import { getPlacesMetadata, getPlacesTaxes } from '@brutoneto/core'
 
 export default defineEventHandler(() => {
-  return getPlaces()
+  const placesTaxes = getPlacesTaxes()
+
+  // Transform data to include keys, names, and taxes
+  const places = Object.entries(placesTaxes).map(([key, data]) => ({
+    key,
+    name: data.name,
+    taxRateLow: data.taxRateLow,
+    taxRateHigh: data.taxRateHigh,
+  }))
+
+  return {
+    places,
+    metadata: getPlacesMetadata(),
+  }
 })

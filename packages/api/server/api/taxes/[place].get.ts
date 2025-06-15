@@ -1,4 +1,4 @@
-import { getPlaceTax, isValidPlace } from '@brutoneto/core'
+import { getPlaceTax, getPlacesMetadata, isValidPlace } from '@brutoneto/core'
 import { z } from 'zod'
 
 const ParamsSchema = z.object({
@@ -6,7 +6,7 @@ const ParamsSchema = z.object({
     .string()
     .refine(isValidPlace, {
       message: 'Invalid place',
-    })
+    }),
 })
 
 export default defineEventHandler(async (event) => {
@@ -21,6 +21,15 @@ export default defineEventHandler(async (event) => {
   }
 
   const { place } = params.data
+  const placeTax = getPlaceTax(place)
 
-  return getPlaceTax(place)
+  return {
+    place: {
+      key: place,
+      name: placeTax.name,
+      taxRateLow: placeTax.taxRateLow,
+      taxRateHigh: placeTax.taxRateHigh,
+    },
+    metadata: getPlacesMetadata(),
+  }
 })

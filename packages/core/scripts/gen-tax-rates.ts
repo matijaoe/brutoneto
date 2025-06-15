@@ -92,13 +92,16 @@ async function generateTaxRecords(): Promise<{ records: PlaceTaxesRecord[], meta
 
   console.log('🔄 Parsing tax rate data...')
 
-  // Extract last updated date from the page
-  const lastUpdatedText = $('time[datetime]').attr('datetime') || 
-                         $('time').text() || 
-                         $('.last-updated').text() ||
-                         ''
+  // Extract last updated date from the time element
+  const timeElement = $('time[datetime]').first()
+  const lastUpdatedDatetime = timeElement.attr('datetime')
+  const lastUpdatedText = timeElement.text().trim()
   
-  console.log(`📅 Source last updated: ${lastUpdatedText}`)
+  // Parse the clean date from text like "Zadnja izmjena: 10.03.2025"
+  const cleanLastUpdated = lastUpdatedText.match(/Zadnja izmjena: (\d{2}\.\d{2}\.\d{4})/)
+  const lastUpdatedDate = cleanLastUpdated ? cleanLastUpdated[1] : lastUpdatedDatetime || ''
+  
+  console.log(`📅 Source last updated: ${lastUpdatedDate}`)
 
   $('div.post-content article').each((_idx, article) => {
     const jedinica = $(article).find('h3 strong').first().text().trim()
@@ -121,7 +124,7 @@ async function generateTaxRecords(): Promise<{ records: PlaceTaxesRecord[], meta
   
   const metadata: TaxDataMetadata = {
     totalPlaces: taxRateRecords.length,
-    lastUpdated: lastUpdatedText || new Date().toISOString(),
+    lastUpdated: lastUpdatedDate || new Date().toISOString().split('T')[0],
     sourceUrl: SOURCE_URL,
     generatedAt: new Date().toISOString()
   }

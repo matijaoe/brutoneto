@@ -12,10 +12,22 @@
     "url": "https://github.com/matijaoe/brutoneto"
   },
   "scripts": {
-    "build": "pnpm --filter @brutoneto/core run build",
+    "build": "pnpm -r run build",
+    "build:core": "pnpm --filter @brutoneto/core run build",
+    "build:api": "pnpm --filter @brutoneto/api run build",
+    "dev": "pnpm -r --parallel run dev",
+    "dev:core": "pnpm --filter @brutoneto/core run dev",
+    "dev:api": "pnpm --filter @brutoneto/api run dev",
     "test": "pnpm --filter @brutoneto/core run test",
-    "lint": "pnpm --filter @brutoneto/core run lint",
-    "generate": "pnpm --filter @brutoneto/core run generate"
+    "lint": "pnpm -r run lint",
+    "lint:core": "pnpm --filter @brutoneto/core run lint",
+    "lint:api": "pnpm --filter @brutoneto/api run lint",
+    "format": "pnpm -r run format",
+    "format:core": "pnpm --filter @brutoneto/core run format",
+    "format:api": "pnpm --filter @brutoneto/api run format",
+    "clean": "pnpm -r exec rm -rf dist .output node_modules/.cache",
+    "generate": "pnpm --filter @brutoneto/core run generate",
+    "preview": "pnpm --filter @brutoneto/api run preview"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.3",

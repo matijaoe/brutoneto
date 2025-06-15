@@ -1,6 +1,8 @@
-import { getDefaultTax } from '@brutoneto/core'
+import { getDefaultTax, getPlacesMetadata } from '@brutoneto/core'
 
 export default defineEventHandler(() => {
-  // eslint-disable-next-line ts/no-unsafe-return, ts/no-unsafe-call
-  return getDefaultTax()
+  return {
+    defaultTax: getDefaultTax(),
+    metadata: getPlacesMetadata(),
+  }
 })

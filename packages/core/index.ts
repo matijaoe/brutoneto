@@ -5,6 +5,7 @@ export {
   getPlacesOptions,
   getPlaces,
   getDefaultTax,
+  getPlacesMetadata,
 } from './src/places'
 
 // Main salary calculations
@@ -41,6 +42,7 @@ export {
 export {
   Place,
   PlaceName,
+  PlacesMetadata,
 } from './src/data/places'
 
 // Precision utilities (optional for custom calculations)
