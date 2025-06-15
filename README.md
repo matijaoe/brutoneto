@@ -1,15 +1,15 @@
 # brutoneto
 
-Croatian salary calculation library (bruto/neto conversions) - now as a monorepo with multiple packages.
+Croatian salary calculation library (bruto/neto conversions) - now as a centralized monorepo with multiple packages.
 
 ## Packages
 
 | Package | Description | Publishable |
 |---------|-------------|-------------|
 | `@brutoneto/core` | Pure salary calculation engine | ✅ |
-| `@brutoneto/cli` | Command-line tool | ✅ |
-| `@brutoneto/api` | REST API service | ❌ |
-| `@brutoneto/web` | Vue.js web interface | ❌ |
+| `@brutoneto/cli` | Command-line tool | ❌ |
+| `@brutoneto/api` | REST API service | ✅ |
+| `@brutoneto/web` | Web interface | ❌ |
 
 ## Installation
 
@@ -85,31 +85,4 @@ pnpm --filter @brutoneto/core run build
 
 # Test specific package
 pnpm --filter @brutoneto/core run test
-```
-
-## CLI Usage
-
-After building the CLI package:
-
-```bash
-# Calculate net salary
-brutoneto 5000
-
-# Calculate with specific place
-brutoneto 5000 --place zagreb
-
-# Show detailed breakdown
-brutoneto 5000 --place zagreb --breakdown
-```
-
-## API Usage
-
-Start the API service and make HTTP requests:
-
-```bash
-# Get net salary from gross
-GET /gross-to-net/5000?place=zagreb&breakdown=true
-
-# Get gross salary from net
-GET /net-to-gross/3500?place=zagreb
 ```
