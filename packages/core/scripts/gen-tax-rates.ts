@@ -14,9 +14,16 @@ interface PlaceTaxesRecord {
   visaStopa: number
 }
 
+interface TaxDataMetadata {
+  totalPlaces: number
+  lastUpdated: string
+  sourceUrl: string
+  generatedAt: string
+}
+
 const SOURCE_URL = 'https://isplate.info/porez-na-dohodak-stope.aspx'
 
-async function generateTaxRecords(): Promise<PlaceTaxesRecord[]> {
+async function generateTaxRecords(): Promise<{ records: PlaceTaxesRecord[], metadata: TaxDataMetadata }> {
   console.log('🔄 Fetching initial page to get form data...')
   
   // First, get the initial page to extract form data
@@ -85,6 +92,14 @@ async function generateTaxRecords(): Promise<PlaceTaxesRecord[]> {
 
   console.log('🔄 Parsing tax rate data...')
 
+  // Extract last updated date from the page
+  const lastUpdatedText = $('time[datetime]').attr('datetime') || 
+                         $('time').text() || 
+                         $('.last-updated').text() ||
+                         ''
+  
+  console.log(`📅 Source last updated: ${lastUpdatedText}`)
+
   $('div.post-content article').each((_idx, article) => {
     const jedinica = $(article).find('h3 strong').first().text().trim()
     const spans = $(article)
@@ -102,13 +117,27 @@ async function generateTaxRecords(): Promise<PlaceTaxesRecord[]> {
     }
   })
 
-  return taxRateRecords
+  console.log(`✅ Parsed ${taxRateRecords.length} Croatian places`)
+  
+  const metadata: TaxDataMetadata = {
+    totalPlaces: taxRateRecords.length,
+    lastUpdated: lastUpdatedText || new Date().toISOString(),
+    sourceUrl: SOURCE_URL,
+    generatedAt: new Date().toISOString()
+  }
+  
+  return { records: taxRateRecords, metadata }
 }
 
-async function writeTaxRecords(taxRecords: PlaceTaxesRecord[]) {
+async function writeTaxRecords(taxRecords: PlaceTaxesRecord[], metadata: TaxDataMetadata) {
   const written = await writeFile(
     'src/data/places.json',
     JSON.stringify(taxRecords, null, 2),
+  )
+
+  const metadataWritten = await writeFile(
+    'src/data/places-metadata.json',
+    JSON.stringify(metadata, null, 2),
   )
 
   if (written) {
@@ -116,6 +145,13 @@ async function writeTaxRecords(taxRecords: PlaceTaxesRecord[]) {
   }
   else {
     console.error('❌ Error writing tax rates file')
+  }
+
+  if (metadataWritten) {
+    console.log('✅ Metadata written to "/src/data/places-metadata.json"')
+  }
+  else {
+    console.error('❌ Error writing metadata file')
   }
 }
 async function writeGeneratedCode(content: string) {
@@ -130,7 +166,7 @@ async function writeGeneratedCode(content: string) {
   }
 }
 
-const taxRecords = await generateTaxRecords()
+const { records: taxRecords, metadata } = await generateTaxRecords()
 const placeNames = taxRecords.map(record => record.jedinica)
 
 const PlaceMap = taxRecords.reduce(
@@ -179,6 +215,13 @@ async function generateCode() {
   const placeNameUnion = placeNames.map(p => `'${p}'`).join('\n  | ')
   const placeNameCode = `export type PlaceName =\n  | ${placeNameUnion}`
 
+  // Add metadata export
+  const metadataCode = `export const PlacesMetadata = ${JSON.stringify(
+    metadata,
+    null,
+    2,
+  )} as const`
+
   // Assemble the file in a predictable order
   const rawContent = [
     headerComment,
@@ -191,11 +234,13 @@ async function generateCode() {
     placesArrayCode,
     '',
     placeNameCode,
+    '',
+    metadataCode,
   ].join('\n\n')
 
   return prettier.format(rawContent, { parser: 'typescript' })
 }
 
-await writeTaxRecords(taxRecords)
+await writeTaxRecords(taxRecords, metadata)
 
 await writeGeneratedCode(await generateCode())
