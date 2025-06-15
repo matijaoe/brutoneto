@@ -1,4 +1,9 @@
 // https://nitro.unjs.io/config
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
+const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf-8'))
+
 export default defineNitroConfig({
   compatibilityDate: '2025-01-15',
   srcDir: 'server',
@@ -10,7 +15,7 @@ export default defineNitroConfig({
     meta: {
       title: 'Brutoneto API',
       description: 'Croatian salary calculations API for bruto/neto conversions',
-      version: '1.0.0',
+      version: packageJson.version,
     },
     ui: {
       scalar: { route: '/_scalar' },
