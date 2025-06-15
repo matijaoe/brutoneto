@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
 
-const packageJson = JSON.parse(readFileSync(join(process.cwd(), 'packages/api/package.json'), 'utf-8'))
+const packageJsonPath = join(process.cwd(), 'package.json')
+const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
 
 export default defineEventHandler((event) => {
   const host = getHeader(event, 'host') || 'localhost:3000'

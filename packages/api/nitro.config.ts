@@ -1,8 +1,10 @@
 // https://nitro.unjs.io/config
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import process from 'node:process'
 
-const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf-8'))
+const packageJsonPath = join(process.cwd(), 'package.json')
+const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
 
 export default defineNitroConfig({
   compatibilityDate: '2025-01-15',
