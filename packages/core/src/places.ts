@@ -1,6 +1,6 @@
 import { RATE } from './constants'
 import type { Place } from './data/places'
-import { PlaceMap, places } from './data/places'
+import { PlaceMap, PlacesMetadata, places } from './data/places'
 
 // TODO: update taxes, not correct anymore
 
@@ -31,7 +31,7 @@ export function getPlacesTaxes() {
  * Generates options for places, suitable for use in UI components like dropdowns.
  */
 export function getPlacesOptions() {
-  return Object.keys(PlaceMap).map((place) => ({
+  return Object.keys(PlaceMap).map(place => ({
     value: place,
     label: place,
   }))
@@ -51,5 +51,17 @@ export function getDefaultTax() {
   return {
     taxRateLow: RATE.TAX_LOW_BRACKET,
     taxRateHigh: RATE.TAX_HIGH_BRACKET,
+  }
+}
+
+/**
+ * Retrieves metadata about places data
+ */
+export function getPlacesMetadata() {
+  return {
+    totalPlaces: PlacesMetadata.totalPlaces,
+    lastUpdated: PlacesMetadata.lastUpdated,
+    lastFetched: PlacesMetadata.generatedAt,
+    sourceUrl: PlacesMetadata.sourceUrl,
   }
 }

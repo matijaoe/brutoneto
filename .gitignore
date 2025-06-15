@@ -3,6 +3,7 @@
 # Logs
 
 logs
+*.log
 _.log
 npm-debug.log_
 yarn-debug.log*
@@ -12,7 +13,7 @@ lerna-debug.log*
 
 # Caches 
 
-.cache
+
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 
@@ -119,6 +120,9 @@ out
 
 .nuxt
 dist
+.data
+.nitro
+.output
 
 # Gatsby files
 

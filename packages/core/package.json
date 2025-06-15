@@ -1,7 +1,7 @@
 {
   "name": "@brutoneto/core",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Matija Osrečki",
     "url": "https://github.com/matijaoe"
@@ -25,7 +25,8 @@
     "dev": "bun run src/index.ts",
     "build": "bun run build.ts",
     "prepack": "bun run build",
-    "lint": "eslint src",
+    "lint": "eslint .",
+    "format": "eslint . --fix",
     "test": "vitest",
     "bump": "npx bumpp"
   },
