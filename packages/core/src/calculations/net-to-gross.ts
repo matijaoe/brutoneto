@@ -3,7 +3,7 @@ import type { Place } from '../data/places'
 import { PlaceMap } from '../data/places'
 import { assertValidSalary, roundEuros } from '../utils/precision'
 
-export type NetToGrossConfig = {
+export interface NetToGrossConfig {
   place?: Place
   taxRateLow?: number
   taxRateHigh?: number
@@ -68,7 +68,8 @@ export function netToGross(
     const A = (1 - contributionRate) * (1 - taxRateLow)
     const B = allowance * taxRateLow
     gross = (net - B) / A
-  } else {
+  }
+  else {
     // high-rate bracket
     const A = (1 - contributionRate) * (1 - taxRateHigh)
     const B = allowance * taxRateHigh

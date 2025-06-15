@@ -5,7 +5,8 @@ export async function writeFile(path: string, data: string): Promise<boolean> {
   try {
     await Bun.write(path, data, { createPath: true })
     return true
-  } catch {
+  }
+  catch {
     return false
   }
 }

@@ -1,14 +1,15 @@
 import type { z } from 'zod'
 
-export const isNumber = (val: unknown): val is number => {
+export function isNumber(val: unknown): val is number {
   try {
     return Number(val) === val
-  } catch {
+  }
+  catch {
     return false
   }
 }
 
-export const isString = (val: unknown): val is string => {
+export function isString(val: unknown): val is string {
   return typeof val === 'string'
 }
 
@@ -24,10 +25,7 @@ export const isString = (val: unknown): val is string => {
  * toNumber('123foo', 0) // 0
  * toNumber('foo', 'bar') // 'bar'
  */
-export const toNumber = <T = undefined>(
-  val: unknown,
-  fallback?: T,
-): number | T => {
+export function toNumber<T = undefined>(val: unknown, fallback?: T): number | T {
   if (isNumber(val)) {
     return val
   }
@@ -47,10 +45,7 @@ export const toNumber = <T = undefined>(
  * toNumber('123foo', 0) // 123
  * toNumber('foo', 'bar') // 'bar'
  */
-export const looseToNumber = <T = undefined>(
-  val: unknown,
-  fallback?: T,
-): number | T => {
+export function looseToNumber<T = undefined>(val: unknown, fallback?: T): number | T {
   if (isNumber(val)) {
     return val
   }
@@ -59,7 +54,7 @@ export const looseToNumber = <T = undefined>(
   return Number.isNaN(n) ? fallback as T : n
 }
 
-export const extractZodErrorMessage = (err: z.ZodError) => {
+export function extractZodErrorMessage(err: z.ZodError) {
   return err.errors.map((error: z.ZodIssue) => {
     if (!error.path?.length) {
       return error.message

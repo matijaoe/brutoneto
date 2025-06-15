@@ -10,8 +10,9 @@ import { Decimal } from '../lib/decimal'
  * roundEuros(1.005) // returns 1.01
  * roundEuros(1.004) // returns 1.00
  */
-export const roundEuros = (value: number): number =>
-  new Decimal(value).toDP(2).toNumber()
+export function roundEuros(value: number): number {
+  return new Decimal(value).toDP(2).toNumber()
+}
 
 /**
  * Asserts that a value is finite and positive.
@@ -20,7 +21,7 @@ export const roundEuros = (value: number): number =>
  * @param name - The parameter name for error messages
  * @throws Error if the value is not finite or is negative
  */
-export const assertFinitePositive = (value: number, name: string): void => {
+export function assertFinitePositive(value: number, name: string): void {
   if (!Number.isFinite(value) || value < 0) {
     throw new Error(`${name} must be a finite positive number, got: ${value}`)
   }
@@ -34,7 +35,7 @@ export const assertFinitePositive = (value: number, name: string): void => {
  * @param max - Maximum allowed value (default: 1,000,000)
  * @throws Error if the value is invalid
  */
-export const assertValidSalary = (value: number, name: string, max = 1_000_000): void => {
+export function assertValidSalary(value: number, name: string, max = 1_000_000): void {
   if (!Number.isFinite(value) || value < 0 || value > max) {
     throw new Error(`${name} must be a finite positive number ≤ ${max}, got: ${value}`)
   }

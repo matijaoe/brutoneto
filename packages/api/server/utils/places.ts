@@ -20,7 +20,7 @@ Object.entries(PLACE_SHORTCUTS).forEach(([place, shortcuts]) => {
  * @param place - Place name or shortcut
  * @returns Full place name as Place type or original string
  */
-export const resolvePlaceShortcut = (place: string): Place | string => {
+export function resolvePlaceShortcut(place: string): Place | string {
   const lowerPlace = place.toLowerCase()
   return SHORTCUT_TO_PLACE[lowerPlace] || place
 }
@@ -30,7 +30,7 @@ export const resolvePlaceShortcut = (place: string): Place | string => {
  * @param place - Place name or shortcut
  * @returns True if valid place (including shortcuts)
  */
-export const isValidPlaceWithShortcuts = (place: string): boolean => {
+export function isValidPlaceWithShortcuts(place: string): boolean {
   const resolvedPlace = resolvePlaceShortcut(place)
   return isValidPlace(resolvedPlace)
 }
@@ -39,7 +39,7 @@ export const isValidPlaceWithShortcuts = (place: string): boolean => {
  * Get all available shortcuts mapped to their full place names
  * @returns Object with shortcuts as keys and full names as values
  */
-export const getShortcutMapping = (): Record<string, string> => {
+export function getShortcutMapping(): Record<string, string> {
   return { ...SHORTCUT_TO_PLACE }
 }
 
@@ -48,7 +48,7 @@ export const getShortcutMapping = (): Record<string, string> => {
  * @param place - Place name
  * @returns Array of shortcuts for the place
  */
-export const getShortcutsForPlace = (place: Place): string[] => {
+export function getShortcutsForPlace(place: Place): string[] {
   return PLACE_SHORTCUTS[place] ?? []
 }
 
@@ -56,6 +56,6 @@ export const getShortcutsForPlace = (place: Place): string[] => {
  * Get all place shortcuts organized by place
  * @returns Object with place names as keys and arrays of shortcuts as values
  */
-export const getAllPlaceShortcuts = (): Partial<Record<Place, string[]>> => {
+export function getAllPlaceShortcuts(): Partial<Record<Place, string[]>> {
   return { ...PLACE_SHORTCUTS }
 }

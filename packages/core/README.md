@@ -73,11 +73,11 @@ console.log(gross) // 4527.27
 ### Tax Information
 
 ```typescript
-import { 
-  getPlaceTax, 
-  getPlaces, 
+import {
   getDefaultTax,
-  isValidPlace 
+  getPlaceTax,
+  getPlaces,
+  isValidPlace
 } from '@brutoneto/core'
 
 // Get tax rates for specific location
@@ -103,11 +103,11 @@ console.log(isValidPlace('invalid')) // false
 
 ```typescript
 interface SalaryConfig {
-  place?: Place                          // Croatian location
-  taxRateLow?: number                    // Custom low tax rate (0-0.99)
-  taxRateHigh?: number                   // Custom high tax rate (0-0.99)
-  personalAllowanceCoefficient?: number  // Coefficient (0.15-1.0)
-  thirdPillarContribution?: number       // Monthly contribution (0-750)
+  place?: Place // Croatian location
+  taxRateLow?: number // Custom low tax rate (0-0.99)
+  taxRateHigh?: number // Custom high tax rate (0-0.99)
+  personalAllowanceCoefficient?: number // Coefficient (0.15-1.0)
+  thirdPillarContribution?: number // Monthly contribution (0-750)
 }
 ```
 
@@ -123,15 +123,15 @@ The library supports all Croatian cities and municipalities with their specific 
 
 ```typescript
 import {
-  HIGH_TAX_BRACKET_THRESHOLD,
   BASIC_PERSONAL_ALLOWANCE,
-  MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
+  HIGH_TAX_BRACKET_THRESHOLD,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
+  MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   THIRD_PILLAR_NON_TAXABLE_LIMIT
 } from '@brutoneto/core'
 
 console.log(HIGH_TAX_BRACKET_THRESHOLD) // 5000 (EUR)
-console.log(BASIC_PERSONAL_ALLOWANCE)   // 600 (EUR)
+console.log(BASIC_PERSONAL_ALLOWANCE) // 600 (EUR)
 console.log(THIRD_PILLAR_NON_TAXABLE_LIMIT) // 750 (EUR)
 ```
 
@@ -140,7 +140,7 @@ console.log(THIRD_PILLAR_NON_TAXABLE_LIMIT) // 750 (EUR)
 ### Precision Utilities
 
 ```typescript
-import { roundEuros, percent } from '@brutoneto/core'
+import { percent, roundEuros } from '@brutoneto/core'
 
 const rounded = roundEuros(1234.567) // 1234.57
 const percentage = percent(0.23, 1000) // 230
@@ -175,9 +175,9 @@ The Croatian tax system implemented in this library includes:
 
 - **Income Tax**: Two brackets (20% up to €5,000, 30% above)
 - **Surtax**: Location-specific rates (0-18%)
-- **Pension Contributions**: 
+- **Pension Contributions**:
   - 1st pillar: 15% (mandatory)
-  - 2nd pillar: 5% (mandatory)  
+  - 2nd pillar: 5% (mandatory)
   - 3rd pillar: up to €750/month (optional, tax-deductible)
 - **Health Insurance**: 16.5% of gross salary
 - **Personal Allowance**: €600 base with coefficient (0.15-1.0)

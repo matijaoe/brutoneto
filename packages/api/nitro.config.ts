@@ -1,5 +1,6 @@
 // https://nitro.unjs.io/config
 export default defineNitroConfig({
+  compatibilityDate: '2025-01-15',
   srcDir: 'server',
   errorHandler: '~/error',
   experimental: {
@@ -15,5 +16,8 @@ export default defineNitroConfig({
       scalar: { route: '/_scalar' },
       swagger: { route: '/_swagger' },
     },
+  },
+  output: {
+    dir: '../../.vercel/output',
   },
 })

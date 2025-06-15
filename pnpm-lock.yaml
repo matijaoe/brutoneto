@@ -57,6 +57,9 @@ importers:
       eslint:
         specifier: ^9.5.0
         version: 9.29.0(jiti@2.4.2)
+      h3:
+        specifier: ^1.15.3
+        version: 1.15.3
       nitropack:
         specifier: ^2.11.12
         version: 2.11.12

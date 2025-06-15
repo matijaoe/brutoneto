@@ -16,7 +16,8 @@ export function clamp(
 
   if (Array.isArray(range)) {
     ;[min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY] = range
-  } else {
+  }
+  else {
     ; ({ min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY }
       = range)
   }
@@ -71,7 +72,8 @@ export function range(...args: [number] | [number, number, number?]): number[] {
     start = 0
     step = 1
     end = length - 1
-  } else {
+  }
+  else {
     ;[start, end, step = 1] = args
     length = Math.ceil(Math.abs((end - start) / step))
   }
@@ -124,7 +126,8 @@ export function isBetween(
   let min: number, max: number
   if (Array.isArray(range)) {
     ;[min, max] = range
-  } else {
+  }
+  else {
     ; ({ min, max } = range)
   }
   return val >= min && val <= max

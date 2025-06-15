@@ -35,7 +35,7 @@ pnpm preview
 
 - `place` - Croatian location (e.g., `zagreb`, `split`) or shortcut (`zg`, `svn`)
 - `ltax` - Custom low tax rate (0-0.99)
-- `htax` - Custom high tax rate (0-0.99) 
+- `htax` - Custom high tax rate (0-0.99)
 - `coeff` - Personal allowance coefficient (0.15-1.0)
 - `third_pillar` - Third pillar pension contribution (0-750)
 - `detailed` - Return detailed breakdown (`true`/`false`)
@@ -93,7 +93,7 @@ The API supports shortcuts for common Croatian locations:
 The API includes OpenAPI specification and interactive documentation:
 
 - **Scalar UI**: `/_scalar` - Modern API documentation interface
-- **Swagger UI**: `/_swagger` - Classic Swagger documentation  
+- **Swagger UI**: `/_swagger` - Classic Swagger documentation
 - **OpenAPI JSON**: `/_openapi.json` - Raw OpenAPI specification
 
 Visit these endpoints when the server is running to explore the API interactively.
