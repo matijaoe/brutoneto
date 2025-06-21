@@ -1,3 +1,7 @@
 {
-  "extends": "./.nitro/types/tsconfig.json"
+  "extends": "./.nitro/types/tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false
+  }
 }

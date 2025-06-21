@@ -1,4 +1,15 @@
 {
-  "buildCommand": "pnpm --filter @brutoneto/core run build && pnpm --filter @brutoneto/api run build",
-  "installCommand": "pnpm install"
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/packages/api/$1"
+    }
+  ],
+  "functions": {
+    "packages/api/server/**/*.ts": {
+      "runtime": "@vercel/node"
+    }
+  }
 }
