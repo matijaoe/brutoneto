@@ -11,6 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@brutoneto/core": "workspace:*",
     "@nuxt/eslint": "1.4.1",
     "@nuxt/icon": "1.14.0",
     "@nuxt/ui": "3.1.3",

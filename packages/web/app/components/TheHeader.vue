@@ -4,11 +4,11 @@ const { apiUrl } = $config.public
 </script>
 
 <template>
-  <header class="bg-white border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <header>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center space-x-4">
-          <h1 class="text-xl font-bold text-gray-900">
+          <h1 class="text-xl font-bold">
             Brutoneto
           </h1>
           <UBadge color="warning" variant="outline">
