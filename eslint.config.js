@@ -103,6 +103,7 @@ export default antfu({
         case: 'kebabCase',
         ignore: [
           '.md$',
+          '.vue$',
         ],
       },
     ],
