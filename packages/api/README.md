@@ -45,16 +45,16 @@ pnpm preview
 
 ```bash
 # Basic conversion
-curl "http://localhost:3000/api/neto/3000?place=zagreb"
+curl "http://localhost:4000/api/neto/3000?place=zagreb"
 
 # Detailed breakdown
-curl "http://localhost:3000/api/neto/5000?place=zg&detailed=true"
+curl "http://localhost:4000/api/neto/5000?place=zg&detailed=true"
 
 # Custom tax rates
-curl "http://localhost:3000/api/neto/4000?ltax=0.25&htax=0.35"
+curl "http://localhost:4000/api/neto/4000?ltax=0.25&htax=0.35"
 
 # Net to gross conversion
-curl "http://localhost:3000/api/bruto/2500?place=split"
+curl "http://localhost:4000/api/bruto/2500?place=split"
 ```
 
 ### Places and Tax Information
@@ -68,16 +68,16 @@ curl "http://localhost:3000/api/bruto/2500?place=split"
 
 ```bash
 # Get all places with metadata
-curl "http://localhost:3000/api/places"
+curl "http://localhost:4000/api/places"
 
 # Get all places (taxes format)
-curl "http://localhost:3000/api/taxes/"
+curl "http://localhost:4000/api/taxes/"
 
 # Get Zagreb tax rates
-curl "http://localhost:3000/api/taxes/zagreb"
+curl "http://localhost:4000/api/taxes/zagreb"
 
 # Get default tax rates
-curl "http://localhost:3000/api/taxes/default"
+curl "http://localhost:4000/api/taxes/default"
 ```
 
 ## Place Shortcuts

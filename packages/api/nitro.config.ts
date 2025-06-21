@@ -10,6 +10,9 @@ export default defineNitroConfig({
   compatibilityDate: '2025-01-15',
   srcDir: 'server',
   errorHandler: '~/error',
+  devServer: {
+    port: 4000,
+  },
   experimental: {
     openAPI: true,
   },
