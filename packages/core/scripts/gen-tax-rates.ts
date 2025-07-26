@@ -104,7 +104,7 @@ async function generateTaxRecords(): Promise<{ records: PlaceTaxesRecord[], meta
   console.log(`📅 Source last updated: ${lastUpdatedDate}`)
 
   $('div.post-content article').each((_idx, article) => {
-    const jedinica = $(article).find('h3 strong').first().text().trim()
+    let jedinica = $(article).find('h3 strong').first().text().trim()
     const spans = $(article)
       .find('tr.m-3 span.display-2')
       .slice(0, 2)
@@ -112,8 +112,16 @@ async function generateTaxRecords(): Promise<{ records: PlaceTaxesRecord[], meta
     const [low, high] = [$(spans[0]).text(), $(spans[1]).text()]
 
     if (jedinica && low && high) {
+      // Special case for long compound place name
+      if (jedinica.toLowerCase().includes('kaštelir-labinci-castelliere-s.domenica')) {
+        jedinica = 'Kaštelir-Labinci'
+      }
+      else {
+        jedinica = localizedTitleCase(jedinica)
+      }
+
       taxRateRecords.push({
-        jedinica: localizedTitleCase(jedinica),
+        jedinica,
         nizaStopa: convertFromPercentage(low),
         visaStopa: convertFromPercentage(high),
       })

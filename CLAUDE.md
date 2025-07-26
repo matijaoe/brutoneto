@@ -4,48 +4,89 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- **Build**: `pnpm run build` - Builds the core package using Bun
-- **Test**: `pnpm run test` - Runs Vitest on core package 
-- **Test Single File**: `pnpm --filter @brutoneto/core run test gross-to-net` - Run specific test file
-- **Lint**: `pnpm run lint` - Runs ESLint with @antfu/eslint-config
-- **Generate Tax Data**: `pnpm run generate` - Generates Croatian tax rate data from HTML tables
+- **Build**: `pnpm run build` - Builds all packages
+- **Test**: `pnpm run test` - Runs Vitest tests on core package
+- **Test Single File**: `pnpm --filter @brutoneto/core run test net-to-gross` - Run specific test file
+- **Lint**: `pnpm run lint` - Runs ESLint across all packages
+- **Format**: `pnpm run format` - Auto-fix ESLint issues across all packages
+- **Generate Tax Data**: `pnpm run generate` - Scrapes and generates Croatian tax rate data
+- **Clean**: `pnpm run clean` - Remove all dist/, .output/, and cache directories
 
-### Publishing
-- **Bump Version**: `pnpm --filter @brutoneto/core run bump` - Bumps version using bumpp
-- **Publish Core**: `pnpm --filter @brutoneto/core run release` - Bumps version and publishes to npm
+### Development Commands
+- **Dev All**: `pnpm run dev` - Start all packages in dev mode (parallel)
+- **Core Dev**: `pnpm --filter @brutoneto/core run dev` - Run core package with Bun
+- **API Dev**: `pnpm --filter @brutoneto/api run dev` - Start API server in dev mode
+- **API Preview**: `pnpm run preview` - Start API in production preview mode
 
-### Core Package Development
-- **Dev Mode**: `pnpm --filter @brutoneto/core run dev` - Runs src/index.ts with Bun
-- **Core Build**: `pnpm --filter @brutoneto/core run build` - Builds TypeScript to dist/ with type definitions
+### Package-Specific Commands
+- **Core Build**: `pnpm --filter @brutoneto/core run build` - Build TypeScript to dist/ with declarations
+- **Core Bump**: `pnpm --filter @brutoneto/core run bump` - Bump version using bumpp
+- **API Build**: `pnpm --filter @brutoneto/api run build` - Build Nitro API server
 
 ## Architecture
 
-This is a pnpm workspace monorepo for Croatian salary calculations (bruto/neto conversions). Only the core package contains implementation - other packages are minimal placeholders.
+This is a **pnpm workspace monorepo** for Croatian salary calculations with **EUR currency** (Croatia adopted Euro). The project includes production-ready packages and development placeholders.
 
-### Active Package
-- **@brutoneto/core** (`packages/core/`) - Complete salary calculation engine and data generation
-- **@brutoneto/cli**, **@brutoneto/api**, **@brutoneto/web** - Minimal placeholder packages with no implementation
+### Package Status
+- **@brutoneto/core** (`packages/core/`) - ✅ **Production-ready** salary calculation engine
+- **@brutoneto/api** (`packages/api/`) - ✅ **Production-ready** REST API service (Nitro)
+- **@brutoneto/web** (`packages/web/`) - ❌ **Placeholder** Nuxt web interface
+- **@brutoneto/cli** (`packages/cli/`) - ❌ **Placeholder** command-line tool
 
 ### Core Package Architecture (`packages/core/`)
-- **Main exports** (`index.ts`): Directly exports all public APIs from source files
-- **Calculations** (`src/calculations/`): Core salary computation logic
-  - `gross-to-net.ts`: Main calculations with `grossToNetBreakdown()` (comprehensive) and `grossToNet()` (simple)
-  - `net-to-gross.ts`: Reverse calculation using binary search algorithm
-  - `salary.ts`: Shared utilities for pension, tax, and allowance calculations
-- **Places** (`src/places.ts`): Functions for Croatian location-based tax rates  
-- **Constants** (`src/constants.ts`): Tax rates, brackets, and allowances for 2025
-- **Data** (`src/data/`): Generated tax data - never manually edit these files
-- **Utils** (`src/utils.ts`): Exported calculation utilities (clamp, isBetween, range, toDecimal)
-- **Decimal wrapper** (`src/lib/decimal.ts`): Configured Decimal.js for precise financial calculations
+**Main entry**: `index.ts` - Exports all public APIs
+
+**Key calculations**:
+- `grossToNet(gross, options?)` - Simple gross-to-net conversion
+- `grossToNetBreakdown(gross, options?)` - Detailed breakdown with all tax components
+- `netToGross(net, options?)` - Reverse calculation using binary search
+
+**Source structure**:
+- `src/calculations/` - Core salary computation logic
+  - `gross-to-net.ts` - Primary calculation functions
+  - `net-to-gross.ts` - Reverse calculation algorithm
+  - `salary.ts` - Shared tax, pension, and allowance utilities
+- `src/constants.ts` - 2025 tax rates, brackets (20%/30% at €5,000), allowances (€600 base)
+- `src/places.ts` - Croatian location functions with surtax rates
+- `src/data/` - Generated tax data (556+ locations) - **never manually edit**
+- `src/lib/decimal.ts` - Configured Decimal.js wrapper for financial precision
+- `src/utils.ts` - Exported utilities (clamp, isBetween, range, toDecimal)
+
+### API Package Architecture (`packages/api/`)
+**Framework**: Nitro (serverless Node.js)
+**Documentation**: Available at `/_scalar` and `/_swagger` endpoints
+
+**Key endpoints**:
+- `GET /neto/{gross}` - Gross to net calculation
+- `GET /bruto/{net}` - Net to gross calculation
+- `GET /places` - All Croatian locations and tax rates
+- `GET /taxes/*` - Tax system information
+
+**Features**:
+- Zod schema validation
+- Support for place shortcuts, tax coefficients, third pillar contributions
+- Detailed/simple response modes, yearly/monthly calculations
+- Comprehensive error handling
+
+### Croatian Tax System (2025)
+- **Currency**: EUR (European Euro) with 2 decimal precision
+- **Tax brackets**: 20% (up to €5,000), 30% (above €5,000)
+- **Personal allowance**: €600 base with coefficient system (0.3-6.0)
+- **Pension contributions**: 1st pillar (15%), 2nd pillar (5%)
+- **Health insurance**: 16.5% of gross salary
+- **Third pillar**: Optional up to €67/month
+- **Surtax**: Location-specific rates (0-18%)
 
 ### Data Generation System
-- **Generator** (`scripts/gen-tax-rates.ts`): Parses HTML tables of Croatian tax rates to generate:
-  - `src/data/places.ts`: TypeScript types and constants for all Croatian locations
-  - `src/data/places.json`: Raw tax rate data  
-- **ESLint rule**: Forbids raw `decimal.js` imports - must use the configured wrapper
+- **Script**: `scripts/gen-tax-rates.ts` - Scrapes Croatian government tax tables
+- **Generates**:
+  - `src/data/places.ts` - TypeScript types and location constants
+  - `src/data/places.json` - Raw tax rate data
+  - `src/data/places-metadata.json` - Location metadata
+- **ESLint rule**: Prevents direct `decimal.js` imports (must use configured wrapper)
 
-### Calculation Model
-Croatian salary calculations with:
-- Personal allowance coefficients and two-bracket tax system (20%/30% at 5000 HRK threshold)
-- Mandatory pension contributions (1st/2nd pillar) and health insurance
-- Optional 3rd pillar pension contributions and location-specific surtax rates
+### Testing
+- **Framework**: Vitest
+- **Coverage**: Comprehensive tests for all calculation functions
+- **Location**: Test files alongside source files (`.test.ts` suffix)
+- **Run single test**: `pnpm --filter @brutoneto/core run test {filename}`

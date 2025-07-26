@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd ../.. && pnpm --filter @brutoneto/web run build",
-  "outputDirectory": "dist",
-  "installCommand": "cd ../.. && pnpm install",
-  "framework": null
-} 

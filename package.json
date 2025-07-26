@@ -18,6 +18,7 @@
     "dev": "pnpm -r --parallel run dev",
     "dev:core": "pnpm --filter @brutoneto/core run dev",
     "dev:api": "pnpm --filter @brutoneto/api run dev",
+    "dev:web": "pnpm --filter @brutoneto/web run dev",
     "test": "pnpm --filter @brutoneto/core run test",
     "lint": "pnpm -r run lint",
     "lint:core": "pnpm --filter @brutoneto/core run lint",

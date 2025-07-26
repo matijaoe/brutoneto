@@ -6,7 +6,7 @@ const packageJsonPath = join(process.cwd(), 'package.json')
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
 
 export default defineEventHandler((event) => {
-  const host = getHeader(event, 'host') || 'localhost:3000'
+  const host = getHeader(event, 'host') || 'localhost:4000'
   const protocol = host.includes('localhost') ? 'http' : 'https'
 
   return {
