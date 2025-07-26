@@ -12,7 +12,7 @@
     "url": "https://github.com/matijaoe/brutoneto"
   },
   "scripts": {
-    "build": "pnpm -r run build",
+    "build": "pnpm run build:core && pnpm run build:api && pnpm --filter @brutoneto/web run build",
     "build:core": "pnpm --filter @brutoneto/core run build",
     "build:api": "pnpm --filter @brutoneto/api run build",
     "dev": "pnpm -r --parallel run dev",

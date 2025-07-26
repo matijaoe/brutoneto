@@ -1,15 +1,15 @@
 {
   "buildCommand": "pnpm run build",
   "installCommand": "pnpm install",
+  "functions": {
+    "packages/api/.output/server/**/*.mjs": {
+      "runtime": "@vercel/node@20.x"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/packages/api/$1"
+      "destination": "/packages/api/.output/server/index.mjs"
     }
-  ],
-  "functions": {
-    "packages/api/server/**/*.ts": {
-      "runtime": "@vercel/node"
-    }
-  }
+  ]
 }
