@@ -1,11 +1,11 @@
 import type { Place } from '@brutoneto/core'
 import { isValidPlace } from '@brutoneto/core'
 
-const PLACE_SHORTCUTS: Partial<Record<Place, string[]>> = {
+const PLACE_SHORTCUTS = {
   'zagreb': ['zg'],
   'sveta-nedelja-samobor': ['svn'],
   'samobor': ['smb'],
-}
+} satisfies Partial<Record<Place, string[]>>
 
 // Create reverse mapping for quick lookup
 const SHORTCUT_TO_PLACE: Record<string, Place> = {}
