@@ -208,6 +208,7 @@ export function grossToNetBreakdown(gross: number, config: SalaryConfig = {}) {
 
   return {
     net: roundEuros(net),
+    netWithHalfTaxReturned: roundEuros(net + (taxes / 2)),
     gross: roundEuros(realGross),
     originalGross: !matchingGross ? originalGross : undefined,
     totalCostToEmployer: roundEuros(totalCostToEmployer),
@@ -222,6 +223,7 @@ export function grossToNetBreakdown(gross: number, config: SalaryConfig = {}) {
       lowerBracket: roundEuros(taxLower),
       higherBracket: roundEuros(taxHigher),
       total: roundEuros(taxes),
+      totalHalf: roundEuros(taxes / 2),
     },
     healthInsurance: roundEuros(healthInsuranceContribution),
     income: roundEuros(income),
