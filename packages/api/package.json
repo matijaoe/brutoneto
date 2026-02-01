@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "build": "nitro build",
+    "build": "pnpm --filter @brutoneto/core run build && nitro build",
     "dev": "nitro dev --port 4000",
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs",

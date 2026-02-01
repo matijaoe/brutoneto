@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "pnpm --filter @brutoneto/core run build && nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
