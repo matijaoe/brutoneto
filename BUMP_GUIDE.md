@@ -19,7 +19,7 @@ pnpm run release:core     # Build → bump → publish
 
 ## 📋 When to Bump What
 
-### Core (npm package - v1.1.0)
+### Core (npm package)
 
 **Bump when:**
 - ✅ Dependencies updated (even dev deps) → **patch**
@@ -34,7 +34,7 @@ pnpm run bump:core     # Interactive choice
 pnpm run release:core  # Builds, bumps, publishes to npm
 ```
 
-### API & Web (Vercel deployments - v0.1.0)
+### API & Web (Vercel deployments)
 
 **Bump when:**
 - ✅ After dependency updates → **patch**

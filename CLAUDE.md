@@ -14,18 +14,10 @@ pnpm run clean            # Remove all build outputs
 
 ## Versioning & Releases
 
-```bash
-# From root - easy bump commands
-pnpm run bump:core        # Bump Core (interactive: patch/minor/major)
-pnpm run bump:api         # Bump API
-pnpm run bump:web         # Bump Web
-pnpm run bump:packages    # Bump both API and Web together
-pnpm run release:core     # Build → bump → publish Core to npm
+**Quick commands**: See `BUMP_GUIDE.md` for all bump commands and workflows
 
-# When to bump:
-# - Core: When dependencies change OR public API changes
-# - API/Web: After merging changes (patch for maintenance, minor for features)
-```
+- `pnpm run release:core` - Build → bump → publish Core to npm
+- `pnpm run bump:packages` - Bump API + Web together
 
 ## Package Commands
 
@@ -35,11 +27,11 @@ pnpm --filter @brutoneto/core run dev      # Tests in watch mode
 pnpm --filter @brutoneto/core run build    # Build to dist/
 pnpm --filter @brutoneto/core run release  # Build → bump → publish to npm
 
-# API (Vercel)
+# API 
 pnpm run dev:api          # Start API dev server (port 4000)
 pnpm run build:api        # Build Nitro serverless
 
-# Web (Vercel)
+# Web
 pnpm run dev:web          # Start Nuxt dev (port 3000)
 pnpm run build:web        # Build Nuxt SSR
 ```
@@ -52,15 +44,24 @@ pnpm run build:web        # Build Nuxt SSR
 
 | Package | Version | Status | Purpose |
 |---------|---------|--------|---------|
-| `@brutoneto/core` | 1.1.0 | ✅ Published to npm | Calculation engine |
+| `@brutoneto/core` | 1.1.1 | ✅ Published to npm | Calculation engine |
 | `@brutoneto/api` | 0.1.0 | ✅ Deployed to Vercel | REST API (Nitro) |
 | `@brutoneto/web` | 0.1.0 | 🚧 In development | Nuxt interface |
 
+
 ### Versioning
 
-- **Core**: Independent, published to npm, semantic versioning
-- **API/Web**: Internal tracking, deployed together, use `workspace:*` for Core
-- See `VERSIONING.md` for workflows
+- **Core**: Independent versioning, published to npm (https://www.npmjs.com/package/@brutoneto/core)
+  - Semantic versioning for external consumers
+  - Release: `pnpm run release:core` (builds, bumps, publishes)
+- **API/Web**: Internal tracking, deployed together to Vercel
+  - Versions don't affect npm or external consumers
+  - Bump: `pnpm run bump:packages`
+- **Dependency Strategy**: API/Web use `workspace:*` for Core
+  - Always use **local workspace version** (not npm version)
+  - Vercel deployments get latest Core from monorepo, not npm
+  - External apps installing `@brutoneto/core` get published npm version
+- **Commands & Workflows**: See `BUMP_GUIDE.md` for complete guide
 
 ### Deployment (Vercel)
 
