@@ -93,6 +93,7 @@ export default antfu({
   rules: {
     'antfu/top-level-function': 'off',
     'curly': ['error', 'all'],
+    'node/prefer-global/process': 'off', // Allow process.env in Node.js config files
 
     'unicorn/catch-error-name': ['error', { name: 'err' }],
     'unicorn/consistent-destructuring': 'error',
