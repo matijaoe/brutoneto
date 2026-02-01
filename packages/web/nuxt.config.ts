@@ -5,15 +5,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/test-utils',
-    '@nuxt/ui',
     '@vueuse/nuxt',
+    '@nuxt/ui',
   ],
   css: ['~/assets/css/main.css'],
-  ui: {
-    theme: {
-      defaultVariants: {
-        color: 'teal',
-      },
-    },
-  },
 })

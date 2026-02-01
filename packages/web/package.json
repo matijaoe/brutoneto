@@ -1,7 +1,7 @@
 {
   "name": "@brutoneto/web",
-  "version": "0.1.1",
   "type": "module",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "nuxt build",
