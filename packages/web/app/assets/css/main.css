@@ -3,7 +3,7 @@
 @import "@nuxt/ui";
 
 @theme {
-  --container-width: 80rem;
+  --container-width: 72rem;
   --font-unifontex: "UnifontEX", monospace;
 }
 

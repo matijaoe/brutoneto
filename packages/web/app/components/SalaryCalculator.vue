@@ -40,10 +40,17 @@ const amount = computed({
     }
   },
 })
+const inputRef = ref<{ focus?: () => void } | null>(null)
 
 const endpoint = computed(() => (mode.value === 'gross-to-net' ? 'neto' : 'bruto'))
 const toYearly = (value: number) => value * 12
 const amountNumber = computed(() => Number(amount.value))
+const amountLabel = computed(() => {
+  const periodLabel = period.value === 'yearly' ? 'Yearly' : 'Monthly'
+  return mode.value === 'gross-to-net'
+    ? `${periodLabel} gross amount`
+    : `${periodLabel} net amount`
+})
 const grossYearly = computed(() => {
   if (period.value === 'yearly' && Number.isFinite(amountNumber.value)) {
     return amountNumber.value
@@ -77,20 +84,21 @@ const isInputValid = computed(() => {
 })
 
 const hasBlurredOnce = ref(false)
+const hasSubmittedOnce = ref(false)
 const showPeriodHint = computed(() => {
-  if (!hasBlurredOnce.value) {
-    return null
-  }
   if (!Number.isFinite(amountNumber.value)) {
     return null
   }
   if (period.value === 'yearly' && amountNumber.value > 0 && amountNumber.value < 10000) {
+    if (!hasBlurredOnce.value && !hasSubmittedOnce.value) {
+      return null
+    }
     return {
       text: 'Switch to monthly?',
       next: 'monthly' as const,
     }
   }
-  if (period.value === 'monthly' && amountNumber.value >= 10000) {
+  if (period.value === 'monthly' && amountNumber.value >= 20000) {
     return {
       text: 'Switch to yearly?',
       next: 'yearly' as const,
@@ -103,8 +111,18 @@ const handleCalculate = () => {
   if (!isInputValid.value) {
     return
   }
+  hasSubmittedOnce.value = true
   calculate()
+  inputRef.value?.blur?.()
 }
+
+watch(
+  () => mode.value,
+  async () => {
+    await nextTick()
+    inputRef.value?.focus?.()
+  },
+)
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('en-US', {
@@ -117,26 +135,33 @@ const formatCurrency = (value: number) => {
 <template>
   <div>
     <form @submit.prevent="handleCalculate">
-      <UInput
-        v-model="amount"
-        icon="mdi:currency-eur"
-        type="number"
-        :placeholder="placeholder"
-        size="lg"
-        :ui="{ trailing: 'pe-1!' }"
-        :autofocus="autofocus"
-        @blur="hasBlurredOnce = true"
+      <UFormField
+        :label="amountLabel"
+        :ui="{ label: 'text-sm' }"
       >
-        <template #trailing>
-          <UButton
-            color="primary"
-            variant="link"
-            size="lg"
-            icon="mdi:send"
-            type="submit"
-          />
-        </template>
-      </UInput>
+        <UInput
+          ref="inputRef"
+          v-model="amount"
+          icon="mdi:currency-eur"
+          type="number"
+          :placeholder="placeholder"
+          size="lg"
+          class="w-full sm:w-auto"
+          :ui="{ trailing: 'pe-1!' }"
+          :autofocus="autofocus"
+          @blur="hasBlurredOnce = true"
+        >
+          <template #trailing>
+            <UButton
+              color="primary"
+              variant="link"
+              size="lg"
+              icon="mdi:send"
+              type="submit"
+            />
+          </template>
+        </UInput>
+      </UFormField>
     </form>
     <Transition
       enter-active-class="transition duration-200"
