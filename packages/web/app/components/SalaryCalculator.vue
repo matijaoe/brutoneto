@@ -40,11 +40,15 @@ const amount = computed({
     }
   },
 })
-const inputRef = ref<{ focus?: () => void } | null>(null)
+const inputRef = ref<any>(null)
+const getInputEl = () =>
+  (inputRef.value?.$el as HTMLElement | undefined)?.querySelector?.('input') as HTMLInputElement | null
 
 const endpoint = computed(() => (mode.value === 'gross-to-net' ? 'neto' : 'bruto'))
 const toYearly = (value: number) => value * 12
 const amountNumber = computed(() => Number(amount.value))
+const lastSubmittedAmount = ref<number | null>(null)
+const lastSubmittedPeriod = ref<'yearly' | 'monthly' | null>(null)
 const amountLabel = computed(() => {
   const periodLabel = period.value === 'yearly' ? 'Yearly' : 'Monthly'
   return mode.value === 'gross-to-net'
@@ -52,8 +56,8 @@ const amountLabel = computed(() => {
     : `${periodLabel} net amount`
 })
 const grossYearly = computed(() => {
-  if (period.value === 'yearly' && Number.isFinite(amountNumber.value)) {
-    return amountNumber.value
+  if (lastSubmittedPeriod.value === 'yearly' && lastSubmittedAmount.value != null) {
+    return lastSubmittedAmount.value
   }
   return toYearly(data.value?.gross ?? 0)
 })
@@ -76,6 +80,16 @@ const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
     immediate: false,
     watch: false,
     lazy: true,
+  },
+)
+
+watch(
+  () => selectedPlaceKey.value,
+  () => {
+    if (!hasSubmittedOnce.value || !isInputValid.value) {
+      return
+    }
+    handleCalculate()
   },
 )
 
@@ -112,15 +126,33 @@ const handleCalculate = () => {
     return
   }
   hasSubmittedOnce.value = true
+  lastSubmittedAmount.value = amountNumber.value
+  lastSubmittedPeriod.value = period.value
   calculate()
-  inputRef.value?.blur?.()
+  getInputEl()?.blur()
 }
+
+const updateAmountByPercent = (delta: number) => {
+  if (!Number.isFinite(amountNumber.value)) {
+    return
+  }
+  const nextValue = Math.round(amountNumber.value * (1 + delta) * 100) / 100
+  amount.value = String(nextValue)
+  handleCalculate()
+}
+
+const percentChips = [
+  { label: '-5%', delta: -0.05, tooltip: 'Subtract 5%', color: 'error' },
+  { label: '+5%', delta: 0.05, tooltip: 'Add 5%', color: 'success' },
+  { label: '+10%', delta: 0.1, tooltip: 'Add 10%', color: 'success' },
+  { label: '+15%', delta: 0.15, tooltip: 'Add 15%', color: 'success' },
+] as const
 
 watch(
   () => mode.value,
   async () => {
     await nextTick()
-    inputRef.value?.focus?.()
+    getInputEl()?.focus()
   },
 )
 
@@ -182,8 +214,29 @@ const formatCurrency = (value: number) => {
         {{ showPeriodHint.text }}
       </UButton>
     </Transition>
+    <div v-if="hasSubmittedOnce && isInputValid" class="mt-2 flex items-center gap-2">
+      <UTooltip
+        v-for="chip in percentChips"
+        :key="chip.label"
+        :text="chip.tooltip"
+      >
+        <button
+          type="button"
+          @click="updateAmountByPercent(chip.delta)"
+        >
+          <UBadge
+            :color="chip.color"
+            variant="soft"
+            size="sm"
+            class="cursor-pointer select-none"
+          >
+            {{ chip.label }}
+          </UBadge>
+        </button>
+      </UTooltip>
+    </div>
 
-    <section v-if="data" class="mt-3 flex flex-col gap-3">
+    <section v-if="data" class="mt-6 flex flex-col gap-3">
       <div class="grid md:grid-cols-2 gap-3">
         <UCard>
           <template #header>
