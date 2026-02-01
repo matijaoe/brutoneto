@@ -15,12 +15,12 @@ const { data: taxesRes, status: taxesStatus } = useFetch<{ places: {
   name: string
   taxRateLow: number
   taxRateHigh: number
-}[] }>('http://localhost:4000/api/taxes', {
+}[] }>('/api/taxes', {
   method: 'GET',
 })
 const places = computed(() => taxesRes.value?.places)
 
-const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(() => `http://localhost:4000/api/neto/${gross.value}`, {
+const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(() => `/api/neto/${gross.value}`, {
   method: 'GET',
   query: {
     detailed: true,
@@ -32,6 +32,11 @@ const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(()
   watch: false,
   lazy: true,
 })
+
+const handleCalculate = () => {
+  if (!gross.value || Number(gross.value) <= 0) return
+  calculate()
+}
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('en-US', {
@@ -92,7 +97,7 @@ const formatCurrency = (value: number) => {
         </USelect>
       </div>
 
-      <form class="mt-4" @submit.prevent="calculate()">
+      <form class="mt-4" @submit.prevent="handleCalculate">
         <UInput
           v-model="gross"
           icon="mdi:currency-eur"
