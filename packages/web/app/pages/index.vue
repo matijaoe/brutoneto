@@ -16,6 +16,9 @@ const mode = computed<Mode>({
   },
 })
 const isActiveMode = (value: Mode) => mode.value === value
+const arrowIcon = computed(() =>
+  isActiveMode('gross-to-net') ? 'mdi:arrow-right' : 'mdi:arrow-left',
+)
 const selectedPlaceKey = useCookie<Place>('place', {
   default: () => 'sveta-nedelja-samobor',
 })
@@ -48,32 +51,59 @@ const places = computed(() => taxesRes.value?.places)
     </h1>
 
     <div class="mt-6">
-      <div class="flex">
-        <UFieldGroup>
-          <UButton
-            label="Gross → Net"
-            :variant="isActiveMode('gross-to-net') ? 'solid' : 'soft'"
-            color="primary"
-            size="sm"
-            @click="mode = 'gross-to-net'"
-          />
-          <UButton
-            label="Net → Gross"
-            :variant="isActiveMode('net-to-gross') ? 'solid' : 'soft'"
-            color="primary"
-            size="sm"
-            @click="mode = 'net-to-gross'"
-          />
-        </UFieldGroup>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 px-2 py-2 -ml-2">
+          <UTooltip
+            text="Calculate gross (net → gross)" :content="{
+              side: 'top',
+            }"
+          >
+            <button @click="mode = 'net-to-gross'">
+              <span
+                class="text-lg uppercase tracking-wide font-unifontex"
+                :class="isActiveMode('net-to-gross') ? 'text-foreground font-bold' : 'text-muted'"
+              >
+                Gross
+              </span>
+            </button>
+          </UTooltip>
+          <UTooltip
+            text="Switch mode" :content="{
+              side: 'top',
+            }"
+          >
+            <UButton
+              color="primary"
+              variant="link"
+              size="xl"
+              :icon="isActiveMode('net-to-gross') ? 'mdi:arrow-left' : 'mdi:arrow-right'"
+              @click="mode = isActiveMode('net-to-gross') ? 'gross-to-net' : 'net-to-gross'"
+            />
+          </UTooltip>
+          <UTooltip
+            text="Calculate net (gross → net)" :content="{
+              side: 'top',
+            }"
+          >
+            <button @click="mode = 'gross-to-net'">
+              <span
+                class="text-lg uppercase tracking-wide font-unifontex"
+                :class="isActiveMode('gross-to-net') ? 'text-foreground font-bold' : 'text-muted'"
+              >
+                Net
+              </span>
+            </button>
+          </UTooltip>
+        </div>
       </div>
 
-      <div class="mt-4 flex items-center gap-4">
+      <div class="mt-3 flex flex-col sm:flex-row sm:items-center gap-3">
         <USelect
           v-model="period"
           class="w-full sm:w-32"
           :ui="{ content: 'w-full sm:w-32' }"
           :items="['monthly', 'yearly']"
-          size="md"
+          size="lg"
         />
         <USelectMenu
           v-model="selectedPlaceKey"
@@ -81,7 +111,7 @@ const places = computed(() => taxesRes.value?.places)
           label-key="name"
           value-key="key"
           :items="places"
-          size="md"
+          size="lg"
           :disabled="!places"
           :loading="taxesStatus === 'pending'"
           :ui="{ content: 'w-full sm:w-64' }"
@@ -114,16 +144,15 @@ const places = computed(() => taxesRes.value?.places)
         </USelectMenu>
       </div>
 
-      <GrossToNetCalculator
-        v-if="isActiveMode('gross-to-net')"
-        :selected-place-key="selectedPlaceKey"
-        :period="period"
-      />
-      <NetToGrossCalculator
-        v-else
-        :selected-place-key="selectedPlaceKey"
-        :period="period"
-      />
+      <section class="mt-3">
+        <SalaryCalculator
+          v-model:period="period"
+          :mode="mode"
+          :selected-place-key="selectedPlaceKey"
+          :placeholder="isActiveMode('gross-to-net') ? '3000' : '2200'"
+          autofocus
+        />
+      </section>
     </div>
 
     <UCollapsible v-if="taxesRes">

@@ -11,3 +11,8 @@
   --ui-container: var(--container-width);
   --ui-radius: 0.125rem;
 }
+
+button,
+[role="button"] {
+  cursor: pointer;
+}

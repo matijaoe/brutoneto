@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
+import { useClipboard, useStorage } from '@vueuse/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
 
@@ -15,11 +16,30 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   autofocus: false,
 })
+const emit = defineEmits<{
+  (event: 'update:period', value: 'yearly' | 'monthly'): void
+}>()
 
-const amount = ref('')
+const amountByMode = useStorage<Record<Mode, string>>('salary-amounts', {
+  'gross-to-net': '',
+  'net-to-gross': '',
+})
 const selectedPlaceKey = toRef(props, 'selectedPlaceKey')
-const period = toRef(props, 'period')
+const period = computed({
+  get: () => props.period,
+  set: (value: 'yearly' | 'monthly') => emit('update:period', value),
+})
 const mode = toRef(props, 'mode')
+
+const amount = computed({
+  get: () => amountByMode.value[mode.value] ?? '',
+  set: (value: string) => {
+    amountByMode.value = {
+      ...amountByMode.value,
+      [mode.value]: value,
+    }
+  },
+})
 
 const endpoint = computed(() => (mode.value === 'gross-to-net' ? 'neto' : 'bruto'))
 const toYearly = (value: number) => value * 12
@@ -31,6 +51,10 @@ const grossYearly = computed(() => {
   return toYearly(data.value?.gross ?? 0)
 })
 const netYearly = computed(() => toYearly(data.value?.net ?? 0))
+const formattedData = computed(() =>
+  data.value ? JSON.stringify(data.value, null, 2) : '',
+)
+const { copy, copied } = useClipboard({ copiedDuring: 1200 })
 
 const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
   () => `/api/${endpoint.value}/${amount.value}`,
@@ -52,6 +76,29 @@ const isInputValid = computed(() => {
   return amount.value && Number(amount.value) > 0
 })
 
+const hasBlurredOnce = ref(false)
+const showPeriodHint = computed(() => {
+  if (!hasBlurredOnce.value) {
+    return null
+  }
+  if (!Number.isFinite(amountNumber.value)) {
+    return null
+  }
+  if (period.value === 'yearly' && amountNumber.value > 0 && amountNumber.value < 10000) {
+    return {
+      text: 'Switch to monthly?',
+      next: 'monthly' as const,
+    }
+  }
+  if (period.value === 'monthly' && amountNumber.value >= 10000) {
+    return {
+      text: 'Switch to yearly?',
+      next: 'yearly' as const,
+    }
+  }
+  return null
+})
+
 const handleCalculate = () => {
   if (!isInputValid.value) {
     return
@@ -69,38 +116,63 @@ const formatCurrency = (value: number) => {
 
 <template>
   <div>
-    <form class="mt-4" @submit.prevent="handleCalculate">
+    <form @submit.prevent="handleCalculate">
       <UInput
         v-model="amount"
         icon="mdi:currency-eur"
         type="number"
         :placeholder="placeholder"
-        size="md"
+        size="lg"
+        :ui="{ trailing: 'pe-1!' }"
         :autofocus="autofocus"
+        @blur="hasBlurredOnce = true"
       >
         <template #trailing>
           <UButton
-            :disabled="!isInputValid"
             color="primary"
             variant="link"
-            size="sm"
+            size="lg"
             icon="mdi:send"
             type="submit"
           />
         </template>
       </UInput>
     </form>
+    <Transition
+      enter-active-class="transition duration-200"
+      enter-from-class="opacity-0 -translate-y-1"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition duration-200"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 -translate-y-1"
+    >
+      <UButton
+        v-if="showPeriodHint"
+        variant="link"
+        size="xs"
+        color="neutral"
+        class="px-0"
+        @click="period = showPeriodHint.next"
+      >
+        {{ showPeriodHint.text }}
+      </UButton>
+    </Transition>
 
-    <section v-if="data" class="mt-8 flex flex-col gap-4">
-      <div class="grid md:grid-cols-2 gap-4">
+    <section v-if="data" class="mt-3 flex flex-col gap-3">
+      <div class="grid md:grid-cols-2 gap-3">
         <UCard>
           <template #header>
-            <h2 class="text-base font-bold uppercase text-muted font-unifontex">
+            <h2
+              class="text-base font-bold uppercase font-unifontex text-foreground"
+            >
               Gross
             </h2>
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
-                {{ formatCurrency(data.gross) }}<span class="text-base text-muted">/mo</span>
+                <span class="text-foreground">
+                  {{ formatCurrency(data.gross) }}
+                </span>
+                <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
                 {{ formatCurrency(grossYearly) }} /yr
@@ -110,12 +182,17 @@ const formatCurrency = (value: number) => {
         </UCard>
         <UCard>
           <template #header>
-            <h2 class="text-base font-bold uppercase text-muted font-unifontex">
+            <h2
+              class="text-base font-bold uppercase font-unifontex"
+            >
               Net
             </h2>
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
-                {{ formatCurrency(data.net) }}<span class="text-base text-muted">/mo</span>
+                <span class="text-foreground">
+                  {{ formatCurrency(data.net) }}
+                </span>
+                <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
                 {{ formatCurrency(netYearly) }} /yr
@@ -136,9 +213,22 @@ const formatCurrency = (value: number) => {
           />
 
           <template #content>
-            <div class="p-2">
+            <div class="p-2 -mx-1">
               <UCard>
-                <pre class="font-mono">{{ data }}</pre>
+                <div class="flex items-center justify-between gap-2 pb-2">
+                  <p class="text-xs uppercase text-muted">
+                    Raw output
+                  </p>
+                  <UButton
+                    :label="copied ? 'Copied' : 'Copy'"
+                    color="neutral"
+                    variant="ghost"
+                    size="xs"
+                    icon="mdi:content-copy"
+                    @click="copy(formattedData)"
+                  />
+                </div>
+                <pre class="font-mono text-xs whitespace-pre-wrap">{{ formattedData }}</pre>
               </UCard>
             </div>
           </template>

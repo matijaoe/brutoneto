@@ -181,3 +181,4 @@ dist
 # AI
 .claude
 repomix-output.*
+packages/api/.nitro
