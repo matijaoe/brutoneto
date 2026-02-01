@@ -14,7 +14,6 @@
   ],
   "functions": {
     "packages/api/.output/server/index.mjs": {
-      "runtime": "nodejs24.x",
       "memory": 1024,
       "maxDuration": 10
     }
