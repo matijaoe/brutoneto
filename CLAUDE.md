@@ -42,11 +42,12 @@ pnpm run build:web        # Build Nuxt SSR
 
 ### Packages
 
-| Package | Version | Status | Purpose |
-|---------|---------|--------|---------|
-| `@brutoneto/core` | 1.1.1 | ✅ Published to npm | Calculation engine |
-| `@brutoneto/api` | 0.1.0 | ✅ Deployed to Vercel | REST API (Nitro) |
-| `@brutoneto/web` | 0.1.0 | 🚧 In development | Nuxt interface |
+| Package | Status | Purpose |
+|---------|--------|---------|
+| `@brutoneto/core` | ✅ Published to npm | Calculation engine |
+| `@brutoneto/api` | ✅ Deployed to Vercel | REST API (Nitro) |
+| `@brutoneto/web` | 🚧 In development | Nuxt interface |
+
 
 
 ### Versioning
