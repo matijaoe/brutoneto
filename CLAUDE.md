@@ -13,6 +13,21 @@ pnpm run kill-ports       # Kill stuck dev processes
 pnpm run clean            # Remove all build outputs
 ```
 
+## Versioning & Releases
+
+```bash
+# From root - easy bump commands
+pnpm run bump:core        # Bump Core (interactive: patch/minor/major)
+pnpm run bump:api         # Bump API
+pnpm run bump:web         # Bump Web
+pnpm run bump:packages    # Bump both API and Web together
+pnpm run release:core     # Build → bump → publish Core to npm
+
+# When to bump:
+# - Core: When dependencies change OR public API changes
+# - API/Web: After merging changes (patch for maintenance, minor for features)
+```
+
 ## Package Commands
 
 ```bash
