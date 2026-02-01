@@ -4,12 +4,17 @@ Croatian salary calculation library (bruto/neto conversions) - now as a centrali
 
 ## Packages
 
-| Package | Description | Publishable |
+| Package | Description | Available |
 |---------|-------------|-------------|
 | `@brutoneto/core` | Pure salary calculation engine | ✅ |
 | `@brutoneto/cli` | Command-line tool | ❌ |
 | `@brutoneto/api` | REST API service | ✅ |
-| `@brutoneto/web` | Web interface | ❌ |
+| `@brutoneto/web` | Web interface | ✅ |
+
+
+## Preview
+<img width="1082" height="759" alt="image" src="https://github.com/user-attachments/assets/16ecf14c-e972-42e8-9e36-378a7b7905ff" />
+
 
 ## Installation
 
@@ -86,3 +91,5 @@ pnpm --filter @brutoneto/core run build
 # Test specific package
 pnpm --filter @brutoneto/core run test
 ```
+
+
