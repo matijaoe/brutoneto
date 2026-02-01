@@ -9,7 +9,6 @@ pnpm run dev              # Start all (API:4000, Web:3000, Tests:watch)
 pnpm run build            # Build all packages
 pnpm run ci               # Full CI: lint, typecheck, test, build
 pnpm run preview:prod     # Test production locally (port 8080)
-pnpm run kill-ports       # Kill stuck dev processes
 pnpm run clean            # Remove all build outputs
 ```
 
@@ -104,23 +103,9 @@ src/
 
 **Features**: Zod validation, place shortcuts, coefficients, third pillar, detailed/simple modes
 
-## Croatian Tax System (2025)
-
-- **Currency**: EUR
-- **Brackets**: 20% (≤€5,000), 30% (>€5,000)
-- **Allowance**: €600 base, coefficient 0.3-6.0
-- **Pension**: 1st pillar 15%, 2nd pillar 5%
-- **Health**: 16.5% of gross
-- **Third pillar**: Optional up to €67/month
-- **Surtax**: 0-18% (location-specific)
-
 ## Testing
 
 - **Framework**: Vitest
 - **Location**: `.test.ts` files alongside source
 - **Watch**: `pnpm run test:watch`
 - **Single file**: `pnpm --filter @brutoneto/core run test {filename}`
-
-## Troubleshooting
-
-**Port errors**: Run `pnpm run kill-ports` before starting dev servers
