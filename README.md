@@ -13,7 +13,8 @@ Croatian salary calculation library (bruto/neto conversions) - now as a centrali
 
 
 ## Preview
-<img width="1082" height="759" alt="image" src="https://github.com/user-attachments/assets/16ecf14c-e972-42e8-9e36-378a7b7905ff" />
+
+<img width="2102" height="1174" alt="CleanShot 2026-02-01 at 18 55 02@2x" src="https://github.com/user-attachments/assets/6d58cd46-100e-4f5e-805e-c8a037311156" />
 
 
 ## Installation
