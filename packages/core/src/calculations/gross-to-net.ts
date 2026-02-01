@@ -1,3 +1,4 @@
+import type { Place } from '../data/places'
 import {
   BASIC_PERSONAL_ALLOWANCE,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
@@ -6,7 +7,6 @@ import {
   RATE,
   THIRD_PILLAR_NON_TAXABLE_LIMIT,
 } from '../constants'
-import type { Place } from '../data/places'
 import { PlaceMap } from '../data/places'
 import { Decimal } from '../lib/decimal'
 import { isBetween } from '../utils'

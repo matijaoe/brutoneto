@@ -1,5 +1,5 @@
-import { BASIC_PERSONAL_ALLOWANCE, HIGH_TAX_BRACKET_THRESHOLD, PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
 import type { Place } from '../data/places'
+import { BASIC_PERSONAL_ALLOWANCE, HIGH_TAX_BRACKET_THRESHOLD, PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
 import { PlaceMap } from '../data/places'
 import { assertValidSalary, roundEuros } from '../utils/precision'
 
@@ -49,16 +49,16 @@ export function netToGross(
 
   /* ---------- fixed parameters ---------- */
   const contributionRate
-      = RATE.PENSION_CONTRIBUTION_PILLAR_1
-        + RATE.PENSION_CONTRIBUTION_PILLAR_2
+    = RATE.PENSION_CONTRIBUTION_PILLAR_1
+      + RATE.PENSION_CONTRIBUTION_PILLAR_2
   const allowance = BASIC_PERSONAL_ALLOWANCE * personalAllowanceCoefficient
   const threshold = HIGH_TAX_BRACKET_THRESHOLD
 
   /* ---------- net at the bracket frontier ---------- */
   const grossAtLimit = (threshold + allowance) / (1 - contributionRate)
   const netAtLimit
-      = grossAtLimit * (1 - contributionRate) * (1 - taxRateLow)
-        + allowance * taxRateLow
+    = grossAtLimit * (1 - contributionRate) * (1 - taxRateLow)
+      + allowance * taxRateLow
 
   /* ---------- solve N = A·G + B ---------- */
   let gross: number

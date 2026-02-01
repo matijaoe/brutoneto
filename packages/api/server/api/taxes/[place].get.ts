@@ -1,4 +1,4 @@
-import { getPlaceTax, getPlacesMetadata, isValidPlace } from '@brutoneto/core'
+import { getPlacesMetadata, getPlaceTax, isValidPlace } from '@brutoneto/core'
 import { z } from 'zod'
 
 const ParamsSchema = z.object({
