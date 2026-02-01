@@ -1,4 +1,0 @@
-{
-  "buildCommand": "cd ../.. && pnpm --filter @brutoneto/api run build",
-  "installCommand": "cd ../.. && pnpm install"
-}

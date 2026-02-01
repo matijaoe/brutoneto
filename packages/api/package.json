@@ -1,25 +1,24 @@
 {
   "name": "@brutoneto/api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "nitro build",
     "dev": "nitro dev --port 4000",
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs",
+    "bump": "bumpp",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "eslint . --fix"
   },
   "dependencies": {
-    "@brutoneto/core": "workspace:*",
-    "graphql": "^16.9.0",
-    "graphql-yoga": "^5.4.0"
+    "@brutoneto/core": "workspace:*"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.21.1",
-    "eslint": "^9.5.0",
-    "h3": "^1.15.3",
-    "nitropack": "^2.11.12",
-    "zod": "^3.23.8"
+    "@antfu/eslint-config": "^7.2.0",
+    "eslint": "^9.39.2",
+    "nitropack": "^2.13.1",
+    "zod": "^4.3.6"
   }
 }

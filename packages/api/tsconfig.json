@@ -3,5 +3,6 @@
   "compilerOptions": {
     "composite": true,
     "noEmit": false
-  }
+  },
+  "exclude": ["eslint.config.mjs"]
 }

@@ -1,34 +1,38 @@
-import { z } from 'zod'
+import type { Place } from '@brutoneto/core'
 import {
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
-  isValidPlace,
   netToGross,
 } from '@brutoneto/core'
+import { getQuery, getRouterParams } from 'h3'
+import { z } from 'zod'
+import { isValidPlaceWithShortcuts, resolvePlaceShortcut } from '~/utils/places'
 
 const ParamsSchema = z.object({
-  net: z.number({ coerce: true }).positive(),
+  net: z.coerce.number().positive(),
 })
 
 const QuerySchema = z.object({
   place: z
     .string()
-    .refine(isValidPlace, {
+    .refine(isValidPlaceWithShortcuts, {
       message: 'Invalid place',
     })
     .optional(),
-  ltax: z.number({ coerce: true }).min(0).max(0.99).optional(),
-  htax: z.number({ coerce: true }).min(0).max(0.99).optional(),
+  ltax: z.coerce.number().min(0).max(0.99).optional(),
+  htax: z.coerce.number().min(0).max(0.99).optional(),
   coeff: z
-    .number({ coerce: true })
+    .coerce
+    .number()
     .min(MIN_PERSONAL_ALLOWANCE_COEFFICIENT)
     .max(MAX_PERSONAL_ALLOWANCE_COEFFICIENT)
     .optional(),
-  detailed: z.boolean({ coerce: true }).optional(),
+  detailed: z.coerce.boolean().optional(),
 })
 
 export default defineEventHandler(async (event) => {
-  const params = await getValidatedRouterParams(event, ParamsSchema.safeParse)
+  const routerParams = getRouterParams(event)
+  const params = ParamsSchema.safeParse(routerParams)
 
   if (params.success === false) {
     throw createError({
@@ -40,7 +44,8 @@ export default defineEventHandler(async (event) => {
 
   const { net } = params.data
 
-  const query = await getValidatedQuery(event, QuerySchema.safeParse)
+  const queryParams = getQuery(event)
+  const query = QuerySchema.safeParse(queryParams)
 
   if (query.success === false) {
     throw createError({
@@ -52,8 +57,11 @@ export default defineEventHandler(async (event) => {
 
   const { place, ltax, htax, coeff } = query.data
 
+  // Resolve place shortcuts to full place names
+  const resolvedPlace = place != null ? resolvePlaceShortcut(place) as Place : undefined
+
   const gross = netToGross(net, {
-    place,
+    place: resolvedPlace,
     taxRateLow: ltax,
     taxRateHigh: htax,
     personalAllowanceCoefficient: coeff,

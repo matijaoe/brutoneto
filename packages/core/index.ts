@@ -1,17 +1,7 @@
-export {
-  isValidPlace,
-  getPlaceTax,
-  getPlacesTaxes,
-  getPlacesOptions,
-  getPlaces,
-  getDefaultTax,
-  getPlacesMetadata,
-} from './src/places'
-
 // Main salary calculations
 export {
-  grossToNetBreakdown,
   grossToNet,
+  grossToNetBreakdown,
   type SalaryConfig,
 } from './src/calculations/gross-to-net'
 
@@ -30,12 +20,12 @@ export {
 } from './src/calculations/salary'
 
 export {
-  RATE,
   BASIC_PERSONAL_ALLOWANCE,
   HIGH_TAX_BRACKET_THRESHOLD,
+  MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   PERSONAL_ALLOWANCE_COEFFICIENT,
-  MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
+  RATE,
   THIRD_PILLAR_NON_TAXABLE_LIMIT,
 } from './src/constants'
 
@@ -45,10 +35,20 @@ export {
   PlacesMetadata,
 } from './src/data/places'
 
+export {
+  getDefaultTax,
+  getPlaces,
+  getPlacesMetadata,
+  getPlacesOptions,
+  getPlacesTaxes,
+  getPlaceTax,
+  isValidPlace,
+} from './src/places'
+
 // Precision utilities (optional for custom calculations)
 export {
-  roundEuros,
-  assertValidSalary,
   assertFinitePositive,
+  assertValidSalary,
   percent,
+  roundEuros,
 } from './src/utils/precision'

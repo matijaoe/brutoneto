@@ -1,6 +1,6 @@
-import { RATE } from './constants'
 import type { Place } from './data/places'
-import { PlaceMap, PlacesMetadata, places } from './data/places'
+import { RATE } from './constants'
+import { PlaceMap, places, PlacesMetadata } from './data/places'
 
 // TODO: update taxes, not correct anymore
 

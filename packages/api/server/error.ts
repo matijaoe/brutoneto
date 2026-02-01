@@ -1,12 +1,18 @@
-import type { H3Error, H3Event } from 'h3'
+import type { H3Error } from 'h3'
 
-export default defineNitroErrorHandler((error: H3Error, event: H3Event) => {
+export default defineEventHandler((event) => {
+  // TODO: use real type
+  const error = event.context.error as H3Error & { data?: Record<string, any>, cause: { status?: number, message?: string }, status?: number }
+
   setResponseHeader(event, 'Content-Type', 'application/json')
-  setResponseStatus(event, (error.cause as any).status || (error as any).status || 500)
+  setResponseStatus(event, error?.cause?.status || error?.status || 500)
 
-  return send(event, JSON.stringify({
-    ...(error.cause as any) ?? {},
-    fatal: (error as any).fatal,
-    unhandled: (error as any).unhandled,
-  }))
+  return {
+    error: true,
+    url: event.path,
+    statusCode: error?.cause?.status || error?.status || 500,
+    statusMessage: error?.statusMessage || error?.message || 'Internal Server Error',
+    message: error?.cause?.message || error?.message || 'An error occurred',
+    ...(error?.data || {}),
+  }
 })

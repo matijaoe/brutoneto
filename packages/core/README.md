@@ -75,8 +75,8 @@ console.log(gross) // 4527.27
 ```typescript
 import {
   getDefaultTax,
-  getPlaceTax,
   getPlaces,
+  getPlaceTax,
   isValidPlace
 } from '@brutoneto/core'
 

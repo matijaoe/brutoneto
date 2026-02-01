@@ -54,12 +54,34 @@ export function looseToNumber<T = undefined>(val: unknown, fallback?: T): number
   return Number.isNaN(n) ? fallback as T : n
 }
 
-export function extractZodErrorMessage(err: z.ZodError) {
-  return err.errors.map((error: z.ZodIssue) => {
-    if (!error.path?.length) {
-      return error.message
+export function extractZodErrorMessage(err: z.ZodError | any) {
+  // Zod v4 format - error.message contains JSON string
+  if (typeof err.message === 'string' && err.message.startsWith('[')) {
+    try {
+      const errors = JSON.parse(err.message)
+      if (Array.isArray(errors)) {
+        return errors.map((error: any) => {
+          if (!error.path?.length) {
+            return error.message || 'Validation error'
+          }
+          return `Field <${error.path.join('.')}>: ${error.message}`
+        }).join('; ')
+      }
     }
-    // const receivedValue = error.
-    return `Field <${error.path.join('.')}>: ${error.message}`
-  }).join('; ')
+    catch {
+      // Fall through to old format handling
+    }
+  }
+
+  // Zod v3 format - error.errors is array
+  if (err.errors && Array.isArray(err.errors)) {
+    return err.errors.map((error: z.ZodIssue) => {
+      if (!error.path?.length) {
+        return error.message
+      }
+      return `Field <${error.path.join('.')}>: ${error.message}`
+    }).join('; ')
+  }
+
+  return err.message || 'Validation error'
 }

@@ -1,92 +1,113 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guide for working with this repository.
 
-## Commands
+## Quick Commands
 
-- **Build**: `pnpm run build` - Builds all packages
-- **Test**: `pnpm run test` - Runs Vitest tests on core package
-- **Test Single File**: `pnpm --filter @brutoneto/core run test net-to-gross` - Run specific test file
-- **Lint**: `pnpm run lint` - Runs ESLint across all packages
-- **Format**: `pnpm run format` - Auto-fix ESLint issues across all packages
-- **Generate Tax Data**: `pnpm run generate` - Scrapes and generates Croatian tax rate data
-- **Clean**: `pnpm run clean` - Remove all dist/, .output/, and cache directories
+```bash
+pnpm run dev              # Start all (API:4000, Web:3000, Tests:watch)
+pnpm run build            # Build all packages
+pnpm run ci               # Full CI: lint, typecheck, test, build
+pnpm run preview:prod     # Test production locally (port 8080)
+pnpm run clean            # Remove all build outputs
+```
 
-### Development Commands
-- **Dev All**: `pnpm run dev` - Start all packages in dev mode (parallel)
-- **Core Dev**: `pnpm --filter @brutoneto/core run dev` - Run core package with Bun
-- **API Dev**: `pnpm --filter @brutoneto/api run dev` - Start API server in dev mode
-- **API Preview**: `pnpm run preview` - Start API in production preview mode
+## Versioning & Releases
 
-### Package-Specific Commands
-- **Core Build**: `pnpm --filter @brutoneto/core run build` - Build TypeScript to dist/ with declarations
-- **Core Bump**: `pnpm --filter @brutoneto/core run bump` - Bump version using bumpp
-- **API Build**: `pnpm --filter @brutoneto/api run build` - Build Nitro API server
+**Quick commands**: See `BUMP_GUIDE.md` for all bump commands and workflows
+
+- `pnpm run release:core` - Build → bump → publish Core to npm
+- `pnpm run bump:packages` - Bump API + Web together
+
+## Package Commands
+
+```bash
+# Core (npm package)
+pnpm --filter @brutoneto/core run dev      # Tests in watch mode
+pnpm --filter @brutoneto/core run build    # Build to dist/
+pnpm --filter @brutoneto/core run release  # Build → bump → publish to npm
+
+# API 
+pnpm run dev:api          # Start API dev server (port 4000)
+pnpm run build:api        # Build Nitro serverless
+
+# Web
+pnpm run dev:web          # Start Nuxt dev (port 3000)
+pnpm run build:web        # Build Nuxt SSR
+```
 
 ## Architecture
 
-This is a **pnpm workspace monorepo** for Croatian salary calculations with **EUR currency** (Croatia adopted Euro). The project includes production-ready packages and development placeholders.
+**Monorepo**: pnpm workspace for Croatian salary calculations (EUR currency)
 
-### Package Status
-- **@brutoneto/core** (`packages/core/`) - ✅ **Production-ready** salary calculation engine
-- **@brutoneto/api** (`packages/api/`) - ✅ **Production-ready** REST API service (Nitro)
-- **@brutoneto/web** (`packages/web/`) - ❌ **Placeholder** Nuxt web interface
-- **@brutoneto/cli** (`packages/cli/`) - ❌ **Placeholder** command-line tool
+### Packages
 
-### Core Package Architecture (`packages/core/`)
-**Main entry**: `index.ts` - Exports all public APIs
+| Package | Status | Purpose |
+|---------|--------|---------|
+| `@brutoneto/core` | ✅ Published to npm | Calculation engine |
+| `@brutoneto/api` | ✅ Deployed to Vercel | REST API (Nitro) |
+| `@brutoneto/web` | 🚧 In development | Nuxt interface |
 
-**Key calculations**:
-- `grossToNet(gross, options?)` - Simple gross-to-net conversion
-- `grossToNetBreakdown(gross, options?)` - Detailed breakdown with all tax components
-- `netToGross(net, options?)` - Reverse calculation using binary search
 
-**Source structure**:
-- `src/calculations/` - Core salary computation logic
-  - `gross-to-net.ts` - Primary calculation functions
-  - `net-to-gross.ts` - Reverse calculation algorithm
-  - `salary.ts` - Shared tax, pension, and allowance utilities
-- `src/constants.ts` - 2025 tax rates, brackets (20%/30% at €5,000), allowances (€600 base)
-- `src/places.ts` - Croatian location functions with surtax rates
-- `src/data/` - Generated tax data (556+ locations) - **never manually edit**
-- `src/lib/decimal.ts` - Configured Decimal.js wrapper for financial precision
-- `src/utils.ts` - Exported utilities (clamp, isBetween, range, toDecimal)
 
-### API Package Architecture (`packages/api/`)
-**Framework**: Nitro (serverless Node.js)
-**Documentation**: Available at `/_scalar` and `/_swagger` endpoints
+### Versioning
 
-**Key endpoints**:
-- `GET /neto/{gross}` - Gross to net calculation
-- `GET /bruto/{net}` - Net to gross calculation
-- `GET /places` - All Croatian locations and tax rates
-- `GET /taxes/*` - Tax system information
+- **Core**: Independent versioning, published to npm (https://www.npmjs.com/package/@brutoneto/core)
+  - Semantic versioning for external consumers
+  - Release: `pnpm run release:core` (builds, bumps, publishes)
+- **API/Web**: Internal tracking, deployed together to Vercel
+  - Versions don't affect npm or external consumers
+  - Bump: `pnpm run bump:packages`
+- **Dependency Strategy**: API/Web use `workspace:*` for Core
+  - Always use **local workspace version** (not npm version)
+  - Vercel deployments get latest Core from monorepo, not npm
+  - External apps installing `@brutoneto/core` get published npm version
+- **Commands & Workflows**: See `BUMP_GUIDE.md` for complete guide
 
-**Features**:
-- Zod schema validation
-- Support for place shortcuts, tax coefficients, third pillar contributions
-- Detailed/simple response modes, yearly/monthly calculations
-- Comprehensive error handling
+### Deployment (Vercel)
 
-### Croatian Tax System (2025)
-- **Currency**: EUR (European Euro) with 2 decimal precision
-- **Tax brackets**: 20% (up to €5,000), 30% (above €5,000)
-- **Personal allowance**: €600 base with coefficient system (0.3-6.0)
-- **Pension contributions**: 1st pillar (15%), 2nd pillar (5%)
-- **Health insurance**: 16.5% of gross salary
-- **Third pillar**: Optional up to €67/month
-- **Surtax**: Location-specific rates (0-18%)
+- **Build**: Node.js 24.x, runs `pnpm run build`
+- **Routes**: `/api/*` → API function, `/*` → Web SSR
+- **Config**: `vercel.json` with `nodejs24.x` runtime
 
-### Data Generation System
-- **Script**: `scripts/gen-tax-rates.ts` - Scrapes Croatian government tax tables
-- **Generates**:
-  - `src/data/places.ts` - TypeScript types and location constants
-  - `src/data/places.json` - Raw tax rate data
-  - `src/data/places-metadata.json` - Location metadata
-- **ESLint rule**: Prevents direct `decimal.js` imports (must use configured wrapper)
+## Core Package
 
-### Testing
+**Entry**: `index.ts`
+
+**Main functions**:
+- `grossToNet(gross, opts?)` - Salary → net income
+- `grossToNetBreakdown(gross, opts?)` - Detailed breakdown
+- `netToGross(net, opts?)` - Reverse calculation (binary search)
+
+**Structure**:
+```
+src/
+├── calculations/  # Core logic (gross-to-net, net-to-gross, salary)
+├── constants.ts   # 2025 tax rates (20%/30% brackets at €5k)
+├── places.ts      # Croatian locations + surtax rates
+├── data/          # Generated tax data (556+ locations) - DO NOT EDIT
+├── lib/decimal.ts # Configured Decimal.js wrapper
+└── utils.ts       # Utilities (clamp, isBetween, range, toDecimal)
+```
+
+**Data generation**: `pnpm run generate` scrapes Croatian government tax tables
+
+**ESLint rule**: Never import `decimal.js` directly, use `src/lib/decimal.ts`
+
+## API Package (Nitro)
+
+**Endpoints**:
+- `GET /neto/{gross}` - Gross → net
+- `GET /bruto/{net}` - Net → gross
+- `GET /places` - All locations
+- `GET /taxes/*` - Tax info
+- Docs: `/_scalar`, `/_swagger`
+
+**Features**: Zod validation, place shortcuts, coefficients, third pillar, detailed/simple modes
+
+## Testing
+
 - **Framework**: Vitest
-- **Coverage**: Comprehensive tests for all calculation functions
-- **Location**: Test files alongside source files (`.test.ts` suffix)
-- **Run single test**: `pnpm --filter @brutoneto/core run test {filename}`
+- **Location**: `.test.ts` files alongside source
+- **Watch**: `pnpm run test:watch`
+- **Single file**: `pnpm --filter @brutoneto/core run test {filename}`
