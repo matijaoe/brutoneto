@@ -22,6 +22,15 @@ const period = toRef(props, 'period')
 const mode = toRef(props, 'mode')
 
 const endpoint = computed(() => (mode.value === 'gross-to-net' ? 'neto' : 'bruto'))
+const toYearly = (value: number) => value * 12
+const amountNumber = computed(() => Number(amount.value))
+const grossYearly = computed(() => {
+  if (period.value === 'yearly' && Number.isFinite(amountNumber.value)) {
+    return amountNumber.value
+  }
+  return toYearly(data.value?.gross ?? 0)
+})
+const netYearly = computed(() => toYearly(data.value?.net ?? 0))
 
 const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
   () => `/api/${endpoint.value}/${amount.value}`,
@@ -83,15 +92,20 @@ const formatCurrency = (value: number) => {
     </form>
 
     <section v-if="data" class="mt-8 flex flex-col gap-4">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid md:grid-cols-2 gap-4">
         <UCard>
           <template #header>
             <h2 class="text-base font-bold uppercase text-muted font-unifontex">
               Gross
             </h2>
-            <p class="text-6xl font-unifontex">
-              {{ formatCurrency(data.gross) }}
-            </p>
+            <div class="flex flex-col gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
+                {{ formatCurrency(data.gross) }}<span class="text-base text-muted">/mo</span>
+              </p>
+              <p class="text-lg text-muted font-unifontex">
+                {{ formatCurrency(grossYearly) }} /yr
+              </p>
+            </div>
           </template>
         </UCard>
         <UCard>
@@ -99,9 +113,14 @@ const formatCurrency = (value: number) => {
             <h2 class="text-base font-bold uppercase text-muted font-unifontex">
               Net
             </h2>
-            <p class="text-6xl font-unifontex">
-              {{ formatCurrency(data.net) }}
-            </p>
+            <div class="flex flex-col gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
+                {{ formatCurrency(data.net) }}<span class="text-base text-muted">/mo</span>
+              </p>
+              <p class="text-lg text-muted font-unifontex">
+                {{ formatCurrency(netYearly) }} /yr
+              </p>
+            </div>
           </template>
         </UCard>
       </div>

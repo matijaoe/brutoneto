@@ -3,13 +3,31 @@ import type { Place } from '@brutoneto/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
 
-const mode = ref<Mode>('gross-to-net')
+const params = useUrlSearchParams('history')
+
+const mode = computed<Mode>({
+  get: () => (params.mode === 'nb' ? 'net-to-gross' : 'gross-to-net'),
+  set: (value) => {
+    if (value === 'net-to-gross') {
+      params.mode = 'nb'
+    } else {
+      delete params.mode
+    }
+  },
+})
 const isActiveMode = (value: Mode) => mode.value === value
 const selectedPlaceKey = useCookie<Place>('place', {
   default: () => 'sveta-nedelja-samobor',
 })
-const period = useCookie<'yearly' | 'monthly'>('period', {
-  default: () => 'monthly',
+const period = computed<'yearly' | 'monthly'>({
+  get: () => (params.period === 'yr' ? 'yearly' : 'monthly'),
+  set: (value) => {
+    if (value === 'yearly') {
+      params.period = 'yr'
+    } else {
+      delete params.period
+    }
+  },
 })
 
 const { data: taxesRes, status: taxesStatus } = useFetch<{ places: {
@@ -29,7 +47,7 @@ const places = computed(() => taxesRes.value?.places)
       Bruto<span class="text-primary italic">neto</span>
     </h1>
 
-    <div class="mt-8">
+    <div class="mt-6">
       <div class="flex">
         <UFieldGroup>
           <UButton
@@ -52,12 +70,14 @@ const places = computed(() => taxesRes.value?.places)
       <div class="mt-4 flex items-center gap-4">
         <USelect
           v-model="period"
+          class="w-full sm:w-32"
+          :ui="{ content: 'w-full sm:w-32' }"
           :items="['monthly', 'yearly']"
           size="md"
         />
         <USelectMenu
           v-model="selectedPlaceKey"
-          class="w-full sm:w-64"
+          class="w-full sm:w-52"
           label-key="name"
           value-key="key"
           :items="places"
@@ -65,10 +85,11 @@ const places = computed(() => taxesRes.value?.places)
           :disabled="!places"
           :loading="taxesStatus === 'pending'"
           :ui="{ content: 'w-full sm:w-64' }"
+          virtualize
         >
           <template #item="{ item }">
             <div class="flex items-center justify-between gap-2 w-full">
-              <p class="grow whitespace-nowrap truncate">
+              <p class="grow whitespace-nowrap truncate" :title="item.name">
                 {{ item.name }}
               </p>
 
