@@ -22,13 +22,15 @@
   ],
   "scripts": {
     "generate": "bun run scripts/gen-tax-rates.ts",
-    "dev": "bun run src/index.ts",
+    "dev": "vitest --watch",
     "build": "bun run build.ts",
     "prepack": "bun run build",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "eslint . --fix",
     "test": "vitest",
-    "bump": "npx bumpp"
+    "bump": "bumpp",
+    "release": "pnpm run build && pnpm run bump && npm publish"
   },
   "dependencies": {
     "decimal.js": "^10.6.0"
@@ -36,6 +38,7 @@
   "devDependencies": {
     "bun-plugin-dts": "^0.3.0",
     "cheerio": "^1.2.0",
+    "prettier": "^3.8.1",
     "title-case": "^4.3.2",
     "vitest": "^4.0.18"
   },

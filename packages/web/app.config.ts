@@ -3,4 +3,4 @@ export default defineAppConfig({
     primary: 'blue', // Your accent color
     gray: 'zinc', // Your default gray variant
   },
-}) 
+})

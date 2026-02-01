@@ -1,15 +1,22 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm run build",
   "installCommand": "pnpm install",
-  "functions": {
-    "packages/api/.output/server/**/*.mjs": {
-      "runtime": "@vercel/node@20.x"
-    }
-  },
-  "rewrites": [
+  "outputDirectory": "packages/web/.output/public",
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/packages/api/.output/server/index.mjs"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "packages/api/.output/server/index.mjs"
     }
-  ]
+  ],
+  "functions": {
+    "packages/api/.output/server/index.mjs": {
+      "runtime": "nodejs24.x",
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
 }

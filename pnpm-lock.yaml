@@ -58,12 +58,6 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
 
-  packages/cli:
-    dependencies:
-      '@brutoneto/core':
-        specifier: workspace:*
-        version: link:../core
-
   packages/core:
     dependencies:
       decimal.js:
@@ -76,6 +70,9 @@ importers:
       cheerio:
         specifier: ^1.2.0
         version: 1.2.0
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
       title-case:
         specifier: ^4.3.2
         version: 4.3.2

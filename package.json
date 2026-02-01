@@ -11,15 +11,25 @@
   "repository": {
     "url": "https://github.com/matijaoe/brutoneto"
   },
+  "engines": {
+    "node": ">=24.x",
+    "pnpm": ">=10.0.0"
+  },
   "scripts": {
     "build": "pnpm run build:core && pnpm run build:api && pnpm --filter @brutoneto/web run build",
     "build:core": "pnpm --filter @brutoneto/core run build",
     "build:api": "pnpm --filter @brutoneto/api run build",
+    "build:web": "pnpm --filter @brutoneto/web run build",
     "dev": "pnpm -r --parallel run dev",
     "dev:core": "pnpm --filter @brutoneto/core run dev",
     "dev:api": "pnpm --filter @brutoneto/api run dev",
     "dev:web": "pnpm --filter @brutoneto/web run dev",
+    "preview:api": "pnpm --filter @brutoneto/api run preview",
+    "preview:web": "node packages/web/.output/server/index.mjs",
+    "preview:prod": "node preview-prod.mjs",
     "test": "pnpm --filter @brutoneto/core run test",
+    "test:watch": "pnpm --filter @brutoneto/core run test -- --watch",
+    "typecheck": "pnpm -r --parallel run typecheck",
     "lint": "pnpm -r run lint",
     "lint:core": "pnpm --filter @brutoneto/core run lint",
     "lint:api": "pnpm --filter @brutoneto/api run lint",
@@ -28,7 +38,7 @@
     "format:api": "pnpm --filter @brutoneto/api run format",
     "clean": "pnpm -r exec rm -rf dist .output node_modules/.cache",
     "generate": "pnpm --filter @brutoneto/core run generate",
-    "preview": "pnpm --filter @brutoneto/api run preview"
+    "ci": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.2.0",
