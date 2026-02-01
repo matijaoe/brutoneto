@@ -1,6 +1,18 @@
+@import "@fontsource/unifontex";
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@theme {
+  --container-width: 60rem;
+  --font-unifontex: "UnifontEX", monospace;
+}
+
 :root {
+  --ui-container: var(--container-width);
   --ui-radius: 0.125rem;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
 }
