@@ -2,6 +2,7 @@
 import type { Place } from '@brutoneto/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
+type BrutoType = 'bruto1' | 'bruto2'
 
 const params = useUrlSearchParams('history')
 
@@ -16,6 +17,16 @@ const mode = computed<Mode>({
   },
 })
 const isActiveMode = (value: Mode) => mode.value === value
+const brutoType = computed<BrutoType>({
+  get: () => (params.bruto === '2' ? 'bruto2' : 'bruto1'),
+  set: (value) => {
+    if (value === 'bruto2') {
+      params.bruto = '2'
+    } else {
+      delete params.bruto
+    }
+  },
+})
 const selectedPlaceKey = useCookie<Place>('place', {
   default: () => 'sveta-nedelja-samobor',
 })
@@ -105,14 +116,31 @@ const places = computed(() => taxesRes.value?.places)
             </template>
           </USelectMenu>
         </UFormField>
+        <UFormField
+          v-if="isActiveMode('gross-to-net')"
+          label="Type"
+          :ui="{ label: 'text-sm' }"
+        >
+          <USelect
+            v-model="brutoType"
+            class="w-full sm:w-36"
+            :ui="{ content: 'w-full sm:w-36' }"
+            :items="[
+              { label: 'Bruto 1', value: 'bruto1' },
+              { label: 'Bruto 2', value: 'bruto2' },
+            ]"
+            size="lg"
+          />
+        </UFormField>
       </div>
 
       <section class="mt-3">
         <SalaryCalculator
           v-model:period="period"
           :mode="mode"
+          :bruto-type="isActiveMode('gross-to-net') ? brutoType : 'bruto1'"
           :selected-place-key="selectedPlaceKey"
-          :placeholder="isActiveMode('gross-to-net') ? '3000' : '2200'"
+          :placeholder="isActiveMode('gross-to-net') ? (brutoType === 'bruto2' ? '4660' : '3000') : '2200'"
           autofocus
         />
       </section>
