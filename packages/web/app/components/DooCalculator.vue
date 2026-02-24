@@ -171,7 +171,8 @@ const adjustedDividend = computed(() => {
   const monthlyNet = Math.round((netSalary + netDividend) * 100) / 100
   const taxReturn = data.value.totals.taxReturn
   const monthlyNetWithTaxReturn = Math.round((monthlyNet + taxReturn) * 100) / 100
-  return { netDividend, retained, monthlyNet, monthlyNetWithTaxReturn }
+  const totalWithRetained = Math.round((monthlyNet + retained) * 100) / 100
+  return { netDividend, retained, monthlyNet, monthlyNetWithTaxReturn, totalWithRetained }
 })
 
 const formattedData = computed(() =>
@@ -318,46 +319,51 @@ const formatCurrency = (value: number) => {
         </UCard>
       </div>
 
-      <UCard>
-        <template #header>
-          <h2 class="text-base font-bold uppercase font-unifontex text-primary">
-            Total
-          </h2>
-          <div class="flex flex-col gap-2">
-            <p class="text-5xl font-unifontex flex items-baseline gap-2">
-              <span class="text-foreground">
-                {{ formatCurrency(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet) }}
-              </span>
-              <span class="text-base text-muted">/mo</span>
-            </p>
-            <p class="text-lg text-muted font-unifontex">
-              {{ formatCurrency(toYearly(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet)) }} /yr
-            </p>
-            <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
-              with tax return: {{ formatCurrency(adjustedDividend?.monthlyNetWithTaxReturn ?? data.totals.monthlyNetWithTaxReturn) }} /mo
-            </p>
-          </div>
-        </template>
-      </UCard>
+      <div class="grid gap-3" :class="adjustedDividend && adjustedDividend.retained > 0 ? 'md:grid-cols-2' : ''">
+        <UCard>
+          <template #header>
+            <h2 class="text-base font-bold uppercase font-unifontex text-primary">
+              Total
+            </h2>
+            <div class="flex flex-col gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
+                <span class="text-foreground">
+                  {{ formatCurrency(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet) }}
+                </span>
+                <span class="text-base text-muted">/mo</span>
+              </p>
+              <p class="text-lg text-muted font-unifontex">
+                {{ formatCurrency(toYearly(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet)) }} /yr
+              </p>
+              <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
+                with tax return: {{ formatCurrency(adjustedDividend?.monthlyNetWithTaxReturn ?? data.totals.monthlyNetWithTaxReturn) }} /mo
+              </p>
+              <p v-if="adjustedDividend && adjustedDividend.retained > 0" class="text-sm text-muted font-unifontex">
+                incl. company balance: {{ formatCurrency(adjustedDividend.totalWithRetained) }} /mo
+              </p>
+            </div>
+          </template>
+        </UCard>
 
-      <UCard v-if="adjustedDividend && adjustedDividend.retained > 0" variant="subtle">
-        <template #header>
-          <h2 class="text-base font-bold uppercase font-unifontex text-muted">
-            Remains in company
-          </h2>
-          <div class="flex flex-col gap-2">
-            <p class="text-5xl font-unifontex flex items-baseline gap-2">
-              <span class="text-foreground">
-                {{ formatCurrency(adjustedDividend.retained) }}
-              </span>
-              <span class="text-base text-muted">/mo</span>
-            </p>
-            <p class="text-lg text-muted font-unifontex">
-              {{ formatCurrency(toYearly(adjustedDividend.retained)) }} /yr
-            </p>
-          </div>
-        </template>
-      </UCard>
+        <UCard v-if="adjustedDividend && adjustedDividend.retained > 0" variant="subtle">
+          <template #header>
+            <h2 class="text-base font-bold uppercase font-unifontex text-muted">
+              Company balance
+            </h2>
+            <div class="flex flex-col gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
+                <span class="text-foreground">
+                  {{ formatCurrency(adjustedDividend.retained) }}
+                </span>
+                <span class="text-base text-muted">/mo</span>
+              </p>
+              <p class="text-lg text-muted font-unifontex">
+                {{ formatCurrency(toYearly(adjustedDividend.retained)) }} /yr
+              </p>
+            </div>
+          </template>
+        </UCard>
+      </div>
 
       <div>
         <UCollapsible>
