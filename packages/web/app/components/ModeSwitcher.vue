@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type Mode = 'gross-to-net' | 'net-to-gross'
+type Mode = 'gross-to-net' | 'net-to-gross' | 'doo'
 
 type Props = {
   mode: Mode
@@ -60,6 +60,22 @@ const toggleMode = () =>
             :class="isActiveMode('gross-to-net') ? 'text-foreground font-bold' : 'text-muted'"
           >
             Net
+          </span>
+        </button>
+      </UTooltip>
+
+      <span class="text-muted mx-1">|</span>
+
+      <UTooltip
+        text="d.o.o. salary + dividend calculator"
+        :content="{ side: 'top' }"
+      >
+        <button type="button" @click="setMode('doo')">
+          <span
+            class="text-2xl sm:text-lg uppercase tracking-wide font-unifontex"
+            :class="isActiveMode('doo') ? 'text-foreground font-bold' : 'text-muted'"
+          >
+            d.o.o.
           </span>
         </button>
       </UTooltip>

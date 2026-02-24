@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
 
-type Mode = 'gross-to-net' | 'net-to-gross'
+type Mode = 'gross-to-net' | 'net-to-gross' | 'doo'
 type BrutoType = 'bruto1' | 'bruto2'
 
 const params = useUrlSearchParams('history')
 
 const mode = computed<Mode>({
-  get: () => (params.mode === 'nb' ? 'net-to-gross' : 'gross-to-net'),
+  get: () => {
+    if (params.mode === 'doo') return 'doo'
+    if (params.mode === 'nb') return 'net-to-gross'
+    return 'gross-to-net'
+  },
   set: (value) => {
-    if (value === 'net-to-gross') {
+    if (value === 'doo') {
+      params.mode = 'doo'
+    } else if (value === 'net-to-gross') {
       params.mode = 'nb'
     } else {
       delete params.mode
@@ -137,12 +143,19 @@ const places = computed(() => taxesRes.value?.places)
 
       <section class="mt-3">
         <SalaryCalculator
+          v-if="mode !== 'doo'"
           v-model:period="period"
           :mode="mode"
           :bruto-type="isActiveMode('gross-to-net') ? brutoType : 'bruto1'"
           :selected-place-key="selectedPlaceKey"
           :placeholder="isActiveMode('gross-to-net') ? (brutoType === 'bruto2' ? '4660' : '3000') : '2200'"
           autofocus
+        />
+
+        <DooCalculator
+          v-else
+          v-model:period="period"
+          :selected-place-key="selectedPlaceKey"
         />
       </section>
     </div>
