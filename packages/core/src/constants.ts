@@ -60,3 +60,21 @@ export const MIN_PERSONAL_ALLOWANCE_COEFFICIENT = 0.3
  * The maximum personal allowance coefficient.
  */
 export const MAX_PERSONAL_ALLOWANCE_COEFFICIENT = 6
+
+/**
+ * Default director's minimum gross salary.
+ * @note direktorski minimalac
+ */
+export const DIRECTOR_MINIMUM_GROSS = 1_295.45
+
+/**
+ * Corporate income tax rate for companies with revenue < €1M.
+ * @note porez na dobit
+ */
+export const CORPORATE_TAX_RATE = percent(10)
+
+/**
+ * Tax rate on capital income (dividends).
+ * @note porez na dohodak od kapitala
+ */
+export const DIVIDEND_TAX_RATE = percent(12)
