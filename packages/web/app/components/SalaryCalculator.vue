@@ -175,6 +175,10 @@ const percentChips = [
 watch(
   () => mode.value,
   async () => {
+    data.value = null
+    hasSubmittedOnce.value = false
+    lastSubmittedAmount.value = null
+    lastSubmittedPeriod.value = null
     await nextTick()
     getInputEl()?.focus()
   },

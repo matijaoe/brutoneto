@@ -14,6 +14,7 @@ const mode = computed<Mode>({
     } else {
       delete params.mode
     }
+    delete params.bruto
   },
 })
 const isActiveMode = (value: Mode) => mode.value === value
