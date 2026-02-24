@@ -123,7 +123,7 @@ const places = computed(() => taxesRes.value?.places)
           </USelectMenu>
         </UFormField>
         <UFormField
-          v-if="isActiveMode('gross-to-net')"
+          v-show="isActiveMode('gross-to-net')"
           label="Type"
           :ui="{ label: 'text-sm' }"
         >
