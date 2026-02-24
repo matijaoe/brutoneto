@@ -22,26 +22,13 @@ const emit = defineEmits<{
   (event: 'update:period', value: 'yearly' | 'monthly'): void
 }>()
 
-const amountByMode = useStorage<Record<Mode, string>>('salary-amounts', {
-  'gross-to-net': '',
-  'net-to-gross': '',
-})
+const amount = useStorage<string>('salary-amount', '')
 const selectedPlaceKey = toRef(props, 'selectedPlaceKey')
 const period = computed({
   get: () => props.period,
   set: (value: 'yearly' | 'monthly') => emit('update:period', value),
 })
 const mode = toRef(props, 'mode')
-
-const amount = computed({
-  get: () => amountByMode.value[mode.value] ?? '',
-  set: (value: string) => {
-    amountByMode.value = {
-      ...amountByMode.value,
-      [mode.value]: value,
-    }
-  },
-})
 const inputRef = ref<any>(null)
 const getInputEl = () =>
   (inputRef.value?.$el as HTMLElement | undefined)?.querySelector?.('input') as HTMLInputElement | null

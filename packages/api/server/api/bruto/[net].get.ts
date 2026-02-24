@@ -4,6 +4,7 @@ import {
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   netToGross,
+  roundEuros,
 } from '@brutoneto/core'
 import { getQuery, getRouterParams } from 'h3'
 import { z } from 'zod'
@@ -29,6 +30,7 @@ const QuerySchema = z.object({
     .max(MAX_PERSONAL_ALLOWANCE_COEFFICIENT)
     .optional(),
   detailed: z.coerce.boolean().optional(),
+  yearly: z.coerce.boolean().optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -56,12 +58,14 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { place, ltax, htax, coeff } = query.data
+  const { place, ltax, htax, coeff, yearly } = query.data
+
+  const monthlyNet = yearly === true ? roundEuros(net / 12) : net
 
   // Resolve place shortcuts to full place names
   const resolvedPlace = place != null ? resolvePlaceShortcut(place) as Place : undefined
 
-  const gross = netToGross(net, {
+  const gross = netToGross(monthlyNet, {
     place: resolvedPlace,
     taxRateLow: ltax,
     taxRateHigh: htax,
@@ -70,7 +74,7 @@ export default defineEventHandler(async (event) => {
   const { total: totalCostToEmployer } = grossToTotal(gross)
 
   return {
-    net,
+    net: monthlyNet,
     gross,
     totalCostToEmployer,
     currency: 'EUR',
