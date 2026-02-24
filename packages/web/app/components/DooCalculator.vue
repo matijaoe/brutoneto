@@ -22,16 +22,28 @@ const period = computed({
 
 const revenue = useStorage<string>('doo-revenue', '')
 const directorGross = useStorage<string>('doo-director-gross', String(DIRECTOR_MINIMUM_GROSS))
-const useMinimumSalary = useStorage<boolean>('doo-use-minimum', true)
 
 const revenueNumber = computed(() => Number(revenue.value))
-const directorGrossNumber = computed(() =>
-  useMinimumSalary.value ? DIRECTOR_MINIMUM_GROSS : Number(directorGross.value),
-)
+const directorGrossNumber = computed(() => Number(directorGross.value))
+
+const isAtMinimum = computed(() => directorGrossNumber.value === DIRECTOR_MINIMUM_GROSS)
+
+const setMinimumSalary = () => {
+  directorGross.value = String(DIRECTOR_MINIMUM_GROSS)
+}
 
 const revenueLabel = computed(() => {
   const periodLabel = period.value === 'yearly' ? 'Yearly' : 'Monthly'
   return `${periodLabel} total revenue`
+})
+
+const directorGrossError = computed(() => {
+  if (!directorGross.value) return undefined
+  const value = directorGrossNumber.value
+  if (value > 0 && value < DIRECTOR_MINIMUM_GROSS) {
+    return `Minimum is €${DIRECTOR_MINIMUM_GROSS} (director's minimum wage)`
+  }
+  return undefined
 })
 
 interface DooResponse {
@@ -80,9 +92,7 @@ interface DooResponse {
   }
 }
 
-const effectiveSalaryGross = computed(() =>
-  useMinimumSalary.value ? null : directorGrossNumber.value || null,
-)
+const effectiveSalaryGross = computed(() => directorGrossNumber.value || null)
 
 const { data, execute: calculate } = useFetch<DooResponse>(
   () => `/api/doo/${revenue.value}`,
@@ -102,9 +112,8 @@ const { data, execute: calculate } = useFetch<DooResponse>(
 
 const isInputValid = computed(() => {
   if (!revenue.value || revenueNumber.value <= 0) return false
-  if (!useMinimumSalary.value) {
-    if (!directorGross.value || directorGrossNumber.value <= 0) return false
-  }
+  if (directorGrossError.value) return false
+  if (!directorGross.value || directorGrossNumber.value <= 0) return false
   return true
 })
 
@@ -174,11 +183,12 @@ const formatCurrency = (value: number) => {
           </UInput>
         </UFormField>
 
-        <div>
-          <div class="flex items-center gap-2 mb-1">
-            <label class="text-sm text-muted">Director's gross salary (bruto 1)</label>
-          </div>
-          <div class="flex items-center gap-3">
+        <UFormField
+          label="Director's gross salary (bruto 1)"
+          :error="directorGrossError"
+          :ui="{ label: 'text-sm' }"
+        >
+          <div class="flex items-center gap-2">
             <UInput
               v-model="directorGross"
               icon="mdi:currency-eur"
@@ -186,32 +196,32 @@ const formatCurrency = (value: number) => {
               :placeholder="String(DIRECTOR_MINIMUM_GROSS)"
               size="lg"
               class="w-full sm:w-auto"
-              :disabled="useMinimumSalary"
+              :color="directorGrossError ? 'error' : undefined"
             />
-            <UTooltip text="Use minimum director salary (direktorski minimalac, €1,295.45)">
-              <label class="flex items-center gap-2 cursor-pointer whitespace-nowrap">
-                <input
-                  v-model="useMinimumSalary"
-                  type="checkbox"
-                  class="accent-primary"
-                >
-                <span class="text-sm text-muted">Minimalac</span>
-              </label>
+            <UTooltip text="Set to director's minimum wage (€1,295.45)">
+              <UButton
+                label="Use minimum"
+                color="neutral"
+                :variant="isAtMinimum ? 'soft' : 'outline'"
+                size="lg"
+                :disabled="isAtMinimum"
+                @click="setMinimumSalary"
+              />
             </UTooltip>
           </div>
-        </div>
+        </UFormField>
       </div>
     </form>
 
     <section v-if="data" class="mt-6 flex flex-col gap-3">
-      <div class="grid md:grid-cols-3 gap-3">
+      <div class="grid md:grid-cols-2 gap-3">
         <UCard>
           <template #header>
             <h2 class="text-base font-bold uppercase font-unifontex text-foreground">
               Net Salary
             </h2>
             <div class="flex flex-col gap-2">
-              <p class="text-4xl font-unifontex flex items-baseline gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
                   {{ formatCurrency(data.totals.netSalary) }}
                 </span>
@@ -229,7 +239,7 @@ const formatCurrency = (value: number) => {
               Dividend
             </h2>
             <div class="flex flex-col gap-2">
-              <p class="text-4xl font-unifontex flex items-baseline gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
                   {{ formatCurrency(data.totals.netDividend) }}
                 </span>
@@ -241,28 +251,29 @@ const formatCurrency = (value: number) => {
             </div>
           </template>
         </UCard>
-        <UCard>
-          <template #header>
-            <h2 class="text-base font-bold uppercase font-unifontex text-primary">
-              Total
-            </h2>
-            <div class="flex flex-col gap-2">
-              <p class="text-5xl font-unifontex flex items-baseline gap-2">
-                <span class="text-foreground">
-                  {{ formatCurrency(data.totals.monthlyNet) }}
-                </span>
-                <span class="text-base text-muted">/mo</span>
-              </p>
-              <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(toYearly(data.totals.monthlyNet)) }} /yr
-              </p>
-              <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
-                with tax return: {{ formatCurrency(data.totals.monthlyNetWithTaxReturn) }} /mo
-              </p>
-            </div>
-          </template>
-        </UCard>
       </div>
+
+      <UCard>
+        <template #header>
+          <h2 class="text-base font-bold uppercase font-unifontex text-primary">
+            Total
+          </h2>
+          <div class="flex flex-col gap-2">
+            <p class="text-5xl font-unifontex flex items-baseline gap-2">
+              <span class="text-foreground">
+                {{ formatCurrency(data.totals.monthlyNet) }}
+              </span>
+              <span class="text-base text-muted">/mo</span>
+            </p>
+            <p class="text-lg text-muted font-unifontex">
+              {{ formatCurrency(toYearly(data.totals.monthlyNet)) }} /yr
+            </p>
+            <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
+              with tax return: {{ formatCurrency(data.totals.monthlyNetWithTaxReturn) }} /mo
+            </p>
+          </div>
+        </template>
+      </UCard>
 
       <div>
         <UCollapsible>
