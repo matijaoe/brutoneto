@@ -3,9 +3,11 @@ import type { Place } from '@brutoneto/core'
 import { useClipboard, useStorage } from '@vueuse/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
+type BrutoType = 'bruto1' | 'bruto2'
 
 type Props = {
   mode: Mode
+  brutoType: BrutoType
   selectedPlaceKey: Place
   period: 'yearly' | 'monthly'
   placeholder?: string
@@ -44,19 +46,31 @@ const inputRef = ref<any>(null)
 const getInputEl = () =>
   (inputRef.value?.$el as HTMLElement | undefined)?.querySelector?.('input') as HTMLInputElement | null
 
-const endpoint = computed(() => (mode.value === 'gross-to-net' ? 'neto' : 'bruto'))
+const endpoint = computed(() => {
+  if (mode.value === 'gross-to-net' && props.brutoType === 'bruto2') return 'neto/bruto2'
+  if (mode.value === 'net-to-gross') return 'bruto'
+  return 'neto'
+})
 const toYearly = (value: number) => value * 12
 const amountNumber = computed(() => Number(amount.value))
 const lastSubmittedAmount = ref<number | null>(null)
 const lastSubmittedPeriod = ref<'yearly' | 'monthly' | null>(null)
 const amountLabel = computed(() => {
   const periodLabel = period.value === 'yearly' ? 'Yearly' : 'Monthly'
-  return mode.value === 'gross-to-net'
-    ? `${periodLabel} gross amount`
-    : `${periodLabel} net amount`
+  if (mode.value === 'gross-to-net') {
+    return props.brutoType === 'bruto2'
+      ? `${periodLabel} gross 2 amount (total employer cost)`
+      : `${periodLabel} gross amount`
+  }
+  return `${periodLabel} net amount`
 })
 const grossYearly = computed(() => {
-  if (lastSubmittedPeriod.value === 'yearly' && lastSubmittedAmount.value != null) {
+  if (
+    mode.value === 'gross-to-net'
+    && props.brutoType === 'bruto1'
+    && lastSubmittedPeriod.value === 'yearly'
+    && lastSubmittedAmount.value != null
+  ) {
     return lastSubmittedAmount.value
   }
   return toYearly(data.value?.gross ?? 0)
@@ -85,6 +99,16 @@ const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
 
 watch(
   () => selectedPlaceKey.value,
+  () => {
+    if (!hasSubmittedOnce.value || !isInputValid.value) {
+      return
+    }
+    handleCalculate()
+  },
+)
+
+watch(
+  () => props.brutoType,
   () => {
     if (!hasSubmittedOnce.value || !isInputValid.value) {
       return
@@ -151,6 +175,10 @@ const percentChips = [
 watch(
   () => mode.value,
   async () => {
+    data.value = null
+    hasSubmittedOnce.value = false
+    lastSubmittedAmount.value = null
+    lastSubmittedPeriod.value = null
     await nextTick()
     getInputEl()?.focus()
   },
