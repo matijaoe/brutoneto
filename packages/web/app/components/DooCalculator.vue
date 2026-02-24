@@ -22,14 +22,21 @@ const period = computed({
 
 const revenue = useStorage<string>('doo-revenue', '')
 const directorGross = useStorage<string>('doo-director-gross', String(DIRECTOR_MINIMUM_GROSS))
+const dividendPercentage = useStorage<string>('doo-dividend-pct', '100')
 
 const revenueNumber = computed(() => Number(revenue.value))
 const directorGrossNumber = computed(() => Number(directorGross.value))
+const dividendPercentageNumber = computed(() => Number(dividendPercentage.value))
 
 const isAtMinimum = computed(() => directorGrossNumber.value === DIRECTOR_MINIMUM_GROSS)
+const isFullDividend = computed(() => dividendPercentageNumber.value === 100)
 
 const setMinimumSalary = () => {
   directorGross.value = String(DIRECTOR_MINIMUM_GROSS)
+}
+
+const setFullDividend = () => {
+  dividendPercentage.value = '100'
 }
 
 const revenueLabel = computed(() => {
@@ -42,6 +49,15 @@ const directorGrossError = computed(() => {
   const value = directorGrossNumber.value
   if (value > 0 && value < DIRECTOR_MINIMUM_GROSS) {
     return `Minimum is €${DIRECTOR_MINIMUM_GROSS} (director's minimum wage)`
+  }
+  return undefined
+})
+
+const dividendPercentageError = computed(() => {
+  if (!dividendPercentage.value) return undefined
+  const value = dividendPercentageNumber.value
+  if (value < 0 || value > 100) {
+    return 'Must be between 0 and 100'
   }
   return undefined
 })
@@ -76,6 +92,7 @@ interface DooResponse {
     corporateTaxRate: number
     corporateTax: number
     profitAfterTax: number
+    retainedEarnings: number
   }
   dividend: {
     grossDividend: number
@@ -114,6 +131,7 @@ const isInputValid = computed(() => {
   if (!revenue.value || revenueNumber.value <= 0) return false
   if (directorGrossError.value) return false
   if (!directorGross.value || directorGrossNumber.value <= 0) return false
+  if (dividendPercentageError.value) return false
   return true
 })
 
@@ -138,6 +156,24 @@ watch(
 )
 
 const toYearly = (value: number) => value * 12
+
+// Apply dividend percentage client-side for instant updates
+const adjustedDividend = computed(() => {
+  if (!data.value) return null
+  const pct = dividendPercentageNumber.value / 100
+  const profitAfterTax = data.value.corporate.profitAfterTax
+  const taxRate = data.value.dividend.dividendTaxRate
+  const grossDividend = Math.round(profitAfterTax * pct * 100) / 100
+  const dividendTax = Math.round(grossDividend * taxRate * 100) / 100
+  const netDividend = Math.round((grossDividend - dividendTax) * 100) / 100
+  const retained = Math.round((profitAfterTax - grossDividend) * 100) / 100
+  const netSalary = data.value.totals.netSalary
+  const monthlyNet = Math.round((netSalary + netDividend) * 100) / 100
+  const taxReturn = data.value.totals.taxReturn
+  const monthlyNetWithTaxReturn = Math.round((monthlyNet + taxReturn) * 100) / 100
+  const totalWithRetained = Math.round((monthlyNet + retained) * 100) / 100
+  return { netDividend, retained, monthlyNet, monthlyNetWithTaxReturn, totalWithRetained }
+})
 
 const formattedData = computed(() =>
   data.value ? JSON.stringify(data.value, null, 2) : '',
@@ -210,6 +246,36 @@ const formatCurrency = (value: number) => {
             </UTooltip>
           </div>
         </UFormField>
+
+        <UFormField
+          label="Dividend withdrawal %"
+          :error="dividendPercentageError"
+          :ui="{ label: 'text-sm' }"
+        >
+          <div class="flex items-center gap-2">
+            <UInput
+              v-model="dividendPercentage"
+              icon="mdi:percent"
+              type="number"
+              placeholder="100"
+              :min="0"
+              :max="100"
+              size="lg"
+              class="w-full sm:w-auto"
+              :color="dividendPercentageError ? 'error' : undefined"
+            />
+            <UTooltip text="Withdraw 100% of profit after corporate tax">
+              <UButton
+                label="Use 100%"
+                color="neutral"
+                :variant="isFullDividend ? 'soft' : 'outline'"
+                size="lg"
+                :disabled="isFullDividend"
+                @click="setFullDividend"
+              />
+            </UTooltip>
+          </div>
+        </UFormField>
       </div>
     </form>
 
@@ -241,39 +307,63 @@ const formatCurrency = (value: number) => {
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(data.totals.netDividend) }}
+                  {{ formatCurrency(adjustedDividend?.netDividend ?? data.totals.netDividend) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(toYearly(data.totals.netDividend)) }} /yr
+                {{ formatCurrency(toYearly(adjustedDividend?.netDividend ?? data.totals.netDividend)) }} /yr
               </p>
             </div>
           </template>
         </UCard>
       </div>
 
-      <UCard>
-        <template #header>
-          <h2 class="text-base font-bold uppercase font-unifontex text-primary">
-            Total
-          </h2>
-          <div class="flex flex-col gap-2">
-            <p class="text-5xl font-unifontex flex items-baseline gap-2">
-              <span class="text-foreground">
-                {{ formatCurrency(data.totals.monthlyNet) }}
-              </span>
-              <span class="text-base text-muted">/mo</span>
-            </p>
-            <p class="text-lg text-muted font-unifontex">
-              {{ formatCurrency(toYearly(data.totals.monthlyNet)) }} /yr
-            </p>
-            <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
-              with tax return: {{ formatCurrency(data.totals.monthlyNetWithTaxReturn) }} /mo
-            </p>
-          </div>
-        </template>
-      </UCard>
+      <div class="grid gap-3" :class="adjustedDividend && adjustedDividend.retained > 0 ? 'md:grid-cols-2' : ''">
+        <UCard>
+          <template #header>
+            <h2 class="text-base font-bold uppercase font-unifontex text-primary">
+              Total
+            </h2>
+            <div class="flex flex-col gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
+                <span class="text-foreground">
+                  {{ formatCurrency(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet) }}
+                </span>
+                <span class="text-base text-muted">/mo</span>
+              </p>
+              <p class="text-lg text-muted font-unifontex">
+                {{ formatCurrency(toYearly(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet)) }} /yr
+              </p>
+              <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
+                with tax return: {{ formatCurrency(adjustedDividend?.monthlyNetWithTaxReturn ?? data.totals.monthlyNetWithTaxReturn) }} /mo
+              </p>
+              <p v-if="adjustedDividend && adjustedDividend.retained > 0" class="text-sm text-muted font-unifontex">
+                incl. company balance: {{ formatCurrency(adjustedDividend.totalWithRetained) }} /mo
+              </p>
+            </div>
+          </template>
+        </UCard>
+
+        <UCard v-if="adjustedDividend && adjustedDividend.retained > 0" variant="subtle">
+          <template #header>
+            <h2 class="text-base font-bold uppercase font-unifontex text-muted">
+              Company balance
+            </h2>
+            <div class="flex flex-col gap-2">
+              <p class="text-5xl font-unifontex flex items-baseline gap-2">
+                <span class="text-foreground">
+                  {{ formatCurrency(adjustedDividend.retained) }}
+                </span>
+                <span class="text-base text-muted">/mo</span>
+              </p>
+              <p class="text-lg text-muted font-unifontex">
+                {{ formatCurrency(toYearly(adjustedDividend.retained)) }} /yr
+              </p>
+            </div>
+          </template>
+        </UCard>
+      </div>
 
       <div>
         <UCollapsible>
