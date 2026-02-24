@@ -4,47 +4,46 @@ import type { Place } from '@brutoneto/core'
 type Mode = 'gross-to-net' | 'net-to-gross' | 'doo'
 type BrutoType = 'bruto1' | 'bruto2'
 
-const params = useUrlSearchParams('history')
+const route = useRoute()
+const router = useRouter()
+
+function replaceQuery(updates: Record<string, string | undefined>) {
+  const query = { ...route.query }
+  for (const [key, value] of Object.entries(updates)) {
+    if (value === undefined) {
+      delete query[key]
+    } else {
+      query[key] = value
+    }
+  }
+  router.replace({ query })
+}
 
 const mode = computed<Mode>({
   get: () => {
-    if (params.mode === 'doo') return 'doo'
-    if (params.mode === 'nb') return 'net-to-gross'
+    if (route.query.mode === 'doo') return 'doo'
+    if (route.query.mode === 'nb') return 'net-to-gross'
     return 'gross-to-net'
   },
   set: (value) => {
-    if (value === 'doo') {
-      params.mode = 'doo'
-    } else if (value === 'net-to-gross') {
-      params.mode = 'nb'
-    } else {
-      delete params.mode
-    }
-    delete params.bruto
+    const modeParam = value === 'doo' ? 'doo' : value === 'net-to-gross' ? 'nb' : undefined
+    replaceQuery({ mode: modeParam, bruto: undefined })
   },
 })
 const isActiveMode = (value: Mode) => mode.value === value
 const brutoType = computed<BrutoType>({
-  get: () => (params.bruto === '2' ? 'bruto2' : 'bruto1'),
+  get: () => (route.query.bruto === '2' ? 'bruto2' : 'bruto1'),
   set: (value) => {
-    if (value === 'bruto2') {
-      params.bruto = '2'
-    } else {
-      delete params.bruto
-    }
+    replaceQuery({ bruto: value === 'bruto2' ? '2' : undefined })
   },
 })
 const selectedPlaceKey = useCookie<Place>('place', {
   default: () => 'sveta-nedelja-samobor',
 })
 const period = computed<'yearly' | 'monthly'>({
-  get: () => (params.period === 'yr' ? 'yearly' : 'monthly'),
+  get: () => (route.query.period === 'yr' ? 'yearly' : 'monthly'),
   set: (value) => {
-    if (value === 'yearly') {
-      params.period = 'yr'
-    } else {
-      delete params.period
-    }
+    replaceQuery({ period: value === 'yearly' ? 'yr' : undefined })
   },
 })
 
