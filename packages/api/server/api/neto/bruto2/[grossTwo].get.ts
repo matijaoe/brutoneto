@@ -1,16 +1,19 @@
-import type { Place } from '@brutoneto/core'
+import type { Place, SalaryConfig } from '@brutoneto/core'
 import {
-  grossToTotal,
+  grossTwoToNet,
+  grossTwoToNetBreakdown,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
-  netToGross,
+  roundEuros,
+  THIRD_PILLAR_NON_TAXABLE_LIMIT,
+  totalToGross,
 } from '@brutoneto/core'
 import { getQuery, getRouterParams } from 'h3'
 import { z } from 'zod'
 import { isValidPlaceWithShortcuts, resolvePlaceShortcut } from '~/utils/places'
 
 const ParamsSchema = z.object({
-  net: z.coerce.number().positive(),
+  grossTwo: z.coerce.number().positive(),
 })
 
 const QuerySchema = z.object({
@@ -28,7 +31,16 @@ const QuerySchema = z.object({
     .min(MIN_PERSONAL_ALLOWANCE_COEFFICIENT)
     .max(MAX_PERSONAL_ALLOWANCE_COEFFICIENT)
     .optional(),
+  third_pillar: z
+    .coerce
+    .number()
+    .min(0)
+    .max(THIRD_PILLAR_NON_TAXABLE_LIMIT, {
+      message: `Maximum allowed non-taxable monthly third pillar contribution is €${THIRD_PILLAR_NON_TAXABLE_LIMIT}`,
+    })
+    .optional(),
   detailed: z.coerce.boolean().optional(),
+  yearly: z.coerce.boolean().optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -38,12 +50,12 @@ export default defineEventHandler(async (event) => {
   if (params.success === false) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid net amount',
+      statusMessage: 'Invalid gross two amount',
       message: extractZodErrorMessage(params.error),
     })
   }
 
-  const { net } = params.data
+  const { grossTwo } = params.data
 
   const queryParams = getQuery(event)
   const query = QuerySchema.safeParse(queryParams)
@@ -56,23 +68,35 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { place, ltax, htax, coeff } = query.data
+  const { place, ltax, htax, coeff, third_pillar, detailed, yearly } = query.data
 
-  // Resolve place shortcuts to full place names
+  const monthlyGrossTwo = yearly === true ? roundEuros(grossTwo / 12) : grossTwo
+
   const resolvedPlace = place != null ? resolvePlaceShortcut(place) as Place : undefined
 
-  const gross = netToGross(net, {
+  const config: SalaryConfig = {
     place: resolvedPlace,
     taxRateLow: ltax,
     taxRateHigh: htax,
     personalAllowanceCoefficient: coeff,
-  })
-  const { total: totalCostToEmployer } = grossToTotal(gross)
+    thirdPillarContribution: third_pillar,
+  }
+
+  if (detailed === true) {
+    const res = grossTwoToNetBreakdown(monthlyGrossTwo, config)
+    return {
+      ...res,
+      currency: 'EUR',
+    }
+  }
+
+  const net = grossTwoToNet(monthlyGrossTwo, config)
+  const gross = totalToGross(monthlyGrossTwo)
 
   return {
-    net,
+    totalCostToEmployer: monthlyGrossTwo,
     gross,
-    totalCostToEmployer,
+    net,
     currency: 'EUR',
   }
 })

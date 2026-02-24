@@ -129,6 +129,22 @@ export function calcHealthInsuranceContribution(gross: number): number {
 }
 
 /**
+ * Calculates the gross (bruto 1) amount from the total cost to employer (bruto 2).
+ * Reverse of grossToTotal.
+ *
+ * @note bruto 2 u bruto 1
+ *
+ * @param total - The total cost to employer (bruto 2).
+ * @returns The gross (bruto 1) amount.
+ */
+export function totalToGross(total: number): number {
+  return new Decimal(total)
+    .div(new Decimal(1).add(RATE.HEALTH_INSURANCE_CONTRIBUTION))
+    .toDP(2)
+    .toNumber()
+}
+
+/**
  * Calculates the total amount by adding the gross amount and the health insurance contribution.
  *
  * @param gross - The gross amount.

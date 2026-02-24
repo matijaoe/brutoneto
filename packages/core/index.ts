@@ -11,12 +11,19 @@ export {
   type NetToGrossConfig,
 } from './src/calculations/net-to-gross'
 
+// Gross-two-to-net calculation
+export {
+  grossTwoToNet,
+  grossTwoToNetBreakdown,
+} from './src/calculations/gross-two-to-net'
+
 // Calculation utilities (for custom calculations)
 export {
   calcMandatoryPensionContribution,
   calcPersonalAllowance,
   calcTax,
   grossToTotal,
+  totalToGross,
 } from './src/calculations/salary'
 
 export {
