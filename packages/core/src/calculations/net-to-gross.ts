@@ -2,6 +2,7 @@ import type { Place } from '../data/places'
 import { BASIC_PERSONAL_ALLOWANCE, HIGH_TAX_BRACKET_THRESHOLD, PERSONAL_ALLOWANCE_COEFFICIENT, RATE } from '../constants'
 import { PlaceMap } from '../data/places'
 import { assertValidSalary, roundEuros } from '../utils/precision'
+import { grossToNet } from './gross-to-net'
 
 export interface NetToGrossConfig {
   place?: Place
@@ -10,11 +11,88 @@ export interface NetToGrossConfig {
   personalAllowanceCoefficient?: number
 }
 
+interface ForwardConfig {
+  place?: Place
+  taxRateLow: number
+  taxRateHigh: number
+  personalAllowanceCoefficient: number
+}
+
+/**
+ * Finds the gross value that produces the target net by verifying the
+ * closed-form estimate against grossToNet and correcting if needed.
+ *
+ * Uses a fast local search first (±0.05 EUR), then falls back to binary
+ * search for edge cases near bracket boundaries or the no-tax zone.
+ */
+function correctEstimate(
+  estimate: number,
+  targetNet: number,
+  config: ForwardConfig,
+): number {
+  const clamped = Math.max(0, estimate)
+  const rounded = roundEuros(clamped)
+
+  // Fast path: estimate is already correct
+  if (grossToNet(rounded, config) === targetNet) {
+    return rounded
+  }
+
+  // Quick local search (covers ±0.05 EUR around estimate)
+  for (let i = 1; i <= 5; i++) {
+    const delta = i * 0.01
+    for (const candidate of [roundEuros(clamped + delta), roundEuros(clamped - delta)]) {
+      if (candidate >= 0 && grossToNet(candidate, config) === targetNet) {
+        return candidate
+      }
+    }
+  }
+
+  // Binary search fallback for larger deviations (bracket boundaries, no-tax zone)
+  let lo = 0
+  let hi = 1_000_000
+
+  for (let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2
+    const midNet = grossToNet(roundEuros(mid), config)
+    if (midNet < targetNet) {
+      lo = mid
+    }
+    else {
+      hi = mid
+    }
+    if (hi - lo < 0.005)
+      break
+  }
+
+  // Check the converged value and its neighbors
+  const center = roundEuros((lo + hi) / 2)
+  const candidates = [
+    roundEuros(center - 0.01),
+    center,
+    roundEuros(center + 0.01),
+  ].filter(c => c >= 0)
+
+  let best = candidates[0]!
+  let bestDiff = Math.abs(grossToNet(best, config) - targetNet)
+
+  for (const c of candidates) {
+    const diff = Math.abs(grossToNet(c, config) - targetNet)
+    if (diff < bestDiff || (diff === bestDiff && c < best)) {
+      bestDiff = diff
+      best = c
+    }
+  }
+
+  return best
+}
+
 /**
  * Calculates the gross amount based on the given net amount.
  *
- * Exact, closed-form inversion of grossToNet.
- * Pass values in €, get gross in € (rounded to two decimals).
+ * Uses a closed-form algebraic inversion as an initial estimate, then
+ * verifies against grossToNet and corrects for intermediate rounding
+ * to guarantee an exact roundtrip: netToGross(grossToNet(G)) === G.
  *
  * @alias netoToBruto
  *
@@ -32,6 +110,9 @@ export function netToGross(
   config: NetToGrossConfig = {},
 ): number {
   assertValidSalary(net, 'net')
+
+  if (net === 0)
+    return 0
 
   const {
     place,
@@ -54,29 +135,46 @@ export function netToGross(
   const allowance = BASIC_PERSONAL_ALLOWANCE * personalAllowanceCoefficient
   const threshold = HIGH_TAX_BRACKET_THRESHOLD
 
-  /* ---------- net at the bracket frontier ---------- */
+  /* ---------- bracket boundaries ---------- */
+
+  // No-tax zone: income <= allowance → tax = 0 → net = income = gross*(1-contrib)
+  // Boundary: net = allowance
+  const netNoTax = allowance
+
+  // Low bracket ceiling: taxableIncome = threshold
   const grossAtLimit = (threshold + allowance) / (1 - contributionRate)
   const netAtLimit
     = grossAtLimit * (1 - contributionRate) * (1 - taxRateLow)
       + allowance * taxRateLow
 
-  /* ---------- solve N = A·G + B ---------- */
-  let gross: number
+  /* ---------- closed-form estimate (three regions) ---------- */
+  let estimate: number
 
-  if (net <= netAtLimit) {
-    // low-rate bracket
+  if (net <= netNoTax) {
+    // No-tax zone: net = gross * (1 - contributionRate)
+    estimate = net / (1 - contributionRate)
+  }
+  else if (net <= netAtLimit) {
+    // Low-rate bracket: N = A·G + B
     const A = (1 - contributionRate) * (1 - taxRateLow)
     const B = allowance * taxRateLow
-    gross = (net - B) / A
+    estimate = (net - B) / A
   }
   else {
-    // high-rate bracket
+    // High-rate bracket: N = A·G + B
     const A = (1 - contributionRate) * (1 - taxRateHigh)
     const B = allowance * taxRateHigh
       - threshold * (taxRateLow - taxRateHigh)
-    gross = (net - B) / A
+    estimate = (net - B) / A
   }
 
-  // round to euro-cents and return as number
-  return roundEuros(gross)
+  /* ---------- verify and correct for intermediate rounding ---------- */
+  const forwardConfig: ForwardConfig = {
+    place,
+    taxRateLow,
+    taxRateHigh,
+    personalAllowanceCoefficient,
+  }
+
+  return correctEstimate(estimate, net, forwardConfig)
 }

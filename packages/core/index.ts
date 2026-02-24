@@ -5,17 +5,17 @@ export {
   type SalaryConfig,
 } from './src/calculations/gross-to-net'
 
-// Net-to-gross calculation
-export {
-  netToGross,
-  type NetToGrossConfig,
-} from './src/calculations/net-to-gross'
-
 // Gross-two-to-net calculation
 export {
   grossTwoToNet,
   grossTwoToNetBreakdown,
 } from './src/calculations/gross-two-to-net'
+
+// Net-to-gross calculation
+export {
+  netToGross,
+  type NetToGrossConfig,
+} from './src/calculations/net-to-gross'
 
 // Calculation utilities (for custom calculations)
 export {
