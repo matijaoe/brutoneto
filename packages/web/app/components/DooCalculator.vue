@@ -170,6 +170,12 @@ watch(
 
 const toYearly = (value: number) => value * 12
 
+const retainedEarnings = computed(() => {
+  if (!data.value) return 0
+  return data.value.corporate.retainedEarnings
+    ?? (data.value.corporate.profitAfterTax - data.value.dividend.grossDividend)
+})
+
 const formattedData = computed(() =>
   data.value ? JSON.stringify(data.value, null, 2) : '',
 )
@@ -336,7 +342,7 @@ const formatCurrency = (value: number) => {
         </template>
       </UCard>
 
-      <UCard v-if="data.corporate.retainedEarnings > 0" variant="subtle">
+      <UCard v-if="retainedEarnings > 0" variant="subtle">
         <template #header>
           <h2 class="text-base font-bold uppercase font-unifontex text-muted">
             Remains in company
@@ -344,12 +350,12 @@ const formatCurrency = (value: number) => {
           <div class="flex flex-col gap-2">
             <p class="text-5xl font-unifontex flex items-baseline gap-2">
               <span class="text-foreground">
-                {{ formatCurrency(data.corporate.retainedEarnings) }}
+                {{ formatCurrency(retainedEarnings) }}
               </span>
               <span class="text-base text-muted">/mo</span>
             </p>
             <p class="text-lg text-muted font-unifontex">
-              {{ formatCurrency(toYearly(data.corporate.retainedEarnings)) }} /yr
+              {{ formatCurrency(toYearly(retainedEarnings)) }} /yr
             </p>
           </div>
         </template>
