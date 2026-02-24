@@ -1,5 +1,6 @@
 import type { Place } from '@brutoneto/core'
 import {
+  grossToTotal,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   netToGross,
@@ -66,10 +67,12 @@ export default defineEventHandler(async (event) => {
     taxRateHigh: htax,
     personalAllowanceCoefficient: coeff,
   })
+  const { total: totalCostToEmployer } = grossToTotal(gross)
 
   return {
     net,
     gross,
+    totalCostToEmployer,
     currency: 'EUR',
   }
 })

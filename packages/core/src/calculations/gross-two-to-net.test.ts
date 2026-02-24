@@ -40,12 +40,12 @@ describe('grossTwoToNet', () => {
 })
 
 describe('grossTwoToNetBreakdown', () => {
-  it('should return breakdown with grossTwo field included', () => {
+  it('should return breakdown with correct totalCostToEmployer, gross, and net', () => {
     const gross = 4000
     const { total: grossTwo } = grossToTotal(gross)
 
     const result = grossTwoToNetBreakdown(grossTwo)
-    expect(result.grossTwo).toBe(grossTwo)
+    expect(result.totalCostToEmployer).toBe(grossTwo)
     expect(result.gross).toBe(gross)
     expect(result.net).toBe(grossToNet(gross))
   })
@@ -71,6 +71,6 @@ describe('grossTwoToNetBreakdown', () => {
 
     const result = grossTwoToNetBreakdown(grossTwo, { place: 'zagreb' })
     expect(result.variables.place).toBe('zagreb')
-    expect(result.grossTwo).toBe(grossTwo)
+    expect(result.totalCostToEmployer).toBe(grossTwo)
   })
 })

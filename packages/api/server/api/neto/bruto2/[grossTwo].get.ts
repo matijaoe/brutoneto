@@ -6,6 +6,7 @@ import {
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   roundEuros,
   THIRD_PILLAR_NON_TAXABLE_LIMIT,
+  totalToGross,
 } from '@brutoneto/core'
 import { getQuery, getRouterParams } from 'h3'
 import { z } from 'zod'
@@ -90,9 +91,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const net = grossTwoToNet(monthlyGrossTwo, config)
+  const gross = totalToGross(monthlyGrossTwo)
 
   return {
-    grossTwo: monthlyGrossTwo,
+    totalCostToEmployer: monthlyGrossTwo,
+    gross,
     net,
     currency: 'EUR',
   }

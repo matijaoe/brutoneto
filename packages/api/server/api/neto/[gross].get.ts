@@ -2,6 +2,7 @@ import type { Place, SalaryConfig } from '@brutoneto/core'
 import {
   grossToNet,
   grossToNetBreakdown,
+  grossToTotal,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
   roundEuros,
@@ -91,9 +92,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const net = grossToNet(monthlyGross, grossToNetConfig)
+  const { total: totalCostToEmployer } = grossToTotal(monthlyGross)
 
   return {
     gross: monthlyGross,
+    totalCostToEmployer,
     net,
     currency: 'EUR',
   }
