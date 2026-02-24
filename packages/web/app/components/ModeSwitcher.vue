@@ -30,8 +30,8 @@ const toggleMode = () =>
       >
         <button type="button" @click="setMode('net-to-gross')">
           <span
-            class="text-2xl sm:text-lg uppercase tracking-wide font-unifontex"
-            :class="isActiveMode('net-to-gross') ? 'text-foreground font-bold' : 'text-muted'"
+            class="text-2xl sm:text-lg uppercase tracking-wide font-unifontex font-bold"
+            :class="isActiveMode('net-to-gross') ? 'text-foreground' : 'text-muted'"
           >
             Gross
           </span>
@@ -56,8 +56,8 @@ const toggleMode = () =>
       >
         <button type="button" @click="setMode('gross-to-net')">
           <span
-            class="text-2xl sm:text-lg uppercase tracking-wide font-unifontex"
-            :class="isActiveMode('gross-to-net') ? 'text-foreground font-bold' : 'text-muted'"
+            class="text-2xl sm:text-lg uppercase tracking-wide font-unifontex font-bold"
+            :class="isActiveMode('gross-to-net') ? 'text-foreground' : 'text-muted'"
           >
             Net
           </span>
@@ -72,8 +72,8 @@ const toggleMode = () =>
       >
         <button type="button" @click="setMode('doo')">
           <span
-            class="text-2xl sm:text-lg uppercase tracking-wide font-unifontex"
-            :class="isActiveMode('doo') ? 'text-foreground font-bold' : 'text-muted'"
+            class="text-2xl sm:text-lg uppercase tracking-wide font-unifontex font-bold"
+            :class="isActiveMode('doo') ? 'text-foreground' : 'text-muted'"
           >
             d.o.o.
           </span>
