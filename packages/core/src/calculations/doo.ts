@@ -20,6 +20,12 @@ export interface DooConfig {
   taxRateHigh?: number
   personalAllowanceCoefficient?: number
   thirdPillarContribution?: number
+  /**
+   * Percentage of profit after corporate tax to withdraw as dividend (0–100).
+   * The remainder stays in the company as retained earnings.
+   * Defaults to 100 (withdraw everything).
+   */
+  dividendPercentage?: number
 }
 
 export interface DooBreakdown {
@@ -54,6 +60,7 @@ export interface DooBreakdown {
     corporateTaxRate: number
     corporateTax: number
     profitAfterTax: number
+    retainedEarnings: number
   }
 
   dividend: {
@@ -78,6 +85,7 @@ export interface DooBreakdown {
     personalAllowanceCoefficient: number
     corporateTaxRate: number
     dividendTaxRate: number
+    dividendPercentage: number
     directorMinimumGross: number
     isDirectorMinimum: boolean
   }
@@ -103,6 +111,11 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
 
   const directorGross = config.directorGross ?? DIRECTOR_MINIMUM_GROSS
   assertValidSalary(directorGross, 'directorGross')
+
+  const dividendPercentage = config.dividendPercentage ?? 100
+  if (dividendPercentage < 0 || dividendPercentage > 100) {
+    throw new Error('dividendPercentage must be between 0 and 100')
+  }
 
   const isDirectorMinimum = config.directorGross == null
     || config.directorGross === DIRECTOR_MINIMUM_GROSS
@@ -130,11 +143,14 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
   const $corporateTax = $profit.mul(CORPORATE_TAX_RATE).toDP(2)
   const $profitAfterTax = $profit.sub($corporateTax).toDP(2)
 
-  // Step 3: Dividend
-  const $dividendTax = $profitAfterTax.mul(DIVIDEND_TAX_RATE).toDP(2)
-  const $netDividend = $profitAfterTax.sub($dividendTax).toDP(2)
+  // Step 3: Dividend (only the withdrawn percentage)
+  const $dividendPct = new Decimal(dividendPercentage).div(100)
+  const $grossDividend = $profitAfterTax.mul($dividendPct).toDP(2)
+  const $retainedEarnings = $profitAfterTax.sub($grossDividend).toDP(2)
+  const $dividendTax = $grossDividend.mul(DIVIDEND_TAX_RATE).toDP(2)
+  const $netDividend = $grossDividend.sub($dividendTax).toDP(2)
 
-  // Step 4: Totals
+  // Step 4: Totals (retained earnings NOT included in take-home)
   const $netSalary = new Decimal(netSalary)
   const $monthlyNet = $netSalary.add($netDividend).toDP(2)
   const taxReturn = salaryBreakdown.taxes.totalHalf
@@ -161,10 +177,11 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
       corporateTaxRate: CORPORATE_TAX_RATE,
       corporateTax: roundEuros($corporateTax.toNumber()),
       profitAfterTax: roundEuros($profitAfterTax.toNumber()),
+      retainedEarnings: roundEuros($retainedEarnings.toNumber()),
     },
 
     dividend: {
-      grossDividend: roundEuros($profitAfterTax.toNumber()),
+      grossDividend: roundEuros($grossDividend.toNumber()),
       dividendTaxRate: DIVIDEND_TAX_RATE,
       dividendTax: roundEuros($dividendTax.toNumber()),
       netDividend: roundEuros($netDividend.toNumber()),
@@ -185,6 +202,7 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
       personalAllowanceCoefficient: salaryBreakdown.variables.personalAllowanceCoefficient,
       corporateTaxRate: CORPORATE_TAX_RATE,
       dividendTaxRate: DIVIDEND_TAX_RATE,
+      dividendPercentage,
       directorMinimumGross: DIRECTOR_MINIMUM_GROSS,
       isDirectorMinimum,
     },

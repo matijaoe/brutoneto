@@ -22,14 +22,21 @@ const period = computed({
 
 const revenue = useStorage<string>('doo-revenue', '')
 const directorGross = useStorage<string>('doo-director-gross', String(DIRECTOR_MINIMUM_GROSS))
+const dividendPercentage = useStorage<string>('doo-dividend-pct', '100')
 
 const revenueNumber = computed(() => Number(revenue.value))
 const directorGrossNumber = computed(() => Number(directorGross.value))
+const dividendPercentageNumber = computed(() => Number(dividendPercentage.value))
 
 const isAtMinimum = computed(() => directorGrossNumber.value === DIRECTOR_MINIMUM_GROSS)
+const isFullDividend = computed(() => dividendPercentageNumber.value === 100)
 
 const setMinimumSalary = () => {
   directorGross.value = String(DIRECTOR_MINIMUM_GROSS)
+}
+
+const setFullDividend = () => {
+  dividendPercentage.value = '100'
 }
 
 const revenueLabel = computed(() => {
@@ -42,6 +49,15 @@ const directorGrossError = computed(() => {
   const value = directorGrossNumber.value
   if (value > 0 && value < DIRECTOR_MINIMUM_GROSS) {
     return `Minimum is €${DIRECTOR_MINIMUM_GROSS} (director's minimum wage)`
+  }
+  return undefined
+})
+
+const dividendPercentageError = computed(() => {
+  if (!dividendPercentage.value) return undefined
+  const value = dividendPercentageNumber.value
+  if (value < 0 || value > 100) {
+    return 'Must be between 0 and 100'
   }
   return undefined
 })
@@ -76,6 +92,7 @@ interface DooResponse {
     corporateTaxRate: number
     corporateTax: number
     profitAfterTax: number
+    retainedEarnings: number
   }
   dividend: {
     grossDividend: number
@@ -93,6 +110,10 @@ interface DooResponse {
 }
 
 const effectiveSalaryGross = computed(() => directorGrossNumber.value || null)
+const effectiveDividendPct = computed(() => {
+  const val = dividendPercentageNumber.value
+  return val >= 0 && val <= 100 ? val : null
+})
 
 const { data, execute: calculate } = useFetch<DooResponse>(
   () => `/api/doo/${revenue.value}`,
@@ -103,6 +124,7 @@ const { data, execute: calculate } = useFetch<DooResponse>(
       yearly: computed(() => (period.value === 'yearly' ? 'true' : null)),
       place: selectedPlaceKey,
       salary_gross: effectiveSalaryGross,
+      dividend_pct: effectiveDividendPct,
     },
     immediate: false,
     watch: false,
@@ -114,6 +136,7 @@ const isInputValid = computed(() => {
   if (!revenue.value || revenueNumber.value <= 0) return false
   if (directorGrossError.value) return false
   if (!directorGross.value || directorGrossNumber.value <= 0) return false
+  if (dividendPercentageError.value) return false
   return true
 })
 
@@ -131,6 +154,14 @@ const handleCalculate = () => {
 
 watch(
   () => selectedPlaceKey.value,
+  () => {
+    if (!hasSubmittedOnce.value || !isInputValid.value) return
+    handleCalculate()
+  },
+)
+
+watch(
+  () => dividendPercentage.value,
   () => {
     if (!hasSubmittedOnce.value || !isInputValid.value) return
     handleCalculate()
@@ -210,6 +241,36 @@ const formatCurrency = (value: number) => {
             </UTooltip>
           </div>
         </UFormField>
+
+        <UFormField
+          label="Dividend withdrawal %"
+          :error="dividendPercentageError"
+          :ui="{ label: 'text-sm' }"
+        >
+          <div class="flex items-center gap-2">
+            <UInput
+              v-model="dividendPercentage"
+              icon="mdi:percent"
+              type="number"
+              placeholder="100"
+              :min="0"
+              :max="100"
+              size="lg"
+              class="w-full sm:w-auto"
+              :color="dividendPercentageError ? 'error' : undefined"
+            />
+            <UTooltip text="Withdraw 100% of profit after corporate tax">
+              <UButton
+                label="Use 100%"
+                color="neutral"
+                :variant="isFullDividend ? 'soft' : 'outline'"
+                size="lg"
+                :disabled="isFullDividend"
+                @click="setFullDividend"
+              />
+            </UTooltip>
+          </div>
+        </UFormField>
       </div>
     </form>
 
@@ -270,6 +331,25 @@ const formatCurrency = (value: number) => {
             </p>
             <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
               with tax return: {{ formatCurrency(data.totals.monthlyNetWithTaxReturn) }} /mo
+            </p>
+          </div>
+        </template>
+      </UCard>
+
+      <UCard v-if="data.corporate.retainedEarnings > 0" variant="subtle">
+        <template #header>
+          <h2 class="text-base font-bold uppercase font-unifontex text-muted">
+            Remains in company
+          </h2>
+          <div class="flex flex-col gap-2">
+            <p class="text-5xl font-unifontex flex items-baseline gap-2">
+              <span class="text-foreground">
+                {{ formatCurrency(data.corporate.retainedEarnings) }}
+              </span>
+              <span class="text-base text-muted">/mo</span>
+            </p>
+            <p class="text-lg text-muted font-unifontex">
+              {{ formatCurrency(toYearly(data.corporate.retainedEarnings)) }} /yr
             </p>
           </div>
         </template>

@@ -39,6 +39,7 @@ const QuerySchema = z.object({
       message: `Maximum allowed non-taxable monthly third pillar contribution is €${THIRD_PILLAR_NON_TAXABLE_LIMIT}`,
     })
     .optional(),
+  dividend_pct: z.coerce.number().min(0).max(100).optional(),
   detailed: z.coerce.boolean().optional(),
   yearly: z.coerce.boolean().optional(),
 })
@@ -68,7 +69,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { salary_gross, place, ltax, htax, coeff, third_pillar, detailed, yearly } = query.data
+  const { salary_gross, place, ltax, htax, coeff, third_pillar, dividend_pct, detailed, yearly } = query.data
 
   const monthlyRevenue = yearly === true ? roundEuros(totalRevenue / 12) : totalRevenue
 
@@ -81,6 +82,7 @@ export default defineEventHandler(async (event) => {
     taxRateHigh: htax,
     personalAllowanceCoefficient: coeff,
     thirdPillarContribution: third_pillar,
+    dividendPercentage: dividend_pct,
   }
 
   if (detailed === true) {

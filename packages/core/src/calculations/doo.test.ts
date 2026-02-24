@@ -113,6 +113,72 @@ describe('calculateDoo', () => {
   })
 })
 
+describe('calculateDoo - dividendPercentage', () => {
+  it('should default to 100% dividend withdrawal', () => {
+    const result = calculateDoo(5000)
+    expect(result.variables.dividendPercentage).toBe(100)
+    expect(result.corporate.retainedEarnings).toBe(0)
+    // grossDividend should equal profitAfterTax when 100%
+    expect(result.dividend.grossDividend).toBe(result.corporate.profitAfterTax)
+  })
+
+  it('should withdraw 50% of profit after tax as dividend', () => {
+    const full = calculateDoo(5000)
+    const half = calculateDoo(5000, { dividendPercentage: 50 })
+
+    const expectedGrossDividend = roundEuros(full.corporate.profitAfterTax * 0.5)
+    expect(half.dividend.grossDividend).toBe(expectedGrossDividend)
+
+    const expectedDividendTax = roundEuros(expectedGrossDividend * DIVIDEND_TAX_RATE)
+    expect(half.dividend.dividendTax).toBe(expectedDividendTax)
+
+    const expectedNetDividend = roundEuros(expectedGrossDividend - expectedDividendTax)
+    expect(half.dividend.netDividend).toBe(expectedNetDividend)
+
+    // Retained earnings = profitAfterTax - grossDividend
+    expect(half.corporate.retainedEarnings).toBe(
+      roundEuros(half.corporate.profitAfterTax - half.dividend.grossDividend),
+    )
+  })
+
+  it('should retain all profit when dividendPercentage is 0', () => {
+    const result = calculateDoo(5000, { dividendPercentage: 0 })
+
+    expect(result.dividend.grossDividend).toBe(0)
+    expect(result.dividend.dividendTax).toBe(0)
+    expect(result.dividend.netDividend).toBe(0)
+    expect(result.corporate.retainedEarnings).toBe(result.corporate.profitAfterTax)
+    expect(result.totals.monthlyNet).toBe(result.totals.netSalary)
+  })
+
+  it('should satisfy retainedEarnings + grossDividend === profitAfterTax', () => {
+    for (const pct of [0, 25, 50, 75, 100]) {
+      const result = calculateDoo(5000, { dividendPercentage: pct })
+      expect(
+        roundEuros(result.corporate.retainedEarnings + result.dividend.grossDividend),
+      ).toBe(result.corporate.profitAfterTax)
+    }
+  })
+
+  it('should not affect salary calculation', () => {
+    const full = calculateDoo(5000)
+    const partial = calculateDoo(5000, { dividendPercentage: 30 })
+
+    expect(partial.salary).toEqual(full.salary)
+    expect(partial.corporate.profit).toBe(full.corporate.profit)
+    expect(partial.corporate.corporateTax).toBe(full.corporate.corporateTax)
+    expect(partial.corporate.profitAfterTax).toBe(full.corporate.profitAfterTax)
+  })
+
+  it('should throw for dividendPercentage below 0', () => {
+    expect(() => calculateDoo(5000, { dividendPercentage: -1 })).toThrow()
+  })
+
+  it('should throw for dividendPercentage above 100', () => {
+    expect(() => calculateDoo(5000, { dividendPercentage: 101 })).toThrow()
+  })
+})
+
 describe('calculateDooSimple', () => {
   it('should return netSalary, netDividend, and total', () => {
     const simple = calculateDooSimple(5000)
