@@ -110,10 +110,6 @@ interface DooResponse {
 }
 
 const effectiveSalaryGross = computed(() => directorGrossNumber.value || null)
-const effectiveDividendPct = computed(() => {
-  const val = dividendPercentageNumber.value
-  return val >= 0 && val <= 100 ? val : null
-})
 
 const { data, execute: calculate } = useFetch<DooResponse>(
   () => `/api/doo/${revenue.value}`,
@@ -124,7 +120,6 @@ const { data, execute: calculate } = useFetch<DooResponse>(
       yearly: computed(() => (period.value === 'yearly' ? 'true' : null)),
       place: selectedPlaceKey,
       salary_gross: effectiveSalaryGross,
-      dividend_pct: effectiveDividendPct,
     },
     immediate: false,
     watch: false,
@@ -160,20 +155,23 @@ watch(
   },
 )
 
-watch(
-  () => dividendPercentage.value,
-  () => {
-    if (!hasSubmittedOnce.value || !isInputValid.value) return
-    handleCalculate()
-  },
-)
-
 const toYearly = (value: number) => value * 12
 
-const retainedEarnings = computed(() => {
-  if (!data.value) return 0
-  return data.value.corporate.retainedEarnings
-    ?? (data.value.corporate.profitAfterTax - data.value.dividend.grossDividend)
+// Apply dividend percentage client-side for instant updates
+const adjustedDividend = computed(() => {
+  if (!data.value) return null
+  const pct = dividendPercentageNumber.value / 100
+  const profitAfterTax = data.value.corporate.profitAfterTax
+  const taxRate = data.value.dividend.dividendTaxRate
+  const grossDividend = Math.round(profitAfterTax * pct * 100) / 100
+  const dividendTax = Math.round(grossDividend * taxRate * 100) / 100
+  const netDividend = Math.round((grossDividend - dividendTax) * 100) / 100
+  const retained = Math.round((profitAfterTax - grossDividend) * 100) / 100
+  const netSalary = data.value.totals.netSalary
+  const monthlyNet = Math.round((netSalary + netDividend) * 100) / 100
+  const taxReturn = data.value.totals.taxReturn
+  const monthlyNetWithTaxReturn = Math.round((monthlyNet + taxReturn) * 100) / 100
+  return { netDividend, retained, monthlyNet, monthlyNetWithTaxReturn }
 })
 
 const formattedData = computed(() =>
@@ -308,12 +306,12 @@ const formatCurrency = (value: number) => {
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(data.totals.netDividend) }}
+                  {{ formatCurrency(adjustedDividend?.netDividend ?? data.totals.netDividend) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(toYearly(data.totals.netDividend)) }} /yr
+                {{ formatCurrency(toYearly(adjustedDividend?.netDividend ?? data.totals.netDividend)) }} /yr
               </p>
             </div>
           </template>
@@ -328,21 +326,21 @@ const formatCurrency = (value: number) => {
           <div class="flex flex-col gap-2">
             <p class="text-5xl font-unifontex flex items-baseline gap-2">
               <span class="text-foreground">
-                {{ formatCurrency(data.totals.monthlyNet) }}
+                {{ formatCurrency(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet) }}
               </span>
               <span class="text-base text-muted">/mo</span>
             </p>
             <p class="text-lg text-muted font-unifontex">
-              {{ formatCurrency(toYearly(data.totals.monthlyNet)) }} /yr
+              {{ formatCurrency(toYearly(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet)) }} /yr
             </p>
             <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
-              with tax return: {{ formatCurrency(data.totals.monthlyNetWithTaxReturn) }} /mo
+              with tax return: {{ formatCurrency(adjustedDividend?.monthlyNetWithTaxReturn ?? data.totals.monthlyNetWithTaxReturn) }} /mo
             </p>
           </div>
         </template>
       </UCard>
 
-      <UCard v-if="retainedEarnings > 0" variant="subtle">
+      <UCard v-if="adjustedDividend && adjustedDividend.retained > 0" variant="subtle">
         <template #header>
           <h2 class="text-base font-bold uppercase font-unifontex text-muted">
             Remains in company
@@ -350,12 +348,12 @@ const formatCurrency = (value: number) => {
           <div class="flex flex-col gap-2">
             <p class="text-5xl font-unifontex flex items-baseline gap-2">
               <span class="text-foreground">
-                {{ formatCurrency(retainedEarnings) }}
+                {{ formatCurrency(adjustedDividend.retained) }}
               </span>
               <span class="text-base text-muted">/mo</span>
             </p>
             <p class="text-lg text-muted font-unifontex">
-              {{ formatCurrency(toYearly(retainedEarnings)) }} /yr
+              {{ formatCurrency(toYearly(adjustedDividend.retained)) }} /yr
             </p>
           </div>
         </template>
