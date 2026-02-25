@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
+import type { InputCurrency } from '~/composables/useCurrency'
 import { useClipboard, useStorage } from '@vueuse/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
@@ -22,6 +23,17 @@ const emit = defineEmits<{
   (event: 'update:period', value: 'yearly' | 'monthly'): void
 }>()
 
+const {
+  currency,
+  exchangeRate,
+  exchangeRateDate,
+  isLoadingRate,
+  isNonEur,
+  convertToEur,
+  formatInputCurrency,
+  currencyIcon,
+} = useCurrency()
+
 const amount = useStorage<string>('salary-amount', '')
 const selectedPlaceKey = toRef(props, 'selectedPlaceKey')
 const period = computed({
@@ -40,8 +52,12 @@ const endpoint = computed(() => {
 })
 const toYearly = (value: number) => value * 12
 const amountNumber = computed(() => Number(amount.value))
-const lastSubmittedAmount = ref<number | null>(null)
+const lastSubmittedEurAmount = ref<number | null>(null)
+const lastSubmittedInputAmount = ref<number | null>(null)
+const lastSubmittedCurrency = ref<InputCurrency>('EUR')
 const lastSubmittedPeriod = ref<'yearly' | 'monthly' | null>(null)
+const lastSubmittedRate = ref<number | null>(null)
+const apiAmount = ref<string>('')
 const amountLabel = computed(() => {
   const periodLabel = period.value === 'yearly' ? 'Yearly' : 'Monthly'
   if (mode.value === 'gross-to-net') {
@@ -56,9 +72,9 @@ const grossYearly = computed(() => {
     mode.value === 'gross-to-net'
     && props.brutoType === 'bruto1'
     && lastSubmittedPeriod.value === 'yearly'
-    && lastSubmittedAmount.value != null
+    && lastSubmittedEurAmount.value != null
   ) {
-    return lastSubmittedAmount.value
+    return lastSubmittedEurAmount.value
   }
   return toYearly(data.value?.gross ?? 0)
 })
@@ -69,7 +85,7 @@ const formattedData = computed(() =>
 const { copy, copied } = useClipboard({ copiedDuring: 1200 })
 
 const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
-  () => `/api/${endpoint.value}/${amount.value}`,
+  () => `/api/${endpoint.value}/${apiAmount.value}`,
   {
     method: 'GET',
     query: {
@@ -136,9 +152,22 @@ const handleCalculate = () => {
   if (!isInputValid.value) {
     return
   }
-  hasSubmittedOnce.value = true
-  lastSubmittedAmount.value = amountNumber.value
+
+  const eurAmount = convertToEur(amountNumber.value)
+  if (eurAmount == null && isNonEur.value) {
+    // Rate hasn't loaded yet
+    return
+  }
+
+  const resolvedEur = eurAmount ?? amountNumber.value
+  apiAmount.value = String(resolvedEur)
+  lastSubmittedEurAmount.value = resolvedEur
+  lastSubmittedInputAmount.value = amountNumber.value
+  lastSubmittedCurrency.value = currency.value
+  lastSubmittedRate.value = exchangeRate.value
   lastSubmittedPeriod.value = period.value
+  hasSubmittedOnce.value = true
+
   calculate()
   getInputEl()?.blur()
 }
@@ -164,19 +193,49 @@ watch(
   async () => {
     data.value = null
     hasSubmittedOnce.value = false
-    lastSubmittedAmount.value = null
+    lastSubmittedEurAmount.value = null
+    lastSubmittedInputAmount.value = null
     lastSubmittedPeriod.value = null
     await nextTick()
     getInputEl()?.focus()
   },
 )
 
-const formatCurrency = (value: number) => {
+const toggleCurrency = () => {
+  currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
+}
+
+const showConversionNote = computed(() => {
+  return (
+    data.value
+    && lastSubmittedCurrency.value !== 'EUR'
+    && lastSubmittedInputAmount.value != null
+    && lastSubmittedRate.value != null
+  )
+})
+
+const conversionNote = computed(() => {
+  if (!showConversionNote.value) return null
+  const inputFormatted = formatInputCurrency(lastSubmittedInputAmount.value!)
+  const periodSuffix = lastSubmittedPeriod.value === 'yearly' ? '/yr' : '/mo'
+  const eurFormatted = formatEur(lastSubmittedEurAmount.value!)
+  const rateFormatted = lastSubmittedRate.value!.toFixed(4)
+  return {
+    input: `${inputFormatted}${periodSuffix}`,
+    eur: `${eurFormatted}${periodSuffix}`,
+    rate: `1 ${lastSubmittedCurrency.value} = ${rateFormatted} EUR`,
+    date: exchangeRateDate.value,
+  }
+})
+
+const formatEur = (value: number) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR',
   }).format(value)
 }
+
+const formatCurrency = formatEur
 </script>
 
 <template>
@@ -189,7 +248,6 @@ const formatCurrency = (value: number) => {
         <UInput
           ref="inputRef"
           v-model="amount"
-          icon="mdi:currency-eur"
           type="number"
           :placeholder="placeholder"
           size="lg"
@@ -198,6 +256,20 @@ const formatCurrency = (value: number) => {
           :autofocus="autofocus"
           @blur="hasBlurredOnce = true"
         >
+          <template #leading>
+            <UTooltip text="Switch input currency. Output is always in EUR.">
+              <button
+                type="button"
+                class="flex items-center cursor-pointer"
+                @click="toggleCurrency"
+              >
+                <UIcon
+                  :name="currencyIcon"
+                  class="size-5 text-dimmed"
+                />
+              </button>
+            </UTooltip>
+          </template>
           <template #trailing>
             <UButton
               color="primary"
@@ -205,9 +277,13 @@ const formatCurrency = (value: number) => {
               size="lg"
               icon="mdi:send"
               type="submit"
+              :loading="isNonEur && isLoadingRate"
             />
           </template>
         </UInput>
+        <p v-if="isNonEur" class="text-xs text-dimmed mt-1">
+          Input in {{ currency }} — results will be converted to EUR
+        </p>
       </UFormField>
     </form>
     <Transition
@@ -252,6 +328,11 @@ const formatCurrency = (value: number) => {
     </div>
 
     <section v-if="data" class="mt-6 flex flex-col gap-3">
+      <div v-if="conversionNote" class="flex items-center gap-2 text-sm text-dimmed bg-elevated rounded-lg px-3 py-2">
+        <UIcon name="mdi:swap-horizontal" class="size-4 shrink-0" />
+        <span>{{ conversionNote.input }} = {{ conversionNote.eur }} <span class="text-xs">({{ conversionNote.rate }})</span></span>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-3">
         <UCard>
           <template #header>
