@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
+import type { CurrencySubmission } from '~/composables/useCurrency'
 import { useClipboard, useStorage } from '@vueuse/core'
 
 const DIRECTOR_MINIMUM_GROSS = 1_295.45
@@ -13,6 +14,16 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   (event: 'update:period', value: 'yearly' | 'monthly'): void
 }>()
+
+const {
+  currency,
+  exchangeRate,
+  isLoadingRate,
+  isNonEur,
+  convertToEur,
+  formatInputCurrency,
+  currencyIcon,
+} = useCurrency()
 
 const selectedPlaceKey = toRef(props, 'selectedPlaceKey')
 const period = computed({
@@ -111,8 +122,10 @@ interface DooResponse {
 
 const effectiveSalaryGross = computed(() => directorGrossNumber.value || null)
 
+const submission = ref<CurrencySubmission | null>(null)
+
 const { data, execute: calculate } = useFetch<DooResponse>(
-  () => `/api/doo/${revenue.value}`,
+  () => `/api/doo/${submission.value?.eurAmount ?? 0}`,
   {
     method: 'GET',
     query: {
@@ -135,14 +148,25 @@ const isInputValid = computed(() => {
   return true
 })
 
-const hasSubmittedOnce = ref(false)
+const hasSubmittedOnce = computed(() => submission.value != null)
 const revenueInputRef = ref<any>(null)
 const getRevenueInputEl = () =>
   (revenueInputRef.value?.$el as HTMLElement | undefined)?.querySelector?.('input') as HTMLInputElement | null
 
 const handleCalculate = () => {
   if (!isInputValid.value) return
-  hasSubmittedOnce.value = true
+
+  const eurAmount = convertToEur(revenueNumber.value)
+  if (eurAmount == null && isNonEur.value) return
+
+  submission.value = {
+    eurAmount: eurAmount ?? revenueNumber.value,
+    inputAmount: revenueNumber.value,
+    currency: currency.value,
+    period: period.value,
+    rate: exchangeRate.value,
+  }
+
   calculate()
   getRevenueInputEl()?.blur()
 }
@@ -180,12 +204,29 @@ const formattedData = computed(() =>
 )
 const { copy, copied } = useClipboard({ copiedDuring: 1200 })
 
-const formatCurrency = (value: number) => {
+const toggleCurrency = () => {
+  currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
+}
+
+const conversionNote = computed(() => {
+  const s = submission.value
+  if (!data.value || !s || s.currency === 'EUR' || s.rate == null) return null
+  const periodSuffix = s.period === 'yearly' ? '/yr' : '/mo'
+  return {
+    input: `${formatInputCurrency(s.inputAmount, s.currency)}${periodSuffix}`,
+    eur: `${formatEur(s.eurAmount)}${periodSuffix}`,
+    rate: `1 ${s.currency} = ${s.rate.toFixed(4)} EUR`,
+  }
+})
+
+const formatEur = (value: number) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR',
   }).format(value)
 }
+
+const formatCurrency = formatEur
 </script>
 
 <template>
@@ -199,7 +240,6 @@ const formatCurrency = (value: number) => {
           <UInput
             ref="revenueInputRef"
             v-model="revenue"
-            icon="mdi:currency-eur"
             type="number"
             placeholder="5000"
             size="lg"
@@ -207,6 +247,20 @@ const formatCurrency = (value: number) => {
             :ui="{ trailing: 'pe-1!' }"
             autofocus
           >
+            <template #leading>
+              <UTooltip text="Switch input currency. Output is always in EUR.">
+                <button
+                  type="button"
+                  class="flex items-center cursor-pointer"
+                  @click="toggleCurrency"
+                >
+                  <UIcon
+                    :name="currencyIcon"
+                    class="size-5 text-dimmed"
+                  />
+                </button>
+              </UTooltip>
+            </template>
             <template #trailing>
               <UButton
                 color="primary"
@@ -214,9 +268,13 @@ const formatCurrency = (value: number) => {
                 size="lg"
                 icon="mdi:send"
                 type="submit"
+                :loading="isNonEur && isLoadingRate"
               />
             </template>
           </UInput>
+          <p v-if="isNonEur" class="text-xs text-dimmed mt-1">
+            Input in {{ currency }} — results will be converted to EUR
+          </p>
         </UFormField>
 
         <UFormField
@@ -280,6 +338,11 @@ const formatCurrency = (value: number) => {
     </form>
 
     <section v-if="data" class="mt-6 flex flex-col gap-3">
+      <div v-if="conversionNote" class="flex items-center gap-2 text-sm text-dimmed bg-elevated rounded-lg px-3 py-2">
+        <UIcon name="mdi:swap-horizontal" class="size-4 shrink-0" />
+        <span>{{ conversionNote.input }} = {{ conversionNote.eur }} <span class="text-xs">({{ conversionNote.rate }})</span></span>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-3">
         <UCard>
           <template #header>

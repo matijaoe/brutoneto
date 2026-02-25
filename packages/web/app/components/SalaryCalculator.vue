@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
+import type { CurrencySubmission } from '~/composables/useCurrency'
 import { useClipboard, useStorage } from '@vueuse/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
@@ -22,6 +23,16 @@ const emit = defineEmits<{
   (event: 'update:period', value: 'yearly' | 'monthly'): void
 }>()
 
+const {
+  currency,
+  exchangeRate,
+  isLoadingRate,
+  isNonEur,
+  convertToEur,
+  formatInputCurrency,
+  currencyIcon,
+} = useCurrency()
+
 const amount = useStorage<string>('salary-amount', '')
 const selectedPlaceKey = toRef(props, 'selectedPlaceKey')
 const period = computed({
@@ -40,8 +51,8 @@ const endpoint = computed(() => {
 })
 const toYearly = (value: number) => value * 12
 const amountNumber = computed(() => Number(amount.value))
-const lastSubmittedAmount = ref<number | null>(null)
-const lastSubmittedPeriod = ref<'yearly' | 'monthly' | null>(null)
+
+const submission = ref<CurrencySubmission | null>(null)
 const amountLabel = computed(() => {
   const periodLabel = period.value === 'yearly' ? 'Yearly' : 'Monthly'
   if (mode.value === 'gross-to-net') {
@@ -55,10 +66,9 @@ const grossYearly = computed(() => {
   if (
     mode.value === 'gross-to-net'
     && props.brutoType === 'bruto1'
-    && lastSubmittedPeriod.value === 'yearly'
-    && lastSubmittedAmount.value != null
+    && submission.value?.period === 'yearly'
   ) {
-    return lastSubmittedAmount.value
+    return submission.value.eurAmount
   }
   return toYearly(data.value?.gross ?? 0)
 })
@@ -69,7 +79,7 @@ const formattedData = computed(() =>
 const { copy, copied } = useClipboard({ copiedDuring: 1200 })
 
 const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
-  () => `/api/${endpoint.value}/${amount.value}`,
+  () => `/api/${endpoint.value}/${submission.value?.eurAmount ?? 0}`,
   {
     method: 'GET',
     query: {
@@ -109,7 +119,7 @@ const isInputValid = computed(() => {
 })
 
 const hasBlurredOnce = ref(false)
-const hasSubmittedOnce = ref(false)
+const hasSubmittedOnce = computed(() => submission.value != null)
 const showPeriodHint = computed(() => {
   if (!Number.isFinite(amountNumber.value)) {
     return null
@@ -136,9 +146,20 @@ const handleCalculate = () => {
   if (!isInputValid.value) {
     return
   }
-  hasSubmittedOnce.value = true
-  lastSubmittedAmount.value = amountNumber.value
-  lastSubmittedPeriod.value = period.value
+
+  const eurAmount = convertToEur(amountNumber.value)
+  if (eurAmount == null && isNonEur.value) {
+    return
+  }
+
+  submission.value = {
+    eurAmount: eurAmount ?? amountNumber.value,
+    inputAmount: amountNumber.value,
+    currency: currency.value,
+    period: period.value,
+    rate: exchangeRate.value,
+  }
+
   calculate()
   getInputEl()?.blur()
 }
@@ -163,20 +184,35 @@ watch(
   () => mode.value,
   async () => {
     data.value = null
-    hasSubmittedOnce.value = false
-    lastSubmittedAmount.value = null
-    lastSubmittedPeriod.value = null
+    submission.value = null
     await nextTick()
     getInputEl()?.focus()
   },
 )
 
-const formatCurrency = (value: number) => {
+const toggleCurrency = () => {
+  currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
+}
+
+const conversionNote = computed(() => {
+  const s = submission.value
+  if (!data.value || !s || s.currency === 'EUR' || s.rate == null) return null
+  const periodSuffix = s.period === 'yearly' ? '/yr' : '/mo'
+  return {
+    input: `${formatInputCurrency(s.inputAmount, s.currency)}${periodSuffix}`,
+    eur: `${formatEur(s.eurAmount)}${periodSuffix}`,
+    rate: `1 ${s.currency} = ${s.rate.toFixed(4)} EUR`,
+  }
+})
+
+const formatEur = (value: number) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR',
   }).format(value)
 }
+
+const formatCurrency = formatEur
 </script>
 
 <template>
@@ -189,7 +225,6 @@ const formatCurrency = (value: number) => {
         <UInput
           ref="inputRef"
           v-model="amount"
-          icon="mdi:currency-eur"
           type="number"
           :placeholder="placeholder"
           size="lg"
@@ -198,6 +233,20 @@ const formatCurrency = (value: number) => {
           :autofocus="autofocus"
           @blur="hasBlurredOnce = true"
         >
+          <template #leading>
+            <UTooltip text="Switch input currency. Output is always in EUR.">
+              <button
+                type="button"
+                class="flex items-center cursor-pointer"
+                @click="toggleCurrency"
+              >
+                <UIcon
+                  :name="currencyIcon"
+                  class="size-5 text-dimmed"
+                />
+              </button>
+            </UTooltip>
+          </template>
           <template #trailing>
             <UButton
               color="primary"
@@ -205,9 +254,13 @@ const formatCurrency = (value: number) => {
               size="lg"
               icon="mdi:send"
               type="submit"
+              :loading="isNonEur && isLoadingRate"
             />
           </template>
         </UInput>
+        <p v-if="isNonEur" class="text-xs text-dimmed mt-1">
+          Input in {{ currency }} — results will be converted to EUR
+        </p>
       </UFormField>
     </form>
     <Transition
@@ -252,6 +305,11 @@ const formatCurrency = (value: number) => {
     </div>
 
     <section v-if="data" class="mt-6 flex flex-col gap-3">
+      <div v-if="conversionNote" class="flex items-center gap-2 text-sm text-dimmed bg-elevated rounded-lg px-3 py-2">
+        <UIcon name="mdi:swap-horizontal" class="size-4 shrink-0" />
+        <span>{{ conversionNote.input }} = {{ conversionNote.eur }} <span class="text-xs">({{ conversionNote.rate }})</span></span>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-3">
         <UCard>
           <template #header>
