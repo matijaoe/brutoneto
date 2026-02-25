@@ -2,6 +2,14 @@ import { useStorage } from '@vueuse/core'
 
 export type InputCurrency = 'EUR' | 'USD'
 
+export interface CurrencySubmission {
+  eurAmount: number
+  inputAmount: number
+  currency: InputCurrency
+  period: 'yearly' | 'monthly'
+  rate: number | null
+}
+
 interface ExchangeRateResponse {
   from: string
   to: string
@@ -23,7 +31,6 @@ export function useCurrency() {
   )
 
   const exchangeRate = computed(() => rateData.value?.rate ?? null)
-  const exchangeRateDate = computed(() => rateData.value?.date ?? null)
   const isLoadingRate = computed(() => rateStatus.value === 'pending')
   const isNonEur = computed(() => currency.value !== 'EUR')
 
@@ -40,10 +47,10 @@ export function useCurrency() {
     return Math.round(amount * exchangeRate.value * 100) / 100
   }
 
-  function formatInputCurrency(value: number): string {
+  function formatInputCurrency(value: number, overrideCurrency?: InputCurrency): string {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: currency.value,
+      currency: overrideCurrency ?? currency.value,
     }).format(value)
   }
 
@@ -51,20 +58,13 @@ export function useCurrency() {
     return currency.value === 'USD' ? 'mdi:currency-usd' : 'mdi:currency-eur'
   })
 
-  const currencySymbol = computed(() => {
-    return currency.value === 'USD' ? '$' : '€'
-  })
-
   return {
     currency,
     exchangeRate,
-    exchangeRateDate,
     isLoadingRate,
     isNonEur,
     convertToEur,
     formatInputCurrency,
     currencyIcon,
-    currencySymbol,
-    fetchRate,
   }
 }

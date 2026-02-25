@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
-import type { InputCurrency } from '~/composables/useCurrency'
+import type { CurrencySubmission } from '~/composables/useCurrency'
 import { useClipboard, useStorage } from '@vueuse/core'
 
 const DIRECTOR_MINIMUM_GROSS = 1_295.45
@@ -18,7 +18,6 @@ const emit = defineEmits<{
 const {
   currency,
   exchangeRate,
-  exchangeRateDate,
   isLoadingRate,
   isNonEur,
   convertToEur,
@@ -122,10 +121,11 @@ interface DooResponse {
 }
 
 const effectiveSalaryGross = computed(() => directorGrossNumber.value || null)
-const apiRevenue = ref<string>('')
+
+const submission = ref<CurrencySubmission | null>(null)
 
 const { data, execute: calculate } = useFetch<DooResponse>(
-  () => `/api/doo/${apiRevenue.value}`,
+  () => `/api/doo/${submission.value?.eurAmount ?? 0}`,
   {
     method: 'GET',
     query: {
@@ -148,16 +148,10 @@ const isInputValid = computed(() => {
   return true
 })
 
-const hasSubmittedOnce = ref(false)
+const hasSubmittedOnce = computed(() => submission.value != null)
 const revenueInputRef = ref<any>(null)
 const getRevenueInputEl = () =>
   (revenueInputRef.value?.$el as HTMLElement | undefined)?.querySelector?.('input') as HTMLInputElement | null
-
-const lastSubmittedInputAmount = ref<number | null>(null)
-const lastSubmittedEurAmount = ref<number | null>(null)
-const lastSubmittedCurrency = ref<InputCurrency>('EUR')
-const lastSubmittedRate = ref<number | null>(null)
-const lastSubmittedPeriod = ref<'yearly' | 'monthly' | null>(null)
 
 const handleCalculate = () => {
   if (!isInputValid.value) return
@@ -165,14 +159,13 @@ const handleCalculate = () => {
   const eurAmount = convertToEur(revenueNumber.value)
   if (eurAmount == null && isNonEur.value) return
 
-  const resolvedEur = eurAmount ?? revenueNumber.value
-  apiRevenue.value = String(resolvedEur)
-  lastSubmittedInputAmount.value = revenueNumber.value
-  lastSubmittedEurAmount.value = resolvedEur
-  lastSubmittedCurrency.value = currency.value
-  lastSubmittedRate.value = exchangeRate.value
-  lastSubmittedPeriod.value = period.value
-  hasSubmittedOnce.value = true
+  submission.value = {
+    eurAmount: eurAmount ?? revenueNumber.value,
+    inputAmount: revenueNumber.value,
+    currency: currency.value,
+    period: period.value,
+    rate: exchangeRate.value,
+  }
 
   calculate()
   getRevenueInputEl()?.blur()
@@ -215,26 +208,14 @@ const toggleCurrency = () => {
   currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
 }
 
-const showConversionNote = computed(() => {
-  return (
-    data.value
-    && lastSubmittedCurrency.value !== 'EUR'
-    && lastSubmittedInputAmount.value != null
-    && lastSubmittedRate.value != null
-  )
-})
-
 const conversionNote = computed(() => {
-  if (!showConversionNote.value) return null
-  const inputFormatted = formatInputCurrency(lastSubmittedInputAmount.value!)
-  const periodSuffix = lastSubmittedPeriod.value === 'yearly' ? '/yr' : '/mo'
-  const eurFormatted = formatEur(lastSubmittedEurAmount.value!)
-  const rateFormatted = lastSubmittedRate.value!.toFixed(4)
+  const s = submission.value
+  if (!data.value || !s || s.currency === 'EUR' || s.rate == null) return null
+  const periodSuffix = s.period === 'yearly' ? '/yr' : '/mo'
   return {
-    input: `${inputFormatted}${periodSuffix}`,
-    eur: `${eurFormatted}${periodSuffix}`,
-    rate: `1 ${lastSubmittedCurrency.value} = ${rateFormatted} EUR`,
-    date: exchangeRateDate.value,
+    input: `${formatInputCurrency(s.inputAmount, s.currency)}${periodSuffix}`,
+    eur: `${formatEur(s.eurAmount)}${periodSuffix}`,
+    rate: `1 ${s.currency} = ${s.rate.toFixed(4)} EUR`,
   }
 })
 

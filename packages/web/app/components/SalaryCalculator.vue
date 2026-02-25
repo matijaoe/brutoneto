@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
-import type { InputCurrency } from '~/composables/useCurrency'
+import type { CurrencySubmission } from '~/composables/useCurrency'
 import { useClipboard, useStorage } from '@vueuse/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
@@ -26,7 +26,6 @@ const emit = defineEmits<{
 const {
   currency,
   exchangeRate,
-  exchangeRateDate,
   isLoadingRate,
   isNonEur,
   convertToEur,
@@ -52,12 +51,8 @@ const endpoint = computed(() => {
 })
 const toYearly = (value: number) => value * 12
 const amountNumber = computed(() => Number(amount.value))
-const lastSubmittedEurAmount = ref<number | null>(null)
-const lastSubmittedInputAmount = ref<number | null>(null)
-const lastSubmittedCurrency = ref<InputCurrency>('EUR')
-const lastSubmittedPeriod = ref<'yearly' | 'monthly' | null>(null)
-const lastSubmittedRate = ref<number | null>(null)
-const apiAmount = ref<string>('')
+
+const submission = ref<CurrencySubmission | null>(null)
 const amountLabel = computed(() => {
   const periodLabel = period.value === 'yearly' ? 'Yearly' : 'Monthly'
   if (mode.value === 'gross-to-net') {
@@ -71,10 +66,9 @@ const grossYearly = computed(() => {
   if (
     mode.value === 'gross-to-net'
     && props.brutoType === 'bruto1'
-    && lastSubmittedPeriod.value === 'yearly'
-    && lastSubmittedEurAmount.value != null
+    && submission.value?.period === 'yearly'
   ) {
-    return lastSubmittedEurAmount.value
+    return submission.value.eurAmount
   }
   return toYearly(data.value?.gross ?? 0)
 })
@@ -85,7 +79,7 @@ const formattedData = computed(() =>
 const { copy, copied } = useClipboard({ copiedDuring: 1200 })
 
 const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
-  () => `/api/${endpoint.value}/${apiAmount.value}`,
+  () => `/api/${endpoint.value}/${submission.value?.eurAmount ?? 0}`,
   {
     method: 'GET',
     query: {
@@ -125,7 +119,7 @@ const isInputValid = computed(() => {
 })
 
 const hasBlurredOnce = ref(false)
-const hasSubmittedOnce = ref(false)
+const hasSubmittedOnce = computed(() => submission.value != null)
 const showPeriodHint = computed(() => {
   if (!Number.isFinite(amountNumber.value)) {
     return null
@@ -155,18 +149,16 @@ const handleCalculate = () => {
 
   const eurAmount = convertToEur(amountNumber.value)
   if (eurAmount == null && isNonEur.value) {
-    // Rate hasn't loaded yet
     return
   }
 
-  const resolvedEur = eurAmount ?? amountNumber.value
-  apiAmount.value = String(resolvedEur)
-  lastSubmittedEurAmount.value = resolvedEur
-  lastSubmittedInputAmount.value = amountNumber.value
-  lastSubmittedCurrency.value = currency.value
-  lastSubmittedRate.value = exchangeRate.value
-  lastSubmittedPeriod.value = period.value
-  hasSubmittedOnce.value = true
+  submission.value = {
+    eurAmount: eurAmount ?? amountNumber.value,
+    inputAmount: amountNumber.value,
+    currency: currency.value,
+    period: period.value,
+    rate: exchangeRate.value,
+  }
 
   calculate()
   getInputEl()?.blur()
@@ -192,10 +184,7 @@ watch(
   () => mode.value,
   async () => {
     data.value = null
-    hasSubmittedOnce.value = false
-    lastSubmittedEurAmount.value = null
-    lastSubmittedInputAmount.value = null
-    lastSubmittedPeriod.value = null
+    submission.value = null
     await nextTick()
     getInputEl()?.focus()
   },
@@ -205,26 +194,14 @@ const toggleCurrency = () => {
   currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
 }
 
-const showConversionNote = computed(() => {
-  return (
-    data.value
-    && lastSubmittedCurrency.value !== 'EUR'
-    && lastSubmittedInputAmount.value != null
-    && lastSubmittedRate.value != null
-  )
-})
-
 const conversionNote = computed(() => {
-  if (!showConversionNote.value) return null
-  const inputFormatted = formatInputCurrency(lastSubmittedInputAmount.value!)
-  const periodSuffix = lastSubmittedPeriod.value === 'yearly' ? '/yr' : '/mo'
-  const eurFormatted = formatEur(lastSubmittedEurAmount.value!)
-  const rateFormatted = lastSubmittedRate.value!.toFixed(4)
+  const s = submission.value
+  if (!data.value || !s || s.currency === 'EUR' || s.rate == null) return null
+  const periodSuffix = s.period === 'yearly' ? '/yr' : '/mo'
   return {
-    input: `${inputFormatted}${periodSuffix}`,
-    eur: `${eurFormatted}${periodSuffix}`,
-    rate: `1 ${lastSubmittedCurrency.value} = ${rateFormatted} EUR`,
-    date: exchangeRateDate.value,
+    input: `${formatInputCurrency(s.inputAmount, s.currency)}${periodSuffix}`,
+    eur: `${formatEur(s.eurAmount)}${periodSuffix}`,
+    rate: `1 ${s.currency} = ${s.rate.toFixed(4)} EUR`,
   }
 })
 
