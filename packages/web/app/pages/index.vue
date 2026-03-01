@@ -40,9 +40,13 @@ const brutoType = computed<BrutoType>({
 const selectedPlaceKey = useCookie<Place>('place', {
   default: () => 'sveta-nedelja-samobor',
 })
+const periodCookie = useCookie<'yearly' | 'monthly'>('period', {
+  default: () => 'monthly',
+})
 const period = computed<'yearly' | 'monthly'>({
-  get: () => (route.query.period === 'yr' ? 'yearly' : 'monthly'),
+  get: () => (route.query.period === 'yr' ? 'yearly' : periodCookie.value),
   set: (value) => {
+    periodCookie.value = value
     replaceQuery({ period: value === 'yearly' ? 'yr' : undefined })
   },
 })
