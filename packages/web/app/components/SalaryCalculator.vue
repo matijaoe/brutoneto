@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
-import type { CurrencySubmission } from '~/composables/useCurrency'
-import { useClipboard, useStorage } from '@vueuse/core'
+import { roundEuros } from '@brutoneto/core'
+import { useClipboard, useSessionStorage } from '@vueuse/core'
+import { formatEur, toYearly } from '~/composables/useCurrency'
 
 type Mode = 'gross-to-net' | 'net-to-gross'
 type BrutoType = 'bruto1' | 'bruto2'
@@ -11,6 +12,7 @@ type Props = {
   brutoType: BrutoType
   selectedPlaceKey: Place
   period: 'yearly' | 'monthly'
+  taxReturnPercent: number
   placeholder?: string
   autofocus?: boolean
 }
@@ -29,11 +31,12 @@ const {
   isLoadingRate,
   isNonEur,
   convertToEur,
-  formatInputCurrency,
+  toggleCurrency,
+  buildConversionNote,
   currencyIcon,
 } = useCurrency()
 
-const amount = useStorage<string>('salary-amount', '')
+const amount = useSessionStorage<string>('salary-amount', '')
 const selectedPlaceKey = toRef(props, 'selectedPlaceKey')
 const period = computed({
   get: () => props.period,
@@ -49,7 +52,6 @@ const endpoint = computed(() => {
   if (mode.value === 'net-to-gross') return 'bruto'
   return 'neto'
 })
-const toYearly = (value: number) => value * 12
 const amountNumber = computed(() => Number(amount.value))
 
 const submission = ref<CurrencySubmission | null>(null)
@@ -73,12 +75,20 @@ const grossYearly = computed(() => {
   return toYearly(data.value?.gross ?? 0)
 })
 const netYearly = computed(() => toYearly(data.value?.net ?? 0))
+const taxReturnAmount = computed(() => {
+  if (!data.value?.taxes?.total || !props.taxReturnPercent) return 0
+  return roundEuros(data.value.taxes.total * props.taxReturnPercent / 100)
+})
+const netWithTaxReturn = computed(() => {
+  if (!data.value) return 0
+  return roundEuros(data.value.net + taxReturnAmount.value)
+})
 const formattedData = computed(() =>
   data.value ? JSON.stringify(data.value, null, 2) : '',
 )
 const { copy, copied } = useClipboard({ copiedDuring: 1200 })
 
-const { data, execute: calculate } = useFetch<{ net: number, gross: number }>(
+const { data, execute: calculate } = useFetch<{ net: number, gross: number, taxes: { total: number } }>(
   () => `/api/${endpoint.value}/${submission.value?.eurAmount ?? 0}`,
   {
     method: 'GET',
@@ -168,7 +178,7 @@ const updateAmountByPercent = (delta: number) => {
   if (!Number.isFinite(amountNumber.value)) {
     return
   }
-  const nextValue = Math.round(amountNumber.value * (1 + delta) * 100) / 100
+  const nextValue = roundEuros(amountNumber.value * (1 + delta))
   amount.value = String(nextValue)
   handleCalculate()
 }
@@ -190,29 +200,7 @@ watch(
   },
 )
 
-const toggleCurrency = () => {
-  currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
-}
-
-const conversionNote = computed(() => {
-  const s = submission.value
-  if (!data.value || !s || s.currency === 'EUR' || s.rate == null) return null
-  const periodSuffix = s.period === 'yearly' ? '/yr' : '/mo'
-  return {
-    input: `${formatInputCurrency(s.inputAmount, s.currency)}${periodSuffix}`,
-    eur: `${formatEur(s.eurAmount)}${periodSuffix}`,
-    rate: `1 ${s.currency} = ${s.rate.toFixed(4)} EUR`,
-  }
-})
-
-const formatEur = (value: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(value)
-}
-
-const formatCurrency = formatEur
+const conversionNote = computed(() => buildConversionNote(submission.value, !!data.value))
 </script>
 
 <template>
@@ -321,12 +309,12 @@ const formatCurrency = formatEur
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(data.gross) }}
+                  {{ formatEur(data.gross) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(grossYearly) }} /yr
+                {{ formatEur(grossYearly) }} /yr
               </p>
             </div>
           </template>
@@ -341,12 +329,15 @@ const formatCurrency = formatEur
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(data.net) }}
+                  {{ formatEur(data.net) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(netYearly) }} /yr
+                {{ formatEur(netYearly) }} /yr
+              </p>
+              <p v-if="taxReturnAmount > 0" class="text-sm text-muted font-unifontex">
+                with tax return: {{ formatEur(netWithTaxReturn) }} /mo
               </p>
             </div>
           </template>

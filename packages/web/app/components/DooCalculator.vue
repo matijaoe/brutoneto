@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Place } from '@brutoneto/core'
-import type { CurrencySubmission } from '~/composables/useCurrency'
-import { useClipboard, useStorage } from '@vueuse/core'
-
-const DIRECTOR_MINIMUM_GROSS = 1_295.45
+import type { DooBreakdown, Place } from '@brutoneto/core'
+import { DIRECTOR_MINIMUM_GROSS, roundEuros } from '@brutoneto/core'
+import { useClipboard, useSessionStorage } from '@vueuse/core'
+import { formatEur, toYearly } from '~/composables/useCurrency'
 
 type Props = {
   selectedPlaceKey: Place
   period: 'yearly' | 'monthly'
+  taxReturnPercent: number
 }
 
 const props = defineProps<Props>()
@@ -21,7 +21,8 @@ const {
   isLoadingRate,
   isNonEur,
   convertToEur,
-  formatInputCurrency,
+  toggleCurrency,
+  buildConversionNote,
   currencyIcon,
 } = useCurrency()
 
@@ -31,9 +32,9 @@ const period = computed({
   set: (value: 'yearly' | 'monthly') => emit('update:period', value),
 })
 
-const revenue = useStorage<string>('doo-revenue', '')
-const directorGross = useStorage<string>('doo-director-gross', String(DIRECTOR_MINIMUM_GROSS))
-const dividendPercentage = useStorage<string>('doo-dividend-pct', '100')
+const revenue = useSessionStorage<string>('doo-revenue', '')
+const directorGross = useSessionStorage<string>('doo-director-gross', String(DIRECTOR_MINIMUM_GROSS))
+const dividendPercentage = useSessionStorage<string>('doo-dividend-percent', '100')
 
 const revenueNumber = computed(() => Number(revenue.value))
 const directorGrossNumber = computed(() => Number(directorGross.value))
@@ -73,58 +74,11 @@ const dividendPercentageError = computed(() => {
   return undefined
 })
 
-interface DooResponse {
-  totalRevenue: number
-  directorGross: number
-  salary: {
-    gross: number
-    net: number
-    totalCostToEmployer: number
-    healthInsurance: number
-    pension: {
-      firstPillar: number
-      secondPillar: number
-      mandatoryTotal: number
-      thirdPillar: number
-      total: number
-    }
-    income: number
-    personalAllowance: number
-    taxableIncome: number
-    taxes: {
-      lowerBracket: number
-      higherBracket: number
-      total: number
-      totalHalf: number
-    }
-  }
-  corporate: {
-    profit: number
-    corporateTaxRate: number
-    corporateTax: number
-    profitAfterTax: number
-    retainedEarnings: number
-  }
-  dividend: {
-    grossDividend: number
-    dividendTaxRate: number
-    dividendTax: number
-    netDividend: number
-  }
-  totals: {
-    netSalary: number
-    netDividend: number
-    monthlyNet: number
-    taxReturn: number
-    monthlyNetWithTaxReturn: number
-  }
-}
-
 const effectiveSalaryGross = computed(() => directorGrossNumber.value || null)
 
 const submission = ref<CurrencySubmission | null>(null)
 
-const { data, execute: calculate } = useFetch<DooResponse>(
+const { data, execute: calculate } = useFetch<DooBreakdown>(
   () => `/api/doo/${submission.value?.eurAmount ?? 0}`,
   {
     method: 'GET',
@@ -179,24 +133,25 @@ watch(
   },
 )
 
-const toYearly = (value: number) => value * 12
-
-// Apply dividend percentage client-side for instant updates
+// Apply dividend percentage and tax return client-side for instant updates
 const adjustedDividend = computed(() => {
   if (!data.value) return null
+  const { profitAfterTax } = data.value.corporate
+  const { dividendTaxRate } = data.value.dividend
+  const { netSalary } = data.value.totals
+
   const pct = dividendPercentageNumber.value / 100
-  const profitAfterTax = data.value.corporate.profitAfterTax
-  const taxRate = data.value.dividend.dividendTaxRate
-  const grossDividend = Math.round(profitAfterTax * pct * 100) / 100
-  const dividendTax = Math.round(grossDividend * taxRate * 100) / 100
-  const netDividend = Math.round((grossDividend - dividendTax) * 100) / 100
-  const retained = Math.round((profitAfterTax - grossDividend) * 100) / 100
-  const netSalary = data.value.totals.netSalary
-  const monthlyNet = Math.round((netSalary + netDividend) * 100) / 100
-  const taxReturn = data.value.totals.taxReturn
-  const monthlyNetWithTaxReturn = Math.round((monthlyNet + taxReturn) * 100) / 100
-  const totalWithRetained = Math.round((monthlyNet + retained) * 100) / 100
-  return { netDividend, retained, monthlyNet, monthlyNetWithTaxReturn, totalWithRetained }
+  const grossDividend = roundEuros(profitAfterTax * pct)
+  const dividendTax = roundEuros(grossDividend * dividendTaxRate)
+  const netDividend = roundEuros(grossDividend - dividendTax)
+  const retained = roundEuros(profitAfterTax - grossDividend)
+  const monthlyNet = roundEuros(netSalary + netDividend)
+
+  const taxReturn = roundEuros(data.value.salary.taxes.total * props.taxReturnPercent / 100)
+  const monthlyNetWithTaxReturn = roundEuros(monthlyNet + taxReturn)
+  const totalWithRetained = roundEuros(monthlyNet + retained)
+
+  return { netDividend, retained, monthlyNet, taxReturn, monthlyNetWithTaxReturn, totalWithRetained }
 })
 
 const formattedData = computed(() =>
@@ -204,29 +159,7 @@ const formattedData = computed(() =>
 )
 const { copy, copied } = useClipboard({ copiedDuring: 1200 })
 
-const toggleCurrency = () => {
-  currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
-}
-
-const conversionNote = computed(() => {
-  const s = submission.value
-  if (!data.value || !s || s.currency === 'EUR' || s.rate == null) return null
-  const periodSuffix = s.period === 'yearly' ? '/yr' : '/mo'
-  return {
-    input: `${formatInputCurrency(s.inputAmount, s.currency)}${periodSuffix}`,
-    eur: `${formatEur(s.eurAmount)}${periodSuffix}`,
-    rate: `1 ${s.currency} = ${s.rate.toFixed(4)} EUR`,
-  }
-})
-
-const formatEur = (value: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(value)
-}
-
-const formatCurrency = formatEur
+const conversionNote = computed(() => buildConversionNote(submission.value, !!data.value))
 </script>
 
 <template>
@@ -352,12 +285,12 @@ const formatCurrency = formatEur
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(data.totals.netSalary) }}
+                  {{ formatEur(data.totals.netSalary) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(toYearly(data.totals.netSalary)) }} /yr
+                {{ formatEur(toYearly(data.totals.netSalary)) }} /yr
               </p>
             </div>
           </template>
@@ -370,12 +303,12 @@ const formatCurrency = formatEur
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(adjustedDividend?.netDividend ?? data.totals.netDividend) }}
+                  {{ formatEur(adjustedDividend?.netDividend ?? data.totals.netDividend) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(toYearly(adjustedDividend?.netDividend ?? data.totals.netDividend)) }} /yr
+                {{ formatEur(toYearly(adjustedDividend?.netDividend ?? data.totals.netDividend)) }} /yr
               </p>
             </div>
           </template>
@@ -391,18 +324,18 @@ const formatCurrency = formatEur
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet) }}
+                  {{ formatEur(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(toYearly(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet)) }} /yr
+                {{ formatEur(toYearly(adjustedDividend?.monthlyNet ?? data.totals.monthlyNet)) }} /yr
               </p>
-              <p v-if="data.totals.taxReturn > 0" class="text-sm text-muted font-unifontex">
-                with tax return: {{ formatCurrency(adjustedDividend?.monthlyNetWithTaxReturn ?? data.totals.monthlyNetWithTaxReturn) }} /mo
+              <p v-if="adjustedDividend && adjustedDividend.taxReturn > 0" class="text-sm text-muted font-unifontex">
+                with tax return: {{ formatEur(adjustedDividend.monthlyNetWithTaxReturn) }} /mo
               </p>
               <p v-if="adjustedDividend && adjustedDividend.retained > 0" class="text-sm text-muted font-unifontex">
-                incl. company balance: {{ formatCurrency(adjustedDividend.totalWithRetained) }} /mo
+                incl. company balance: {{ formatEur(adjustedDividend.totalWithRetained) }} /mo
               </p>
             </div>
           </template>
@@ -416,12 +349,12 @@ const formatCurrency = formatEur
             <div class="flex flex-col gap-2">
               <p class="text-5xl font-unifontex flex items-baseline gap-2">
                 <span class="text-foreground">
-                  {{ formatCurrency(adjustedDividend.retained) }}
+                  {{ formatEur(adjustedDividend.retained) }}
                 </span>
                 <span class="text-base text-muted">/mo</span>
               </p>
               <p class="text-lg text-muted font-unifontex">
-                {{ formatCurrency(toYearly(adjustedDividend.retained)) }} /yr
+                {{ formatEur(toYearly(adjustedDividend.retained)) }} /yr
               </p>
             </div>
           </template>

@@ -1,5 +1,6 @@
 import type { Place } from '@brutoneto/core'
 import {
+  grossToNetBreakdown,
   grossToTotal,
   MAX_PERSONAL_ALLOWANCE_COEFFICIENT,
   MIN_PERSONAL_ALLOWANCE_COEFFICIENT,
@@ -58,19 +59,30 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { place, ltax, htax, coeff, yearly } = query.data
+  const { place, ltax, htax, coeff, detailed, yearly } = query.data
 
   const monthlyNet = yearly === true ? roundEuros(net / 12) : net
 
   // Resolve place shortcuts to full place names
   const resolvedPlace = place != null ? resolvePlaceShortcut(place) as Place : undefined
 
-  const gross = netToGross(monthlyNet, {
+  const salaryConfig = {
     place: resolvedPlace,
     taxRateLow: ltax,
     taxRateHigh: htax,
     personalAllowanceCoefficient: coeff,
-  })
+  }
+
+  const gross = netToGross(monthlyNet, salaryConfig)
+
+  if (detailed === true) {
+    const res = grossToNetBreakdown(gross, salaryConfig)
+    return {
+      ...res,
+      currency: 'EUR',
+    }
+  }
+
   const { total: totalCostToEmployer } = grossToTotal(gross)
 
   return {

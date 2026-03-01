@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
+import { useLocalStorage } from '@vueuse/core'
 
 type Mode = 'gross-to-net' | 'net-to-gross' | 'doo'
 type BrutoType = 'bruto1' | 'bruto2'
@@ -40,12 +41,26 @@ const brutoType = computed<BrutoType>({
 const selectedPlaceKey = useCookie<Place>('place', {
   default: () => 'sveta-nedelja-samobor',
 })
+const periodCookie = useCookie<'yearly' | 'monthly'>('period', {
+  default: () => 'monthly',
+})
 const period = computed<'yearly' | 'monthly'>({
-  get: () => (route.query.period === 'yr' ? 'yearly' : 'monthly'),
+  get: () => (route.query.period === 'yr' ? 'yearly' : periodCookie.value),
   set: (value) => {
+    periodCookie.value = value
     replaceQuery({ period: value === 'yearly' ? 'yr' : undefined })
   },
 })
+
+const taxReturnPercent = useLocalStorage<number>('tax-return-percent', 0)
+const hasMounted = ref(false)
+onMounted(() => hasMounted.value = true)
+
+const taxReturnOptions = [
+  { label: 'None', value: 0 },
+  { label: '50%', value: 50 },
+  { label: '100%', value: 100 },
+]
 
 const { data: taxesRes, status: taxesStatus } = useFetch<{ places: {
   key: Place
@@ -138,6 +153,30 @@ const places = computed(() => taxesRes.value?.places)
             size="lg"
           />
         </UFormField>
+        <UFormField
+          label="Tax return"
+          :ui="{ label: 'text-sm' }"
+        >
+          <div class="flex">
+            <button
+              v-for="(opt, i) in taxReturnOptions"
+              :key="opt.value"
+              type="button"
+              class="relative px-3.5 py-2 text-sm border cursor-pointer transition-colors"
+              :class="[
+                hasMounted && taxReturnPercent === opt.value
+                  ? 'z-10 border-primary bg-primary/10 text-primary font-medium'
+                  : 'border-muted text-dimmed hover:text-foreground hover:border-accented',
+                i === 0 ? 'rounded-l-md' : '',
+                i === taxReturnOptions.length - 1 ? 'rounded-r-md' : '',
+                i > 0 ? '-ml-px' : '',
+              ]"
+              @click="taxReturnPercent = opt.value"
+            >
+              {{ opt.label }}
+            </button>
+          </div>
+        </UFormField>
       </div>
 
       <section class="mt-3">
@@ -148,6 +187,7 @@ const places = computed(() => taxesRes.value?.places)
           :bruto-type="isActiveMode('gross-to-net') ? brutoType : 'bruto1'"
           :selected-place-key="selectedPlaceKey"
           :placeholder="isActiveMode('gross-to-net') ? (brutoType === 'bruto2' ? '4660' : '3000') : '2200'"
+          :tax-return-percent="taxReturnPercent"
           autofocus
         />
 
@@ -155,6 +195,7 @@ const places = computed(() => taxesRes.value?.places)
           v-else
           v-model:period="period"
           :selected-place-key="selectedPlaceKey"
+          :tax-return-percent="taxReturnPercent"
         />
       </section>
     </div>

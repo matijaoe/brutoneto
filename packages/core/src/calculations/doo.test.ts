@@ -60,15 +60,16 @@ describe('calculateDoo', () => {
     )
   })
 
-  it('should calculate correct totals', () => {
+  it('should calculate correct totals with default 50% tax return', () => {
     const result = calculateDoo(5000)
     expect(result.totals.monthlyNet).toBe(
       roundEuros(result.totals.netSalary + result.totals.netDividend),
     )
-    expect(result.totals.taxReturn).toBe(result.salary.taxes.totalHalf)
+    expect(result.totals.taxReturn).toBe(roundEuros(result.salary.taxes.total * 0.5))
     expect(result.totals.monthlyNetWithTaxReturn).toBe(
       roundEuros(result.totals.monthlyNet + result.totals.taxReturn),
     )
+    expect(result.variables.taxReturnPercentage).toBe(50)
   })
 
   it('should use custom director gross when specified', () => {
@@ -176,6 +177,51 @@ describe('calculateDoo - dividendPercentage', () => {
 
   it('should throw for dividendPercentage above 100', () => {
     expect(() => calculateDoo(5000, { dividendPercentage: 101 })).toThrow()
+  })
+})
+
+describe('calculateDoo - taxReturnPercentage', () => {
+  it('should default to 50% tax return', () => {
+    const result = calculateDoo(5000)
+    expect(result.variables.taxReturnPercentage).toBe(50)
+    expect(result.totals.taxReturn).toBe(roundEuros(result.salary.taxes.total * 0.5))
+  })
+
+  it('should return no tax when taxReturnPercentage is 0', () => {
+    const result = calculateDoo(5000, { taxReturnPercentage: 0 })
+    expect(result.variables.taxReturnPercentage).toBe(0)
+    expect(result.totals.taxReturn).toBe(0)
+    expect(result.totals.monthlyNetWithTaxReturn).toBe(result.totals.monthlyNet)
+  })
+
+  it('should return full tax when taxReturnPercentage is 100', () => {
+    const result = calculateDoo(5000, { taxReturnPercentage: 100 })
+    expect(result.variables.taxReturnPercentage).toBe(100)
+    expect(result.totals.taxReturn).toBe(result.salary.taxes.total)
+    expect(result.totals.monthlyNetWithTaxReturn).toBe(
+      roundEuros(result.totals.monthlyNet + result.salary.taxes.total),
+    )
+  })
+
+  it('should not affect salary or corporate calculations', () => {
+    const base = calculateDoo(5000)
+    const full = calculateDoo(5000, { taxReturnPercentage: 100 })
+    const none = calculateDoo(5000, { taxReturnPercentage: 0 })
+
+    expect(full.salary).toEqual(base.salary)
+    expect(none.salary).toEqual(base.salary)
+    expect(full.corporate).toEqual(base.corporate)
+    expect(none.corporate).toEqual(base.corporate)
+    expect(full.dividend).toEqual(base.dividend)
+    expect(none.dividend).toEqual(base.dividend)
+  })
+
+  it('should throw for taxReturnPercentage below 0', () => {
+    expect(() => calculateDoo(5000, { taxReturnPercentage: -1 })).toThrow()
+  })
+
+  it('should throw for taxReturnPercentage above 100', () => {
+    expect(() => calculateDoo(5000, { taxReturnPercentage: 101 })).toThrow()
   })
 })
 
