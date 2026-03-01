@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type { Place } from '@brutoneto/core'
 import { useLocalStorage } from '@vueuse/core'
+import type { BrutoType, Mode, Period } from '~/types'
 
-type Mode = 'gross-to-net' | 'net-to-gross' | 'doo'
-type BrutoType = 'bruto1' | 'bruto2'
-
+// --- Route & state management ---
 const route = useRoute()
 const router = useRouter()
 
@@ -13,7 +12,8 @@ function replaceQuery(updates: Record<string, string | undefined>) {
   for (const [key, value] of Object.entries(updates)) {
     if (value === undefined) {
       delete query[key]
-    } else {
+    }
+    else {
       query[key] = value
     }
   }
@@ -31,20 +31,23 @@ const mode = computed<Mode>({
     replaceQuery({ mode: modeParam, bruto: undefined })
   },
 })
-const isActiveMode = (value: Mode) => mode.value === value
+
 const brutoType = computed<BrutoType>({
   get: () => (route.query.bruto === '2' ? 'bruto2' : 'bruto1'),
   set: (value) => {
     replaceQuery({ bruto: value === 'bruto2' ? '2' : undefined })
   },
 })
+
 const selectedPlaceKey = useCookie<Place>('place', {
   default: () => 'sveta-nedelja-samobor',
 })
-const periodCookie = useCookie<'yearly' | 'monthly'>('period', {
+
+const periodCookie = useCookie<Period>('period', {
   default: () => 'monthly',
 })
-const period = computed<'yearly' | 'monthly'>({
+
+const period = computed<Period>({
   get: () => (route.query.period === 'yr' ? 'yearly' : periodCookie.value),
   set: (value) => {
     periodCookie.value = value
@@ -53,15 +56,8 @@ const period = computed<'yearly' | 'monthly'>({
 })
 
 const taxReturnPercent = useLocalStorage<number>('tax-return-percent', 0)
-const hasMounted = ref(false)
-onMounted(() => hasMounted.value = true)
 
-const taxReturnOptions = [
-  { label: 'None', value: 0 },
-  { label: '50%', value: 50 },
-  { label: '100%', value: 100 },
-]
-
+// --- Places data ---
 const { data: taxesRes, status: taxesStatus } = useFetch<{ places: {
   key: Place
   name: string
@@ -71,143 +67,238 @@ const { data: taxesRes, status: taxesStatus } = useFetch<{ places: {
   method: 'GET',
 })
 const places = computed(() => taxesRes.value?.places)
+const selectedPlaceName = computed(() => {
+  const place = places.value?.find(p => p.key === selectedPlaceKey.value)
+  return place?.name
+})
+
+// --- Salary calculation ---
+const salaryMode = computed(() => mode.value === 'net-to-gross' ? 'net-to-gross' as const : 'gross-to-net' as const)
+const salary = useSalaryCalculation({
+  mode: salaryMode,
+  brutoType,
+  selectedPlaceKey: selectedPlaceKey as Ref<Place>,
+  period,
+  taxReturnPercent,
+})
+
+// --- D.O.O. calculation ---
+const doo = useDooCalculation({
+  selectedPlaceKey: selectedPlaceKey as Ref<Place>,
+  period,
+  taxReturnPercent,
+})
+
+// Focus input on mode change
+const amountInputRef = ref<{ blurInput: () => void, focusInput: () => void } | null>(null)
+watch(mode, async () => {
+  await nextTick()
+  amountInputRef.value?.focusInput()
+})
+
+// Salary placeholder
+const salaryPlaceholder = computed(() => {
+  if (mode.value === 'net-to-gross') return '2200'
+  return brutoType.value === 'bruto2' ? '4660' : '3000'
+})
+
+// Period hint handler
+const handlePeriodHint = () => {
+  if (salary.showPeriodHint.value) {
+    period.value = salary.showPeriodHint.value.next
+  }
+}
+
+// Mode tabs
+const modeTabs: Array<{ label: string, value: Mode }> = [
+  { label: 'Gross \u2192 Net', value: 'gross-to-net' },
+  { label: 'Net \u2192 Gross', value: 'net-to-gross' },
+  { label: 'D.O.O.', value: 'doo' },
+]
 </script>
 
 <template>
   <div>
-    <h1 class="text-3xl font-bold font-unifontex uppercase text-center sm:text-left">
-      Bruto<span class="text-primary italic">neto</span>
-    </h1>
+    <!-- Top header bar -->
+    <header class="mb-6">
+      <div class="flex items-center gap-6">
+        <h1 class="text-2xl font-bold font-unifontex uppercase shrink-0">
+          Bruto<span class="text-primary italic">neto</span>
+        </h1>
 
-    <div class="mt-6">
-      <ModeSwitcher v-model:mode="mode" class="justify-center sm:justify-start" />
+        <span class="hidden sm:block w-px h-5 bg-default" />
 
-      <div class="mt-3 flex flex-col sm:flex-row sm:items-center gap-3">
-        <UFormField
-          label="Period"
-          :ui="{ label: 'text-sm' }"
-        >
-          <USelect
-            v-model="period"
-            class="w-full sm:w-32"
-            :ui="{ content: 'w-full sm:w-32' }"
-            :items="['monthly', 'yearly']"
-            size="lg"
-          />
-        </UFormField>
-        <UFormField
-          label="Tax"
-          :ui="{ label: 'text-sm' }"
-        >
-          <USelectMenu
-            v-model="selectedPlaceKey"
-            class="w-full sm:w-64"
-            label-key="name"
-            value-key="key"
-            :items="places"
-            size="lg"
-            :disabled="!places"
-            :loading="taxesStatus === 'pending'"
-            :ui="{ content: 'w-full sm:w-64' }"
-            virtualize
-          >
-            <template #item="{ item }">
-              <div class="flex items-center justify-between gap-2 w-full">
-                <p class="grow whitespace-nowrap truncate" :title="item.name">
-                  {{ item.name }}
-                </p>
-
-                <div class="flex flex-nowrap gap-1 ml-auto">
-                  <UBadge
-                    color="primary"
-                    variant="subtle"
-                    size="xs"
-                  >
-                    {{ Math.round(item.taxRateLow * 100) }}%
-                  </UBadge>
-                  <UBadge
-                    color="error"
-                    variant="subtle"
-                    size="xs"
-                  >
-                    {{ Math.round(item.taxRateHigh * 100) }}%
-                  </UBadge>
-                </div>
-              </div>
-            </template>
-          </USelectMenu>
-        </UFormField>
-        <UFormField
-          v-show="isActiveMode('gross-to-net')"
-          label="Type"
-          :ui="{ label: 'text-sm' }"
-        >
-          <USelect
-            v-model="brutoType"
-            class="w-full sm:w-36"
-            :ui="{ content: 'w-full sm:w-36' }"
-            :items="[
-              { label: 'Bruto 1', value: 'bruto1' },
-              { label: 'Bruto 2', value: 'bruto2' },
+        <nav role="tablist" class="hidden sm:flex items-center gap-1" aria-label="Calculator mode">
+          <button
+            v-for="tab in modeTabs"
+            :key="tab.value"
+            role="tab"
+            type="button"
+            :aria-selected="mode === tab.value"
+            class="px-3 py-1.5 text-sm font-unifontex uppercase tracking-wide cursor-pointer transition-colors whitespace-nowrap rounded-md"
+            :class="[
+              mode === tab.value
+                ? 'text-primary font-bold bg-primary/10'
+                : 'text-muted hover:text-foreground hover:bg-elevated/50',
             ]"
-            size="lg"
-          />
-        </UFormField>
-        <UFormField
-          label="Tax return"
-          :ui="{ label: 'text-sm' }"
-        >
-          <div class="flex">
-            <button
-              v-for="(opt, i) in taxReturnOptions"
-              :key="opt.value"
-              type="button"
-              class="relative px-3.5 py-2 text-sm border cursor-pointer transition-colors"
-              :class="[
-                hasMounted && taxReturnPercent === opt.value
-                  ? 'z-10 border-primary bg-primary/10 text-primary font-medium'
-                  : 'border-muted text-dimmed hover:text-foreground hover:border-accented',
-                i === 0 ? 'rounded-l-md' : '',
-                i === taxReturnOptions.length - 1 ? 'rounded-r-md' : '',
-                i > 0 ? '-ml-px' : '',
-              ]"
-              @click="taxReturnPercent = opt.value"
-            >
-              {{ opt.label }}
-            </button>
-          </div>
-        </UFormField>
+            @click="mode = tab.value"
+          >
+            {{ tab.label }}
+          </button>
+        </nav>
       </div>
 
-      <section class="mt-3">
-        <SalaryCalculator
-          v-if="mode !== 'doo'"
-          v-model:period="period"
-          :mode="mode"
-          :bruto-type="isActiveMode('gross-to-net') ? brutoType : 'bruto1'"
-          :selected-place-key="selectedPlaceKey"
-          :placeholder="isActiveMode('gross-to-net') ? (brutoType === 'bruto2' ? '4660' : '3000') : '2200'"
-          :tax-return-percent="taxReturnPercent"
-          autofocus
-        />
+      <nav role="tablist" class="flex sm:hidden items-center gap-1 mt-3" aria-label="Calculator mode">
+        <button
+          v-for="tab in modeTabs"
+          :key="tab.value"
+          role="tab"
+          type="button"
+          :aria-selected="mode === tab.value"
+          class="px-3 py-1.5 text-sm font-unifontex uppercase tracking-wide cursor-pointer transition-colors rounded-md"
+          :class="[
+            mode === tab.value
+              ? 'text-primary font-bold bg-primary/10'
+              : 'text-muted hover:text-foreground',
+          ]"
+          @click="mode = tab.value"
+        >
+          {{ tab.label }}
+        </button>
+      </nav>
+    </header>
 
-        <DooCalculator
-          v-else
-          v-model:period="period"
-          :selected-place-key="selectedPlaceKey"
-          :tax-return-percent="taxReturnPercent"
-        />
-      </section>
-    </div>
+    <!-- Two-column layout -->
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+      <!-- Input Panel -->
+      <LayoutInputPanel>
+        <div class="flex flex-col gap-5">
+          <InputModeHeader :mode="mode" />
 
-    <UCollapsible v-if="taxesRes">
-      <template #content>
-        <div v-for="place in places" :key="place.key">
-          <h2>{{ place.name }}</h2>
-          <p>{{ place.taxRateLow }}</p>
-          <p>{{ place.taxRateHigh }}</p>
+          <!-- Salary inputs -->
+          <template v-if="mode !== 'doo'">
+            <div class="flex flex-col gap-1.5">
+              <InputAmountInput
+                ref="amountInputRef"
+                v-model="salary.amount.value"
+                :label="salary.amountLabel.value"
+                :placeholder="salaryPlaceholder"
+                :currency-icon="salary.currencyIcon.value"
+                :is-non-eur="salary.isNonEur.value"
+                :currency="salary.currency.value"
+                :is-loading="salary.isNonEur.value && salary.isLoadingRate.value"
+                autofocus
+                @submit="salary.handleCalculate"
+                @toggle-currency="salary.toggleCurrency"
+                @blur="salary.markBlurred"
+              />
+
+              <Transition
+                enter-active-class="transition duration-200"
+                enter-from-class="opacity-0 -translate-y-1"
+                enter-to-class="opacity-100 translate-y-0"
+                leave-active-class="transition duration-200"
+                leave-from-class="opacity-100 translate-y-0"
+                leave-to-class="opacity-0 -translate-y-1"
+              >
+                <UButton
+                  v-if="salary.showPeriodHint.value"
+                  variant="link"
+                  size="xs"
+                  color="neutral"
+                  class="px-0"
+                  @click="handlePeriodHint"
+                >
+                  {{ salary.showPeriodHint.value.text }}
+                </UButton>
+              </Transition>
+
+              <InputQuickChips
+                v-if="salary.hasSubmittedOnce.value && salary.isInputValid.value"
+                :chips="salary.percentChips"
+                @adjust="salary.updateAmountByPercent"
+              />
+            </div>
+          </template>
+
+          <!-- D.O.O. inputs -->
+          <template v-else>
+            <InputAmountInput
+              ref="amountInputRef"
+              v-model="doo.revenue.value"
+              :label="doo.revenueLabel.value"
+              placeholder="5000"
+              :currency-icon="doo.currencyIcon.value"
+              :is-non-eur="doo.isNonEur.value"
+              :currency="doo.currency.value"
+              :is-loading="doo.isNonEur.value && doo.isLoadingRate.value"
+              autofocus
+              @submit="doo.handleCalculate"
+              @toggle-currency="doo.toggleCurrency"
+            />
+
+            <InputDooDistributionControls
+              :director-gross="doo.directorGross.value"
+              :dividend-percentage="doo.dividendPercentage.value"
+              :director-gross-error="doo.directorGrossError.value"
+              :dividend-percentage-error="doo.dividendPercentageError.value"
+              :is-at-minimum="doo.isAtMinimum.value"
+              @update:director-gross="doo.directorGross.value = $event"
+              @update:dividend-percentage="doo.dividendPercentage.value = $event"
+              @set-minimum-salary="doo.setMinimumSalary"
+            />
+          </template>
+
+          <!-- Calculation params -->
+          <InputCalculationParams
+            :period="period"
+            :selected-place-key="selectedPlaceKey"
+            :bruto-type="brutoType"
+            :tax-return-percent="taxReturnPercent"
+            :mode="mode"
+            :places="places"
+            :places-loading="taxesStatus === 'pending'"
+            @update:period="period = $event"
+            @update:selected-place-key="selectedPlaceKey = $event"
+            @update:bruto-type="brutoType = $event"
+            @update:tax-return-percent="taxReturnPercent = $event"
+          />
+
+          <!-- Input summary -->
+          <InputInputSummary
+            v-if="(mode !== 'doo' && salary.data.value) || (mode === 'doo' && doo.data.value && doo.adjustedDividend.value)"
+            :mode="mode"
+            :salary-data="salary.data.value"
+            :doo-data="doo.data.value"
+            :adjusted-dividend="doo.adjustedDividend.value"
+            :period="period"
+          />
         </div>
-      </template>
-    </UCollapsible>
+      </LayoutInputPanel>
+
+      <!-- Results Panel -->
+      <LayoutResultsPanel
+        :has-data="mode !== 'doo' ? !!salary.data.value : !!(doo.data.value && doo.adjustedDividend.value)"
+        :error="mode !== 'doo' ? salary.error.value?.message : doo.error.value?.message"
+      >
+        <ResultsSalaryResults
+          v-if="mode !== 'doo' && salary.data.value"
+          :data="salary.data.value"
+          :mode="salaryMode"
+          :tax-return-amount="salary.taxReturnAmount.value"
+          :net-with-tax-return="salary.netWithTaxReturn.value"
+          :conversion-note="salary.conversionNote.value"
+          :place-name="selectedPlaceName"
+        />
+
+        <ResultsDooResults
+          v-if="mode === 'doo' && doo.data.value && doo.adjustedDividend.value"
+          :data="doo.data.value"
+          :adjusted-dividend="doo.adjustedDividend.value"
+          :conversion-note="doo.conversionNote.value"
+          :place-name="selectedPlaceName"
+        />
+      </LayoutResultsPanel>
+    </div>
   </div>
 </template>
