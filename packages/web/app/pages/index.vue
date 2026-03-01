@@ -120,19 +120,19 @@ const modeTabs: Array<{ label: string, value: Mode }> = [
 <template>
   <div>
     <!-- Top header bar -->
-    <header class="flex items-center gap-5 mb-6">
+    <header class="flex items-center gap-3 sm:gap-5 mb-6">
       <h1 class="text-2xl font-bold font-unifontex uppercase shrink-0">
         Bruto<span class="text-primary italic">neto</span>
       </h1>
 
-      <nav role="tablist" class="flex items-center" aria-label="Calculator mode">
+      <nav role="tablist" class="flex items-center flex-wrap" aria-label="Calculator mode">
         <button
           v-for="tab in modeTabs"
           :key="tab.value"
           role="tab"
           type="button"
           :aria-selected="mode === tab.value"
-          class="px-3 py-1 text-sm font-unifontex uppercase tracking-wide cursor-pointer transition-colors"
+          class="px-2 sm:px-3 py-1 text-xs sm:text-sm font-unifontex uppercase tracking-wide cursor-pointer transition-colors whitespace-nowrap"
           :class="[
             mode === tab.value
               ? 'text-primary font-bold'
