@@ -66,7 +66,7 @@ export function useSalaryBreakdownSections(
 
     return [
       {
-        title: 'Salary Breakdown',
+        title: 'Salary breakdown',
         badge,
         rows: salaryRows,
       },
@@ -132,9 +132,9 @@ export function useDooBreakdownSections(
     const taxBadge = `effective rate ${effectiveRate}%`
 
     return [
-      { title: 'Salary Breakdown', badge: salaryBadge, rows: salaryRows },
-      { title: 'Corporate & Dividend', badge: corpBadge, rows: corpRows },
-      { title: 'All Taxes & Costs', badge: taxBadge, rows: taxRows },
+      { title: 'Salary breakdown', badge: salaryBadge, rows: salaryRows },
+      { title: 'Corporate & dividend', badge: corpBadge, rows: corpRows },
+      { title: 'All taxes & costs', badge: taxBadge, rows: taxRows },
     ]
   })
 }

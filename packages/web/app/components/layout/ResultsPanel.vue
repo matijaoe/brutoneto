@@ -13,7 +13,7 @@ defineProps<{
         Calculation failed. Please try again.
       </p>
       <p v-else class="text-dimmed text-sm">
-        Enter an amount and press calculate to see results
+        Enter an amount to get started
       </p>
     </div>
   </div>
