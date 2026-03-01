@@ -12,7 +12,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:directorGross': [value: string]
   'update:dividendPercentage': [value: string]
-  'set-minimum-salary': []
+  'setMinimumSalary': []
 }>()
 
 const dividendPresets = ['60', '70', '80', '90', '100']
@@ -44,7 +44,7 @@ const isPreset = computed(() => dividendPresets.includes(props.dividendPercentag
               v-if="!isAtMinimum"
               type="button"
               class="text-xs text-primary hover:text-primary/80 cursor-pointer whitespace-nowrap font-medium"
-              @click="emit('set-minimum-salary')"
+              @click="emit('setMinimumSalary')"
             >
               min
             </button>
@@ -59,12 +59,12 @@ const isPreset = computed(() => dividendPresets.includes(props.dividendPercentag
       :error="dividendPercentageError"
       :ui="{ label: 'text-sm text-dimmed' }"
     >
-      <div class="flex">
+      <div class="flex w-full">
         <button
           v-for="(preset, i) in dividendPresets"
           :key="preset"
           type="button"
-          class="px-3 py-2 text-sm border cursor-pointer transition-colors"
+          class="flex-1 px-1 py-2 text-sm border cursor-pointer transition-colors"
           :class="[
             dividendPercentage === preset
               ? 'z-10 border-primary bg-primary/10 text-primary font-medium'
@@ -75,7 +75,7 @@ const isPreset = computed(() => dividendPresets.includes(props.dividendPercentag
         >
           {{ preset }}%
         </button>
-        <div class="relative -ml-px">
+        <div class="relative -ml-px flex-1">
           <input
             :value="isPreset ? '' : dividendPercentage"
             type="number"
@@ -83,7 +83,7 @@ const isPreset = computed(() => dividendPresets.includes(props.dividendPercentag
             aria-label="Custom dividend percentage"
             min="0"
             max="100"
-            class="w-16 h-full px-2 text-sm text-center border rounded-r-md bg-transparent outline-none transition-colors"
+            class="w-full h-full px-2 text-sm text-center border rounded-r-md bg-transparent outline-none transition-colors"
             :class="[
               !isPreset && dividendPercentage
                 ? 'z-10 border-primary bg-primary/10 text-primary font-medium'

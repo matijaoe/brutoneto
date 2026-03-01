@@ -16,14 +16,14 @@ defineProps<{
       <UCollapsible>
         <button
           type="button"
-          class="w-full flex items-center justify-between px-5 py-3 cursor-pointer hover:bg-elevated/50 group-data-[state=open]:bg-elevated/50 transition-colors group"
+          class="w-full flex items-center justify-between px-5 py-3 cursor-pointer bg-elevated/50 hover:bg-elevated/80 transition-colors group"
         >
-          <span class="font-unifontex text-sm tracking-wide text-muted">{{ section.title }}</span>
-          <span class="flex items-center gap-3">
-            <span v-if="section.badge" class="text-xs text-dimmed font-unifontex tabular-nums">
+          <span class="font-unifontex text-sm tracking-wide text-muted shrink-0">{{ section.title }}</span>
+          <span class="flex items-center gap-3 min-w-0">
+            <span v-if="section.badge" class="hidden sm:inline text-sm text-dimmed font-unifontex tabular-nums truncate">
               {{ section.badge }}
             </span>
-            <UIcon name="mdi:chevron-down" class="size-5 text-dimmed transition-transform group-data-[state=open]:rotate-180" />
+            <UIcon name="mdi:chevron-down" class="size-5 text-dimmed shrink-0 transition-transform group-data-[state=open]:rotate-180" />
           </span>
         </button>
 

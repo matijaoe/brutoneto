@@ -120,22 +120,45 @@ const modeTabs: Array<{ label: string, value: Mode }> = [
 <template>
   <div>
     <!-- Top header bar -->
-    <header class="flex items-center gap-3 sm:gap-5 mb-6">
-      <h1 class="text-2xl font-bold font-unifontex uppercase shrink-0">
-        Bruto<span class="text-primary italic">neto</span>
-      </h1>
+    <header class="mb-6">
+      <div class="flex items-center gap-6">
+        <h1 class="text-2xl font-bold font-unifontex uppercase shrink-0">
+          Bruto<span class="text-primary italic">neto</span>
+        </h1>
 
-      <nav role="tablist" class="flex items-center flex-wrap" aria-label="Calculator mode">
+        <span class="hidden sm:block w-px h-5 bg-default" />
+
+        <nav role="tablist" class="hidden sm:flex items-center gap-1" aria-label="Calculator mode">
+          <button
+            v-for="tab in modeTabs"
+            :key="tab.value"
+            role="tab"
+            type="button"
+            :aria-selected="mode === tab.value"
+            class="px-3 py-1.5 text-sm font-unifontex uppercase tracking-wide cursor-pointer transition-colors whitespace-nowrap rounded-md"
+            :class="[
+              mode === tab.value
+                ? 'text-primary font-bold bg-primary/10'
+                : 'text-muted hover:text-foreground hover:bg-elevated/50',
+            ]"
+            @click="mode = tab.value"
+          >
+            {{ tab.label }}
+          </button>
+        </nav>
+      </div>
+
+      <nav role="tablist" class="flex sm:hidden items-center gap-1 mt-3" aria-label="Calculator mode">
         <button
           v-for="tab in modeTabs"
           :key="tab.value"
           role="tab"
           type="button"
           :aria-selected="mode === tab.value"
-          class="px-2 sm:px-3 py-1 text-xs sm:text-sm font-unifontex uppercase tracking-wide cursor-pointer transition-colors whitespace-nowrap"
+          class="px-3 py-1.5 text-sm font-unifontex uppercase tracking-wide cursor-pointer transition-colors rounded-md"
           :class="[
             mode === tab.value
-              ? 'text-primary font-bold'
+              ? 'text-primary font-bold bg-primary/10'
               : 'text-muted hover:text-foreground',
           ]"
           @click="mode = tab.value"
