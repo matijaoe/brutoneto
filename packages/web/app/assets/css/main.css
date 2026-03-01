@@ -1,14 +1,16 @@
 @import "@fontsource/unifontex";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/700.css";
 @import "tailwindcss";
 @import "@nuxt/ui";
 
 @theme {
-  --container-width: 60rem;
   --font-unifontex: "UnifontEX", monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 :root {
-  --ui-container: var(--container-width);
   --ui-radius: 0.125rem;
 }
 
