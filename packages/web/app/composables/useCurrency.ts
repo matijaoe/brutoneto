@@ -1,4 +1,4 @@
-import { useStorage } from '@vueuse/core'
+import { useSessionStorage } from '@vueuse/core'
 
 export type InputCurrency = 'EUR' | 'USD'
 
@@ -18,8 +18,18 @@ interface ExchangeRateResponse {
   stale?: boolean
 }
 
+const eurFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' })
+
+export function formatEur(value: number): string {
+  return eurFormatter.format(value)
+}
+
+export function toYearly(value: number): number {
+  return value * 12
+}
+
 export function useCurrency() {
-  const currency = useStorage<InputCurrency>('input-currency', 'EUR')
+  const currency = useSessionStorage<InputCurrency>('input-currency', 'EUR')
 
   const { data: rateData, status: rateStatus, execute: fetchRate } = useFetch<ExchangeRateResponse>(
     '/api/exchange-rate',
@@ -54,6 +64,20 @@ export function useCurrency() {
     }).format(value)
   }
 
+  function toggleCurrency() {
+    currency.value = currency.value === 'EUR' ? 'USD' : 'EUR'
+  }
+
+  function buildConversionNote(submission: CurrencySubmission | null, hasData: boolean) {
+    if (!hasData || !submission || submission.currency === 'EUR' || submission.rate == null) return null
+    const periodSuffix = submission.period === 'yearly' ? '/yr' : '/mo'
+    return {
+      input: `${formatInputCurrency(submission.inputAmount, submission.currency)}${periodSuffix}`,
+      eur: `${formatEur(submission.eurAmount)}${periodSuffix}`,
+      rate: `1 ${submission.currency} = ${submission.rate.toFixed(4)} EUR`,
+    }
+  }
+
   const currencyIcon = computed(() => {
     return currency.value === 'USD' ? 'mdi:currency-usd' : 'mdi:currency-eur'
   })
@@ -65,6 +89,8 @@ export function useCurrency() {
     isNonEur,
     convertToEur,
     formatInputCurrency,
+    toggleCurrency,
+    buildConversionNote,
     currencyIcon,
   }
 }

@@ -26,6 +26,11 @@ export interface DooConfig {
    * Defaults to 100 (withdraw everything).
    */
   dividendPercentage?: number
+  /**
+   * Percentage of income tax returned via annual tax return (0–100).
+   * Defaults to 50 (half the tax is returned).
+   */
+  taxReturnPercentage?: number
 }
 
 export interface DooBreakdown {
@@ -86,6 +91,7 @@ export interface DooBreakdown {
     corporateTaxRate: number
     dividendTaxRate: number
     dividendPercentage: number
+    taxReturnPercentage: number
     directorMinimumGross: number
     isDirectorMinimum: boolean
   }
@@ -115,6 +121,11 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
   const dividendPercentage = config.dividendPercentage ?? 100
   if (dividendPercentage < 0 || dividendPercentage > 100) {
     throw new Error('dividendPercentage must be between 0 and 100')
+  }
+
+  const taxReturnPercentage = config.taxReturnPercentage ?? 50
+  if (taxReturnPercentage < 0 || taxReturnPercentage > 100) {
+    throw new Error('taxReturnPercentage must be between 0 and 100')
   }
 
   const isDirectorMinimum = config.directorGross == null
@@ -153,8 +164,10 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
   // Step 4: Totals (retained earnings NOT included in take-home)
   const $netSalary = new Decimal(netSalary)
   const $monthlyNet = $netSalary.add($netDividend).toDP(2)
-  const taxReturn = salaryBreakdown.taxes.totalHalf
-  const $monthlyNetWithTaxReturn = $monthlyNet.add(taxReturn).toDP(2)
+  const $taxReturnPct = new Decimal(taxReturnPercentage).div(100)
+  const $taxReturn = new Decimal(salaryBreakdown.taxes.total).mul($taxReturnPct).toDP(2)
+  const taxReturn = roundEuros($taxReturn.toNumber())
+  const $monthlyNetWithTaxReturn = $monthlyNet.add($taxReturn).toDP(2)
 
   return {
     totalRevenue: roundEuros(totalRevenue),
@@ -203,6 +216,7 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
       corporateTaxRate: CORPORATE_TAX_RATE,
       dividendTaxRate: DIVIDEND_TAX_RATE,
       dividendPercentage,
+      taxReturnPercentage,
       directorMinimumGross: DIRECTOR_MINIMUM_GROSS,
       isDirectorMinimum,
     },
