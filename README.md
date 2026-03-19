@@ -1,6 +1,10 @@
 # brutoneto
 
-Croatian salary calculation library (bruto/neto conversions) - now as a centralized monorepo with multiple packages.
+Advanced Croatian salary and tax calculator — from gross/net conversions through company-level taxes to final dividend payouts.
+
+Monorepo: published NPM package · API · Nuxt 3 web app
+
+TypeScript, Vue, Nitro, Zod, Tailwind CSS, shadcn/ui, Bun
 
 ## Packages
 
