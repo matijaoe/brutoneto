@@ -4,7 +4,7 @@ Advanced Croatian salary and tax calculator — from gross/net conversions throu
 
 Monorepo: published NPM package · API · Nuxt 3 web app
 
-TypeScript, Vue, Nitro, Zod, Tailwind CSS, shadcn/ui, Bun
+TypeScript, Vue, Nitro, Zod, Tailwind CSS, Nuxt UI, Bun
 
 ## Packages
 
