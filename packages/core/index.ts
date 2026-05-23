@@ -25,6 +25,19 @@ export {
   type NetToGrossConfig,
 } from './src/calculations/net-to-gross'
 
+// Non-taxable benefits ("neoporezivi primici")
+export {
+  type BenefitCategory,
+  type BenefitFlow,
+  calculateNonTaxableBenefits,
+  type MealMode,
+  NON_TAXABLE_BENEFIT_LIMITS_2026,
+  type NonTaxableBenefitItem,
+  type NonTaxableBenefitKey,
+  type NonTaxableBenefitsBreakdown,
+  type NonTaxableBenefitsConfig,
+} from './src/calculations/non-taxable-benefits'
+
 // Calculation utilities (for custom calculations)
 export {
   calcMandatoryPensionContribution,

@@ -225,6 +225,114 @@ describe('calculateDoo - taxReturnPercentage', () => {
   })
 })
 
+describe('calculateDoo - benefits', () => {
+  it('should default to no benefits', () => {
+    const result = calculateDoo(5000)
+    expect(result.benefits.items).toEqual([])
+    expect(result.benefits.totalMonthly).toBe(0)
+    expect(result.totals.cashBenefits).toBe(0)
+    expect(result.totals.assetBenefits).toBe(0)
+  })
+
+  it('should not affect salary calculation', () => {
+    const base = calculateDoo(5000)
+    const withBenefits = calculateDoo(5000, {
+      benefits: { prigodneNagrade: true, treciStup: true },
+    })
+    expect(withBenefits.salary).toEqual(base.salary)
+  })
+
+  it('should reduce profit by total benefits expense', () => {
+    const base = calculateDoo(5000)
+    const withBenefits = calculateDoo(5000, {
+      benefits: { prigodneNagrade: true, treciStup: true, dopunskoZdravstveno: true },
+    })
+    const expectedProfit = roundEuros(base.corporate.profit - withBenefits.benefits.totalMonthly)
+    expect(withBenefits.corporate.profit).toBe(expectedProfit)
+  })
+
+  it('should reduce corporate tax proportionally', () => {
+    const withBenefits = calculateDoo(5000, {
+      benefits: { nagradaZaRezultate: true },
+    })
+    expect(withBenefits.corporate.corporateTax).toBe(
+      roundEuros(withBenefits.corporate.profit * withBenefits.corporate.corporateTaxRate),
+    )
+  })
+
+  it('should include cash benefits in cashInHand', () => {
+    const result = calculateDoo(5000, {
+      benefits: { prigodneNagrade: true, nagradaZaRezultate: true },
+    })
+    expect(result.totals.cashInHand).toBe(
+      roundEuros(
+        result.totals.netSalary + result.totals.netDividend + result.totals.cashBenefits,
+      ),
+    )
+  })
+
+  it('should include asset benefits in assets (not cashInHand)', () => {
+    const result = calculateDoo(5000, {
+      benefits: { treciStup: true },
+      dividendPercentage: 100,
+    })
+    expect(result.totals.cashInHand).toBe(
+      roundEuros(result.totals.netSalary + result.totals.netDividend),
+    )
+    expect(result.totals.assets).toBe(
+      roundEuros(result.corporate.retainedEarnings + result.totals.assetBenefits),
+    )
+  })
+
+  it('should compute totalValue as cashInHand + assets', () => {
+    const result = calculateDoo(5000, {
+      benefits: { prigodneNagrade: true, treciStup: true },
+      dividendPercentage: 50,
+    })
+    expect(result.totals.totalValue).toBe(
+      roundEuros(result.totals.cashInHand + result.totals.assets),
+    )
+  })
+
+  it('should clamp profit to 0 if benefits exceed available profit', () => {
+    const result = calculateDoo(1500, {
+      benefits: {
+        prigodneNagrade: true,
+        nagradaZaRezultate: true,
+        prehrana: 'racuni',
+        radOdKuce: true,
+        odmorRadnika: true,
+        dopunskoZdravstveno: true,
+        treciStup: true,
+      },
+    })
+    expect(result.corporate.profit).toBe(0)
+    expect(result.corporate.corporateTax).toBe(0)
+    expect(result.dividend.netDividend).toBe(0)
+  })
+
+  it('should compute savingsVsDividend at ~20.8% of total benefits', () => {
+    const result = calculateDoo(5000, {
+      benefits: { prigodneNagrade: true },
+    })
+    // 1 - (1 - 0.10) * (1 - 0.12) = 1 - 0.792 = 0.208
+    expect(result.totals.savingsVsDividend).toBe(
+      roundEuros(result.benefits.totalMonthly * 0.208),
+    )
+  })
+
+  it('should accept three-state prehrana', () => {
+    const off = calculateDoo(5000, { benefits: { prehrana: 'off' } })
+    const pausal = calculateDoo(5000, { benefits: { prehrana: 'pausal' } })
+    const racuni = calculateDoo(5000, { benefits: { prehrana: 'racuni' } })
+
+    expect(off.benefits.items).toHaveLength(0)
+    expect(pausal.benefits.items).toHaveLength(1)
+    expect(racuni.benefits.items).toHaveLength(1)
+    expect(pausal.benefits.cashMonthly).toBeLessThan(racuni.benefits.cashMonthly)
+  })
+})
+
 describe('calculateDooSimple', () => {
   it('should return netSalary, netDividend, and total', () => {
     const simple = calculateDooSimple(5000)

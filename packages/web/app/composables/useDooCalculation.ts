@@ -1,4 +1,4 @@
-import type { DooBreakdown, Place } from '@brutoneto/core'
+import type { DooBreakdown, NonTaxableBenefitsBreakdown, Place } from '@brutoneto/core'
 import { DIRECTOR_MINIMUM_GROSS, roundEuros } from '@brutoneto/core'
 import { useSessionStorage } from '@vueuse/core'
 import type { Period } from '~/types'
@@ -8,6 +8,7 @@ export function useDooCalculation(opts: {
   selectedPlaceKey: Ref<Place>
   period: Ref<Period>
   taxReturnPercent: Ref<number>
+  benefits: Ref<NonTaxableBenefitsBreakdown>
 }) {
   const {
     currency,
@@ -77,6 +78,10 @@ export function useDooCalculation(opts: {
     },
   )
 
+  // Note: benefits are deliberately NOT included in the API request — they're
+  // applied client-side in `adjustedDividend` for instant updates, identical to
+  // how `dividendPercentage` is handled.
+
   const isInputValid = computed(() => {
     if (!revenue.value || revenueNumber.value <= 0) return false
     if (directorGrossError.value) return false
@@ -110,12 +115,25 @@ export function useDooCalculation(opts: {
     },
   )
 
-  // Apply dividend percentage and tax return client-side for instant updates
+  // Apply dividend %, tax return, AND non-taxable benefits client-side for instant updates.
+  // Benefits reduce profit dollar-for-dollar (and therefore corp tax + dividend),
+  // and split into cash (employee bank) vs asset (insurance/pension) destinations.
   const adjustedDividend = computed(() => {
     if (!data.value) return null
-    const { profitAfterTax } = data.value.corporate
+    const { corporateTaxRate } = data.value.corporate
     const { dividendTaxRate } = data.value.dividend
     const { netSalary } = data.value.totals
+
+    // Reverse-engineer the base (pre-benefit) profit so this stays correct
+    // even if the API returned benefits already applied.
+    const baseProfit = roundEuros(
+      data.value.corporate.profit + (data.value.benefits?.totalMonthly ?? 0),
+    )
+
+    const benefitsTotal = opts.benefits.value.totalMonthly
+    const profit = Math.max(0, roundEuros(baseProfit - benefitsTotal))
+    const corporateTax = roundEuros(profit * corporateTaxRate)
+    const profitAfterTax = roundEuros(profit - corporateTax)
 
     const pct = Math.max(0, Math.min(100, dividendPercentageNumber.value)) / 100
     const grossDividend = roundEuros(profitAfterTax * pct)
@@ -128,7 +146,35 @@ export function useDooCalculation(opts: {
     const monthlyNetWithTaxReturn = roundEuros(monthlyNet + taxReturn)
     const totalWithRetained = roundEuros(monthlyNet + retained)
 
-    return { grossDividend, dividendTax, netDividend, retained, monthlyNet, taxReturn, monthlyNetWithTaxReturn, totalWithRetained }
+    const cashBenefits = opts.benefits.value.cashMonthly
+    const assetBenefits = opts.benefits.value.assetMonthly
+    const cashInHand = roundEuros(netSalary + netDividend + cashBenefits)
+    const assets = roundEuros(retained + assetBenefits)
+    const totalValue = roundEuros(cashInHand + assets)
+
+    // 1 − (1 − corp)(1 − div) → ~20.8% for default 10% / 12%
+    const dividendRouteFactor = 1 - (1 - corporateTaxRate) * (1 - dividendTaxRate)
+    const savingsVsDividend = roundEuros(opts.benefits.value.totalMonthly * dividendRouteFactor)
+
+    return {
+      grossDividend,
+      dividendTax,
+      netDividend,
+      retained,
+      monthlyNet,
+      taxReturn,
+      monthlyNetWithTaxReturn,
+      totalWithRetained,
+      profit,
+      corporateTax,
+      profitAfterTax,
+      cashBenefits,
+      assetBenefits,
+      cashInHand,
+      assets,
+      totalValue,
+      savingsVsDividend,
+    }
   })
 
   const conversionNote = computed(() => buildConversionNote(submission.value, !!data.value))

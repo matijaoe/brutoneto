@@ -15,7 +15,7 @@ const emit = defineEmits<{
   'setMinimumSalary': []
 }>()
 
-const dividendPresets = ['60', '70', '80', '90', '100']
+const dividendPresets = ['0', '25', '50', '70', '80', '90']
 
 const isPreset = computed(() => dividendPresets.includes(props.dividendPercentage))
 </script>

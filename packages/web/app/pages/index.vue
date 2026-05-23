@@ -82,11 +82,15 @@ const salary = useSalaryCalculation({
   taxReturnPercent,
 })
 
+// --- Non-taxable benefits (D.O.O. only) ---
+const benefits = useNonTaxableBenefits()
+
 // --- D.O.O. calculation ---
 const doo = useDooCalculation({
   selectedPlaceKey: selectedPlaceKey as Ref<Place>,
   period,
   taxReturnPercent,
+  benefits: benefits.breakdown,
 })
 
 // Focus input on mode change
@@ -247,6 +251,25 @@ const modeTabs: Array<{ label: string, value: Mode }> = [
               @update:dividend-percentage="doo.dividendPercentage.value = $event"
               @set-minimum-salary="doo.setMinimumSalary"
             />
+
+            <InputNonTaxableBenefitsControls
+              :prigodne-nagrade="benefits.prigodneNagrade.value"
+              :nagrada-za-rezultate="benefits.nagradaZaRezultate.value"
+              :prehrana="benefits.prehrana.value"
+              :rad-od-kuce="benefits.radOdKuce.value"
+              :odmor-radnika="benefits.odmorRadnika.value"
+              :dopunsko-zdravstveno="benefits.dopunskoZdravstveno.value"
+              :treci-stup="benefits.treciStup.value"
+              :has-any="benefits.hasAny.value"
+              @update:prigodne-nagrade="benefits.prigodneNagrade.value = $event"
+              @update:nagrada-za-rezultate="benefits.nagradaZaRezultate.value = $event"
+              @update:prehrana="benefits.prehrana.value = $event"
+              @update:rad-od-kuce="benefits.radOdKuce.value = $event"
+              @update:odmor-radnika="benefits.odmorRadnika.value = $event"
+              @update:dopunsko-zdravstveno="benefits.dopunskoZdravstveno.value = $event"
+              @update:treci-stup="benefits.treciStup.value = $event"
+              @reset="benefits.reset"
+            />
           </template>
 
           <!-- Calculation params -->
@@ -297,6 +320,7 @@ const modeTabs: Array<{ label: string, value: Mode }> = [
           :adjusted-dividend="doo.adjustedDividend.value"
           :conversion-note="doo.conversionNote.value"
           :place-name="selectedPlaceName"
+          :benefits="benefits.breakdown.value"
         />
       </LayoutResultsPanel>
     </div>

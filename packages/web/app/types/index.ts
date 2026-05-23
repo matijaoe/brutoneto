@@ -38,6 +38,24 @@ export interface AdjustedDividend {
   taxReturn: number
   monthlyNetWithTaxReturn: number
   totalWithRetained: number
+  /** Profit (revenue − bruto2 − benefits expense), clamped to ≥ 0. */
+  profit: number
+  /** Corporate tax on the benefits-adjusted profit. */
+  corporateTax: number
+  /** Profit after corporate tax. */
+  profitAfterTax: number
+  /** Cash benefits going to employee bank account (sum, €/mo). */
+  cashBenefits: number
+  /** Asset benefits (insurance + pension), locked, not spendable now (€/mo). */
+  assetBenefits: number
+  /** Net salary + net dividend + cash benefits — what lands in the bank. */
+  cashInHand: number
+  /** Company balance (retained) + asset benefits — locked savings/assets. */
+  assets: number
+  /** Cash in hand + assets — total monthly value produced. */
+  totalValue: number
+  /** Estimated tax saving vs taking the same amount through dividend. */
+  savingsVsDividend: number
 }
 
 export interface ConversionNote {
