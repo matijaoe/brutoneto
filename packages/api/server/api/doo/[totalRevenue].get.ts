@@ -1,4 +1,4 @@
-import type { DooConfig, Place } from '@brutoneto/core'
+import type { DooConfig, NonTaxableBenefitsConfig, Place } from '@brutoneto/core'
 import {
   calculateDoo,
   DIRECTOR_MINIMUM_GROSS,
@@ -43,6 +43,14 @@ const QuerySchema = z.object({
   tax_return_percent: z.coerce.number().min(0).max(100).optional(),
   detailed: z.coerce.boolean().optional(),
   yearly: z.coerce.boolean().optional(),
+  // Non-taxable benefits ("neoporezivi primici")
+  benefit_nagrade: z.coerce.boolean().optional(),
+  benefit_results: z.coerce.boolean().optional(),
+  benefit_meal: z.enum(['off', 'pausal', 'racuni']).optional(),
+  benefit_remote: z.coerce.boolean().optional(),
+  benefit_vacation: z.coerce.boolean().optional(),
+  benefit_health: z.coerce.boolean().optional(),
+  benefit_pension: z.coerce.boolean().optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -70,11 +78,44 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { salary_gross, place, ltax, htax, coeff, third_pillar, dividend_percent, tax_return_percent, detailed, yearly } = query.data
+  const {
+    salary_gross,
+    place,
+    ltax,
+    htax,
+    coeff,
+    third_pillar,
+    dividend_percent,
+    tax_return_percent,
+    detailed,
+    yearly,
+    benefit_nagrade,
+    benefit_results,
+    benefit_meal,
+    benefit_remote,
+    benefit_vacation,
+    benefit_health,
+    benefit_pension,
+  } = query.data
 
   const monthlyRevenue = yearly === true ? roundEuros(totalRevenue / 12) : totalRevenue
 
   const resolvedPlace = place != null ? resolvePlaceShortcut(place) as Place : undefined
+
+  const benefits: NonTaxableBenefitsConfig | undefined = (
+    benefit_nagrade || benefit_results || benefit_meal != null
+    || benefit_remote || benefit_vacation || benefit_health || benefit_pension
+  )
+    ? {
+        prigodneNagrade: benefit_nagrade,
+        nagradaZaRezultate: benefit_results,
+        prehrana: benefit_meal,
+        radOdKuce: benefit_remote,
+        odmorRadnika: benefit_vacation,
+        dopunskoZdravstveno: benefit_health,
+        treciStup: benefit_pension,
+      }
+    : undefined
 
   const dooConfig: DooConfig = {
     directorGross: salary_gross ?? DIRECTOR_MINIMUM_GROSS,
@@ -85,6 +126,7 @@ export default defineEventHandler(async (event) => {
     thirdPillarContribution: third_pillar,
     dividendPercentage: dividend_percent,
     taxReturnPercentage: tax_return_percent,
+    benefits,
   }
 
   if (detailed === true) {

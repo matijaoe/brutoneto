@@ -1,6 +1,6 @@
-import type { DooBreakdown } from '@brutoneto/core'
+import type { DooBreakdown, NonTaxableBenefitsBreakdown } from '@brutoneto/core'
 import type { AdjustedDividend, BreakdownRow, BreakdownSection, SalaryData, SalaryMode } from '~/types'
-import { formatEur } from '~/utils/formatters'
+import { formatEur, toYearly } from '~/utils/formatters'
 
 function buildSalaryRows(d: SalaryData | DooBreakdown['salary'], taxReturnAmount: number, taxRates: { low: number, high: number }): BreakdownRow[] {
   const rows: BreakdownRow[] = [
@@ -77,6 +77,7 @@ export function useSalaryBreakdownSections(
 export function useDooBreakdownSections(
   data: Ref<DooBreakdown | null>,
   adjustedDividend: ComputedRef<AdjustedDividend | null>,
+  benefits: Ref<NonTaxableBenefitsBreakdown>,
 ): ComputedRef<BreakdownSection[]> {
   return computed(() => {
     if (!data.value) return []
@@ -89,13 +90,23 @@ export function useDooBreakdownSections(
       high: d.variables.taxRateHigh,
     })
 
-    // Section 2: Corporate & Dividend
-    const dividendPct = adj ? Math.round((adj.grossDividend / d.corporate.profitAfterTax) * 100) : 100
+    // Section 2: Corporate & Dividend (use benefits-adjusted values from `adj` when available)
+    const profitAfterTax = adj?.profitAfterTax ?? d.corporate.profitAfterTax
+    const dividendPct = adj && profitAfterTax > 0
+      ? Math.round((adj.grossDividend / profitAfterTax) * 100)
+      : 100
+    const profit = adj?.profit ?? d.corporate.profit
+    const corporateTax = adj?.corporateTax ?? d.corporate.corporateTax
+
+    const profitLabel = (adj && (adj.cashBenefits + adj.assetBenefits) > 0)
+      ? 'Revenue \u2013 salary costs \u2013 benefits'
+      : 'Revenue \u2013 salary costs'
+
     const corpRows: BreakdownRow[] = [
       { label: 'CORPORATE', value: '', type: 'sub-heading' },
-      { label: 'Revenue \u2013 salary costs', value: formatEur(d.corporate.profit), type: 'primary' },
-      { label: `Corporate tax (${Math.round(d.corporate.corporateTaxRate * 100)}%)`, value: formatEur(d.corporate.corporateTax), type: 'supporting' },
-      { label: 'Profit after tax', value: formatEur(d.corporate.profitAfterTax), type: 'primary' },
+      { label: profitLabel, value: formatEur(profit), type: 'primary' },
+      { label: `Corporate tax (${Math.round(d.corporate.corporateTaxRate * 100)}%)`, value: formatEur(corporateTax), type: 'supporting' },
+      { label: 'Profit after tax', value: formatEur(profitAfterTax), type: 'primary' },
 
       { label: `DIVIDEND (${dividendPct}% WITHDRAWAL)`, value: '', type: 'sub-heading' },
       { label: 'Gross dividend', value: formatEur(adj?.grossDividend ?? d.dividend.grossDividend), type: 'primary' },
@@ -109,11 +120,75 @@ export function useDooBreakdownSections(
       )
     }
 
+    // Section: Non-taxable benefits (only when something is enabled)
+    const b = benefits.value
+    let benefitsSection: BreakdownSection | null = null
+    if (b.items.length > 0) {
+      const rows: BreakdownRow[] = []
+
+      const cashItems = b.items.filter(i => i.flow === 'cash')
+      const assetItems = b.items.filter(i => i.flow === 'asset')
+
+      if (cashItems.length > 0) {
+        rows.push({ label: 'CASH (žiro)', value: '', type: 'sub-heading' })
+        for (const item of cashItems) {
+          rows.push({
+            label: item.label,
+            value: `${formatEur(item.monthly)} / ${formatEur(item.yearly)} /yr`,
+            type: 'supporting',
+          })
+        }
+        rows.push({
+          label: 'Cash subtotal',
+          value: `${formatEur(b.cashMonthly)} / ${formatEur(b.cashYearly)} /yr`,
+          type: 'primary',
+        })
+      }
+
+      if (assetItems.length > 0) {
+        rows.push({ label: 'ASSETS (polica / štednja)', value: '', type: 'sub-heading' })
+        for (const item of assetItems) {
+          rows.push({
+            label: item.label,
+            value: `${formatEur(item.monthly)} / ${formatEur(item.yearly)} /yr`,
+            type: 'supporting',
+          })
+        }
+        rows.push({
+          label: 'Asset subtotal',
+          value: `${formatEur(b.assetMonthly)} / ${formatEur(b.assetYearly)} /yr`,
+          type: 'primary',
+          color: 'purple',
+        })
+      }
+
+      rows.push({
+        label: 'Total company expense',
+        value: `${formatEur(b.totalMonthly)} / ${formatEur(b.totalYearly)} /yr`,
+        type: 'summary',
+      })
+
+      if (adj && adj.savingsVsDividend > 0) {
+        rows.push({
+          label: 'Saving vs dividend route',
+          value: `${formatEur(adj.savingsVsDividend)} / ${formatEur(toYearly(adj.savingsVsDividend))} /yr`,
+          type: 'supporting',
+          color: 'green',
+        })
+      }
+
+      benefitsSection = {
+        title: 'Neoporezivi primici',
+        badge: `${formatEur(b.totalMonthly)} /mo · ${b.items.length} ${b.items.length === 1 ? 'stavka' : 'stavki'}`,
+        rows,
+      }
+    }
+
     // Section 3: All Taxes & Costs
     const totalSalaryTax = d.salary.taxes.total
     const totalPension = d.salary.pension.mandatoryTotal
     const healthIns = d.salary.healthInsurance
-    const corpTax = d.corporate.corporateTax
+    const corpTax = adj?.corporateTax ?? d.corporate.corporateTax
     const divTax = adj?.dividendTax ?? d.dividend.dividendTax
     const allTaxes = totalSalaryTax + totalPension + healthIns + corpTax + divTax
     const effectiveRate = d.totalRevenue > 0 ? ((allTaxes / d.totalRevenue) * 100).toFixed(1) : '0'
@@ -128,13 +203,15 @@ export function useDooBreakdownSections(
     ]
 
     const salaryBadge = `${formatEur(d.salary.gross)} gross \u2192 ${formatEur(d.salary.net)} net`
-    const corpBadge = `${formatEur(d.corporate.profitAfterTax)} profit \u2192 ${formatEur(adj?.netDividend ?? d.dividend.netDividend)} net`
+    const corpBadge = `${formatEur(profitAfterTax)} profit \u2192 ${formatEur(adj?.netDividend ?? d.dividend.netDividend)} net`
     const taxBadge = `effective rate ${effectiveRate}%`
 
-    return [
+    const sections: BreakdownSection[] = [
       { title: 'Salary breakdown', badge: salaryBadge, rows: salaryRows },
       { title: 'Corporate & dividend', badge: corpBadge, rows: corpRows },
-      { title: 'All taxes & costs', badge: taxBadge, rows: taxRows },
     ]
+    if (benefitsSection) sections.push(benefitsSection)
+    sections.push({ title: 'All taxes & costs', badge: taxBadge, rows: taxRows })
+    return sections
   })
 }

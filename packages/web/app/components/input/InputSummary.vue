@@ -18,16 +18,23 @@ const items = computed(() => {
     const allTaxes = props.dooData.salary.taxes.total
       + props.dooData.salary.pension.mandatoryTotal
       + props.dooData.salary.healthInsurance
-      + props.dooData.corporate.corporateTax
+      + adj.corporateTax
       + (adj.netDividend > 0 ? adj.dividendTax : 0)
     const effectiveRate = revenue > 0 ? ((allTaxes / revenue) * 100).toFixed(1) : '0'
 
+    const hasBenefits = (adj.cashBenefits + adj.assetBenefits) > 0
     const result: Array<{ label: string, value: string, color?: string }> = [
-      { label: 'Take-home', value: `${formatEur(adj.monthlyNet)}/mo` },
+      {
+        label: hasBenefits ? 'Cash in hand' : 'Take-home',
+        value: `${formatEur(adj.cashInHand)}/mo`,
+      },
       { label: 'Effective tax', value: `${effectiveRate}%` },
     ]
     if (adj.retained > 0) {
       result.push({ label: 'Balance', value: `${formatEur(adj.retained)}/mo`, color: 'green' })
+    }
+    if (adj.assetBenefits > 0) {
+      result.push({ label: 'Assets', value: `${formatEur(adj.assetBenefits)}/mo`, color: 'green' })
     }
     return result
   }

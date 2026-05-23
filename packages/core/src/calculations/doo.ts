@@ -1,5 +1,9 @@
 import type { Place } from '../data/places'
 import type { SalaryConfig } from './gross-to-net'
+import type {
+  NonTaxableBenefitsBreakdown,
+  NonTaxableBenefitsConfig,
+} from './non-taxable-benefits'
 import {
   CORPORATE_TAX_RATE,
   DIRECTOR_MINIMUM_GROSS,
@@ -8,6 +12,7 @@ import {
 import { Decimal } from '../lib/decimal'
 import { assertFinitePositive, assertValidSalary, roundEuros } from '../utils/precision'
 import { grossToNetBreakdown } from './gross-to-net'
+import { calculateNonTaxableBenefits } from './non-taxable-benefits'
 
 export interface DooConfig {
   /**
@@ -31,6 +36,12 @@ export interface DooConfig {
    * Defaults to 50 (half the tax is returned).
    */
   taxReturnPercentage?: number
+  /**
+   * Optional non-taxable benefits paid by the company on top of salary.
+   * These reduce corporate profit (and therefore corporate tax and dividend),
+   * but go directly to the employee (or to a third party for asset items).
+   */
+  benefits?: NonTaxableBenefitsConfig
 }
 
 export interface DooBreakdown {
@@ -75,12 +86,30 @@ export interface DooBreakdown {
     netDividend: number
   }
 
+  benefits: NonTaxableBenefitsBreakdown
+
   totals: {
     netSalary: number
     netDividend: number
     monthlyNet: number
     taxReturn: number
     monthlyNetWithTaxReturn: number
+    /** Sum of enabled cash-flow benefits (€/mo). */
+    cashBenefits: number
+    /** Sum of enabled asset-flow benefits (€/mo) — insurance + pension. */
+    assetBenefits: number
+    /** Net salary + net dividend + cash benefits. What lands in the bank. */
+    cashInHand: number
+    /** Company balance (retained earnings) + asset benefits. Locked / not spendable now. */
+    assets: number
+    /** Cash in hand + assets. Total monthly value produced. */
+    totalValue: number
+    /**
+     * Estimated tax saving vs taking the same amount through dividend.
+     * Formula: total benefits × (1 − (1 − corp) × (1 − div)).
+     * With 10% corp + 12% div this is ~20.8%.
+     */
+    savingsVsDividend: number
   }
 
   variables: {
@@ -145,29 +174,46 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
   const netSalary = salaryBreakdown.net
   const bruto2 = salaryBreakdown.totalCostToEmployer
 
-  // Step 2: Corporate profit (clamped to 0 if revenue < salary cost)
+  // Step 2: Non-taxable benefits (reduce profit dollar-for-dollar)
+  const benefits = calculateNonTaxableBenefits(config.benefits)
+
+  // Step 3: Corporate profit = revenue − salary cost − benefits expense (clamped to 0)
   const $revenue = new Decimal(totalRevenue)
   const $bruto2 = new Decimal(bruto2)
-  const $rawProfit = $revenue.sub($bruto2)
+  const $benefitsExpense = new Decimal(benefits.totalMonthly)
+  const $rawProfit = $revenue.sub($bruto2).sub($benefitsExpense)
   const $profit = $rawProfit.greaterThan(0) ? $rawProfit : new Decimal(0)
 
   const $corporateTax = $profit.mul(CORPORATE_TAX_RATE).toDP(2)
   const $profitAfterTax = $profit.sub($corporateTax).toDP(2)
 
-  // Step 3: Dividend (only the withdrawn percentage)
+  // Step 4: Dividend (only the withdrawn percentage)
   const $dividendPct = new Decimal(dividendPercentage).div(100)
   const $grossDividend = $profitAfterTax.mul($dividendPct).toDP(2)
   const $retainedEarnings = $profitAfterTax.sub($grossDividend).toDP(2)
   const $dividendTax = $grossDividend.mul(DIVIDEND_TAX_RATE).toDP(2)
   const $netDividend = $grossDividend.sub($dividendTax).toDP(2)
 
-  // Step 4: Totals (retained earnings NOT included in take-home)
+  // Step 5: Totals (retained earnings NOT included in take-home)
   const $netSalary = new Decimal(netSalary)
   const $monthlyNet = $netSalary.add($netDividend).toDP(2)
   const $taxReturnPct = new Decimal(taxReturnPercentage).div(100)
   const $taxReturn = new Decimal(salaryBreakdown.taxes.total).mul($taxReturnPct).toDP(2)
   const taxReturn = roundEuros($taxReturn.toNumber())
   const $monthlyNetWithTaxReturn = $monthlyNet.add($taxReturn).toDP(2)
+
+  // Step 6: Benefits-aware aggregates
+  const $cashBenefits = new Decimal(benefits.cashMonthly)
+  const $assetBenefits = new Decimal(benefits.assetMonthly)
+  const $cashInHand = $netSalary.add($netDividend).add($cashBenefits).toDP(2)
+  const $assets = $retainedEarnings.add($assetBenefits).toDP(2)
+  const $totalValue = $cashInHand.add($assets).toDP(2)
+
+  // Savings vs the dividend route: 1 − (1 − corp)(1 − div).
+  // For default 10% / 12% rates this works out to ~20.8%.
+  const dividendRouteFactor = new Decimal(1)
+    .sub(new Decimal(1).sub(CORPORATE_TAX_RATE).mul(new Decimal(1).sub(DIVIDEND_TAX_RATE)))
+  const $savingsVsDividend = new Decimal(benefits.totalMonthly).mul(dividendRouteFactor).toDP(2)
 
   return {
     totalRevenue: roundEuros(totalRevenue),
@@ -200,12 +246,20 @@ export function calculateDoo(totalRevenue: number, config: DooConfig = {}): DooB
       netDividend: roundEuros($netDividend.toNumber()),
     },
 
+    benefits,
+
     totals: {
       netSalary,
       netDividend: roundEuros($netDividend.toNumber()),
       monthlyNet: roundEuros($monthlyNet.toNumber()),
       taxReturn,
       monthlyNetWithTaxReturn: roundEuros($monthlyNetWithTaxReturn.toNumber()),
+      cashBenefits: benefits.cashMonthly,
+      assetBenefits: benefits.assetMonthly,
+      cashInHand: roundEuros($cashInHand.toNumber()),
+      assets: roundEuros($assets.toNumber()),
+      totalValue: roundEuros($totalValue.toNumber()),
+      savingsVsDividend: roundEuros($savingsVsDividend.toNumber()),
     },
 
     variables: {

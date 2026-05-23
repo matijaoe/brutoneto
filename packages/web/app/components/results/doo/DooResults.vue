@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DooBreakdown } from '@brutoneto/core'
+import type { DooBreakdown, NonTaxableBenefitsBreakdown } from '@brutoneto/core'
 import type { AdjustedDividend, ConversionNote } from '~/types'
 import { useDooBreakdownSections } from '~/composables/useBreakdownRows'
 import { formatEur, toYearly } from '~/utils/formatters'
@@ -9,16 +9,30 @@ const props = defineProps<{
   adjustedDividend: AdjustedDividend
   conversionNote: ConversionNote | null
   placeName?: string
+  benefits: NonTaxableBenefitsBreakdown
 }>()
 
 const dataRef = computed(() => props.data)
 const adjRef = computed(() => props.adjustedDividend)
+const benefitsRef = computed(() => props.benefits)
 
-const sections = useDooBreakdownSections(dataRef, adjRef)
+const sections = useDooBreakdownSections(dataRef, adjRef, benefitsRef)
+
+const hasBenefits = computed(() => props.benefits.items.length > 0)
+const hasCashBenefits = computed(() => props.benefits.cashMonthly > 0)
+const hasAssetBenefits = computed(() => props.benefits.assetMonthly > 0)
+
+const assetSubtitle = computed(() => {
+  if (!hasAssetBenefits.value) return undefined
+  const labels = props.benefits.items
+    .filter(i => i.flow === 'asset')
+    .map(i => i.key === 'treciStup' ? '3. stup' : 'dopunsko')
+  return labels.join(' + ')
+})
 
 const dividendPct = computed(() => {
-  if (!props.data.corporate.profitAfterTax) return 100
-  return Math.round((props.adjustedDividend.grossDividend / props.data.corporate.profitAfterTax) * 100)
+  if (!props.adjustedDividend.profitAfterTax) return 100
+  return Math.round((props.adjustedDividend.grossDividend / props.adjustedDividend.profitAfterTax) * 100)
 })
 
 const retainedPct = computed(() => 100 - dividendPct.value)
@@ -42,11 +56,15 @@ const distributionSegments = computed(() => {
   if (adj.retained > 0) {
     segments.push({ label: 'Balance', value: adj.retained, color: 'green' })
   }
+  const benefitsTotal = adj.cashBenefits + adj.assetBenefits
+  if (benefitsTotal > 0) {
+    segments.push({ label: 'Benefits', value: benefitsTotal, color: 'green' })
+  }
 
   const totalTaxes = props.data.salary.taxes.total
     + props.data.salary.pension.mandatoryTotal
     + props.data.salary.healthInsurance
-    + props.data.corporate.corporateTax
+    + adj.corporateTax
     + (adj.netDividend > 0 ? adj.dividendTax : 0)
   segments.push({ label: 'Taxes', value: totalTaxes, color: 'red' })
 
@@ -54,11 +72,15 @@ const distributionSegments = computed(() => {
 })
 
 const heroSecondaryLine = computed(() => {
-  if (props.adjustedDividend.retained <= 0) return undefined
-  return {
-    label: 'Incl. retained',
-    value: `${formatEur(props.adjustedDividend.totalWithRetained)} /mo`,
+  // Prefer the total-value framing whenever there's anything locked (retained
+  // earnings or asset benefits), so users see cash now AND wealth accumulation.
+  if (props.adjustedDividend.assets > 0) {
+    return {
+      label: 'Total value',
+      value: `${formatEur(props.adjustedDividend.totalValue)} /mo`,
+    }
   }
+  return undefined
 })
 
 const heroExpandedLines = computed(() => {
@@ -97,8 +119,8 @@ const contextLabel = computed(() => {
     <!-- Hero take-home -->
     <div class="mt-8">
       <ResultsHeroNumber
-        :amount="adjustedDividend.monthlyNet"
-        label="take-home"
+        :amount="adjustedDividend.cashInHand"
+        :label="hasBenefits ? 'cash in hand' : 'take-home'"
         :secondary-line="heroSecondaryLine"
         expand-label="with tax return"
         :expanded-lines="heroExpandedLines"
@@ -126,6 +148,43 @@ const contextLabel = computed(() => {
           color="purple"
         />
       </div>
+
+      <!-- Non-taxable benefits cards -->
+      <div v-if="hasBenefits" class="grid sm:grid-cols-2 gap-3 mt-1">
+        <ResultsStreamCard
+          v-if="hasCashBenefits"
+          label="Neoporezivi primici (keš)"
+          :amount="benefits.cashMonthly"
+          color="green"
+        />
+        <!-- Asset benefits get a distinct dashed treatment so users read it as "locked savings" -->
+        <div
+          v-if="hasAssetBenefits"
+          class="rounded-lg border border-dashed border-default bg-default p-4 border-l-3 border-l-amber-500"
+        >
+          <p class="text-xs font-unifontex uppercase tracking-wider text-amber-400">
+            Štednja / osiguranje
+          </p>
+          <p class="text-3xl font-unifontex mt-1 text-foreground tabular-nums">
+            {{ formatEur(benefits.assetMonthly) }}<span class="text-sm text-muted">/mo</span>
+          </p>
+          <p class="text-sm text-muted font-unifontex mt-0.5 tabular-nums">
+            {{ formatEur(toYearly(benefits.assetMonthly)) }} /yr
+          </p>
+          <p v-if="assetSubtitle" class="text-xs text-dimmed mt-1.5">
+            {{ assetSubtitle }} · nije keš
+          </p>
+        </div>
+      </div>
+
+      <!-- Savings vs dividend annotation -->
+      <p
+        v-if="hasBenefits && adjustedDividend.savingsVsDividend > 0"
+        class="text-xs text-dimmed mt-1"
+      >
+        +{{ formatEur(adjustedDividend.savingsVsDividend) }}/mj ·
+        +{{ formatEur(toYearly(adjustedDividend.savingsVsDividend)) }}/god ušteda kroz neoporezivi put vs dividenda
+      </p>
 
       <!-- Retained in company -->
       <div
